@@ -84,4 +84,17 @@ abstract class AppTextStyle {
     fontSize: 14,
     color: Colors.grey[900],
   );
+
+  //
+  static final nunitoSans20LightBlack = TextStyle(
+    fontFamily: 'NunitoSans',
+    fontSize: 20,
+    color: AppColors.lightBlack
+  );
+  static final nunitoSans18WhiteBlod = const TextStyle(
+    fontFamily: 'NunitoSans',
+    fontSize: 18,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
 }

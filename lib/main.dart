@@ -1,19 +1,35 @@
+import 'package:bright_minds/core/database/cache_helper.dart';
+import 'package:bright_minds/core/database/cache_key.dart';
 import 'package:bright_minds/core/routes/router.dart';
+import 'package:bright_minds/core/services/service_locator.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MainApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeApp();
+
+  final isBoardingVisited =
+      getIt<CacheHelper>().getData(key: CacheKey.isBoardingVisited) ?? false;
+
+  runApp(MainApp(isBoardingVisited: isBoardingVisited));
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  const MainApp({super.key, required this.isBoardingVisited});
+
+  final bool isBoardingVisited;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Bright Minds',
       debugShowCheckedModeBanner: false,
-      routerConfig: router,
+      routerConfig: router(isBoardingVisited),
     );
   }
+}
+
+Future<void> initializeApp() async {
+  setupServiceLocator();
+  await getIt<CacheHelper>().init();
 }

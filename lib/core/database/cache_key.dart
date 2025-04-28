@@ -1,3 +1,3 @@
 abstract class CacheKey {
-  static const String key = '';
+  static const String isBoardingVisited = 'isBoardingVisited';
 }
