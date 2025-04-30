@@ -5,7 +5,7 @@ import 'package:bright_minds/core/widgets/material_button.dart';
 import 'package:bright_minds/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:bright_minds/features/onboarding/cubit/onboarding_state.dart';
 import 'package:bright_minds/features/onboarding/models/onboarding_model.dart';
-import 'package:bright_minds/features/onboarding/presentation/widgets/app_name.dart';
+import 'package:bright_minds/core/widgets/app_name.dart';
 import 'package:bright_minds/features/onboarding/presentation/widgets/boarding_item.dart';
 import 'package:bright_minds/features/onboarding/presentation/widgets/skip_button.dart';
 import 'package:flutter/material.dart';

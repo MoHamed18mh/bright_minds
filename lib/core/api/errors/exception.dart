@@ -12,7 +12,11 @@ void handleException(DioException e) {
     throw ServerException(errorModel: ErrorModel.fromJson(e.response!.data));
   } else {
     throw ServerException(
-      errorModel: ErrorModel(),
+      errorModel: ErrorModel(
+        statusCode: 0,
+        error: e.message ?? '',
+        errors: null,
+      ),
     );
   }
 }

@@ -68,6 +68,23 @@ abstract class AppTextStyle {
     fontWeight: FontWeight.bold,
     color: AppColors.lightBlack,
   );
+
+  
+  static final nunitoSans14Grey800 = TextStyle(
+    fontFamily: 'NunitoSans',
+    fontSize: 14,
+    color: Colors.grey[900],
+  );
+
+  //
+  static final nunitoSans20LightBlack = TextStyle(
+      fontFamily: 'NunitoSans', fontSize: 20, color: AppColors.lightBlack);
+  static final nunitoSans18WhiteBlod = const TextStyle(
+    fontFamily: 'NunitoSans',
+    fontSize: 18,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
   static final nunitoSans16LightBlackBold = TextStyle(
     fontFamily: 'NunitoSans',
     fontSize: 16,
@@ -78,23 +95,5 @@ abstract class AppTextStyle {
     fontFamily: 'NunitoSans',
     fontSize: 13,
     color: Colors.grey[700],
-  );
-  static final nunitoSans14Grey800 = TextStyle(
-    fontFamily: 'NunitoSans',
-    fontSize: 14,
-    color: Colors.grey[900],
-  );
-
-  //
-  static final nunitoSans20LightBlack = TextStyle(
-    fontFamily: 'NunitoSans',
-    fontSize: 20,
-    color: AppColors.lightBlack
-  );
-  static final nunitoSans18WhiteBlod = const TextStyle(
-    fontFamily: 'NunitoSans',
-    fontSize: 18,
-    color: Colors.white,
-    fontWeight: FontWeight.bold,
   );
 }

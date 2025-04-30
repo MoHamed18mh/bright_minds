@@ -1,17 +1,33 @@
+import 'package:bright_minds/core/api/dio_consumer.dart';
+import 'package:bright_minds/core/api/end_point.dart';
 import 'package:bright_minds/core/database/cache_helper.dart';
+import 'package:bright_minds/core/functions/redirect.dart';
 import 'package:bright_minds/core/routes/route_keys.dart';
 import 'package:bright_minds/core/services/service_locator.dart';
+import 'package:bright_minds/features/auth/cubit/auth_cubit.dart';
+import 'package:bright_minds/features/auth/presentation/views/forgot_password_view.dart';
 import 'package:bright_minds/features/auth/presentation/views/login_view.dart';
+import 'package:bright_minds/features/auth/presentation/views/register_view.dart';
+import 'package:bright_minds/features/auth/presentation/views/reset_password_view.dart';
+import 'package:bright_minds/features/home/presentation/views/home_view.dart';
 import 'package:bright_minds/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:bright_minds/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-GoRouter router(bool isBoardingVisited) => GoRouter(
-      initialLocation:
-          isBoardingVisited ? RouteKeys.login : RouteKeys.onBoarding,
+final DioConsumer _dio = getIt<DioConsumer>();
+
+GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
+      initialLocation: isLoggedin
+          ? RouteKeys.home
+          : isBoardingVisited
+              ? RouteKeys.login
+              : RouteKeys.onBoarding,
+      redirect: (context, state) {
+        return redirect(state);
+      },
       routes: [
-        /// OnBoarding route
+        /// OnBoarding
         GoRoute(
           path: RouteKeys.onBoarding,
           builder: (context, state) => BlocProvider(
@@ -20,10 +36,68 @@ GoRouter router(bool isBoardingVisited) => GoRouter(
           ),
         ),
 
-        /// Login route
+        /// Login
         GoRoute(
           path: RouteKeys.login,
-          builder: (context, state) => const LoginView(),
+          builder: (context, state) {
+            final email = state.uri.queryParameters[ApiKey.email];
+            final token = state.uri.queryParameters[ApiKey.token];
+
+            return BlocProvider(
+              create: (_) {
+                final cubit = AuthCubit(_dio);
+
+                if (email != null && token != null) {
+                  cubit.confirm(email, token);
+                }
+                return cubit;
+              },
+              child: LoginView(
+                prefillEmail: email,
+              ),
+            );
+          },
+        ),
+
+        /// Register
+        GoRoute(
+          path: RouteKeys.register,
+          builder: (context, state) => BlocProvider(
+            create: (_) => AuthCubit(_dio),
+            child: const RegisterView(),
+          ),
+        ),
+
+        /// Forgot Password
+        GoRoute(
+          path: RouteKeys.forgotPassword,
+          builder: (context, state) => BlocProvider(
+            create: (_) => AuthCubit(_dio),
+            child: const ForgotPasswordView(),
+          ),
+        ),
+
+        /// reset Password
+        GoRoute(
+          path: RouteKeys.resetPassword,
+          builder: (context, state) {
+            final email = state.uri.queryParameters[ApiKey.email];
+            final token = state.uri.queryParameters[ApiKey.token];
+
+            return BlocProvider(
+              create: (_) => AuthCubit(_dio),
+              child: ResetPasswordView(
+                email: email!,
+                token: token!,
+              ),
+            );
+          },
+        ),
+
+        /// home
+        GoRoute(
+          path: RouteKeys.home,
+          builder: (context, state) => const HomeView(),
         )
       ],
     );

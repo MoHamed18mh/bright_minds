@@ -9,22 +9,31 @@ void main() async {
   await initializeApp();
 
   final isBoardingVisited =
-      getIt<CacheHelper>().getData(key: CacheKey.isBoardingVisited) ?? false;
+      await getIt<CacheHelper>().getData(key: CacheKey.isBoardingVisited) ??
+          false;
 
-  runApp(MainApp(isBoardingVisited: isBoardingVisited));
+  final isLoggedin =
+      await getIt<CacheHelper>().containsKey(key: CacheKey.userId);
+
+  runApp(MainApp(
+    isBoardingVisited: isBoardingVisited,
+    isLoggedin: isLoggedin,
+  ));
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key, required this.isBoardingVisited});
+  const MainApp(
+      {super.key, required this.isBoardingVisited, required this.isLoggedin});
 
   final bool isBoardingVisited;
+  final bool isLoggedin;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Bright Minds',
       debugShowCheckedModeBanner: false,
-      routerConfig: router(isBoardingVisited),
+      routerConfig: router(isBoardingVisited, isLoggedin),
     );
   }
 }
