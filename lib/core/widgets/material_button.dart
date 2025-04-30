@@ -19,7 +19,7 @@ class MaterialButtonW extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
         borderSide: BorderSide.none,
       ),
-      child: Text(text, style: AppTextStyle.nunitoSans18WhiteBlod),
+      child: Text(text, style: AppTextStyle.nunitoSansWhite),
     );
   }
 }

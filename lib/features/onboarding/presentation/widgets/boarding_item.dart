@@ -25,7 +25,7 @@ class BoardingItem extends StatelessWidget {
         Text(
           boardingData[index].subTitle,
           textAlign: TextAlign.center,
-          style: AppTextStyle.nunitoSans13Grey700,
+          style: AppTextStyle.nunitoSansGrey,
         ),
       ],
     );

@@ -1,3 +1,4 @@
+import 'package:bright_minds/core/functions/calc_padding.dart';
 import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:bright_minds/core/widgets/back_button.dart';
 import 'package:bright_minds/features/auth/presentation/widgets/title_overview.dart';
@@ -9,11 +10,13 @@ class ForgotPasswordView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    final padding = calcPadding(context);
+
+    return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: CustomScrollView(
+          padding: EdgeInsets.symmetric(horizontal: padding),
+          child: const CustomScrollView(
             slivers: [
               SliverToBoxAdapter(child: BackButtonW()),
               SliverToBoxAdapter(child: SizedBox(height: 26)),

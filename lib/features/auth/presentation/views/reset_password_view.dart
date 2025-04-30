@@ -1,3 +1,4 @@
+import 'package:bright_minds/core/functions/calc_padding.dart';
 import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:bright_minds/features/auth/presentation/widgets/forms/reset_password_form.dart';
 import 'package:bright_minds/features/auth/presentation/widgets/title_overview.dart';
@@ -11,10 +12,12 @@ class ResetPasswordView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final padding = calcPadding(context);
+
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(horizontal: padding),
           child: CustomScrollView(
             slivers: [
               const SliverToBoxAdapter(child: SizedBox(height: 40)),

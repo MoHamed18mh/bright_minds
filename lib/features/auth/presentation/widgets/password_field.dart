@@ -16,7 +16,7 @@ class PassWordFieldW extends StatelessWidget {
     final cubit = context.watch<AuthCubit>();
 
     return TextFormField(
-      style: AppTextStyle.nunitoSans16LightBlackBold,
+      style: AppTextStyle.nunitoSansBlack.copyWith(fontSize: 16),
       controller: controller,
       validator: validatFields,
       obscureText: cubit.obscurePasswordValue,
@@ -31,7 +31,7 @@ class PassWordFieldW extends StatelessWidget {
       prefixIconColor: AppColors.primaryColor,
       label: Text(
         text,
-        style: AppTextStyle.nunitoSans13Grey700,
+        style: AppTextStyle.nunitoSansGrey,
       ),
       suffixIcon: suffixIcon(cubit),
       suffixIconColor: AppColors.primaryColor,

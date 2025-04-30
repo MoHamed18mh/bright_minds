@@ -1,3 +1,4 @@
+import 'package:bright_minds/core/functions/calc_padding.dart';
 import 'package:bright_minds/core/functions/navigation.dart';
 import 'package:bright_minds/core/routes/route_keys.dart';
 import 'package:bright_minds/core/utils/app_strings.dart';
@@ -17,6 +18,7 @@ class OnboardingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.watch<OnboardingCubit>();
+    final padding = calcPadding(context);
 
     return BlocListener<OnboardingCubit, OnboardingState>(
       listener: (context, state) {
@@ -27,7 +29,7 @@ class OnboardingView extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: padding),
             child: CustomScrollView(
               slivers: [
                 /// skip button

@@ -2,7 +2,8 @@ import 'package:bright_minds/core/utils/app_text_style.dart';
 import 'package:flutter/material.dart';
 
 class TextButtonW extends StatelessWidget {
-  const TextButtonW({super.key, required this.alignment, this.onPressed, required this.text});
+  const TextButtonW(
+      {super.key, required this.alignment, this.onPressed, required this.text});
 
   final String text;
   final Alignment alignment;
@@ -16,7 +17,7 @@ class TextButtonW extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           text,
-          style: AppTextStyle.nunitoSans16LightBlackBold.copyWith(
+          style: AppTextStyle.nunitoSansBlack.copyWith(
             fontSize: 13,
           ),
         ),

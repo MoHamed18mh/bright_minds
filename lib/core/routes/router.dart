@@ -9,7 +9,10 @@ import 'package:bright_minds/features/auth/presentation/views/forgot_password_vi
 import 'package:bright_minds/features/auth/presentation/views/login_view.dart';
 import 'package:bright_minds/features/auth/presentation/views/register_view.dart';
 import 'package:bright_minds/features/auth/presentation/views/reset_password_view.dart';
+import 'package:bright_minds/features/contact/contact_view.dart';
+import 'package:bright_minds/features/course/course_view.dart';
 import 'package:bright_minds/features/home/presentation/views/home_view.dart';
+import 'package:bright_minds/features/instructor/instructor_view.dart';
 import 'package:bright_minds/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:bright_minds/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -98,6 +101,24 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
         GoRoute(
           path: RouteKeys.home,
           builder: (context, state) => const HomeView(),
-        )
+        ),
+
+        /// course
+        GoRoute(
+          path: RouteKeys.course,
+          builder: (context, state) => const CourseView(),
+        ),
+
+        /// instructor
+        GoRoute(
+          path: RouteKeys.instructor,
+          builder: (context, state) => const InstructorView(),
+        ),
+
+        /// contact
+        GoRoute(
+          path: RouteKeys.contact,
+          builder: (context, state) => const ContactView(),
+        ),
       ],
     );

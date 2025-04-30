@@ -2,12 +2,6 @@ import 'package:bright_minds/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 abstract class AppTextStyle {
-  static final notoSerif38PrimaryBold = TextStyle(
-    fontFamily: 'NotoSerif',
-    fontSize: 38,
-    fontWeight: FontWeight.bold,
-    color: AppColors.primaryColor,
-  );
   static final notoSerif20PrimaryBold = TextStyle(
     fontFamily: 'NotoSerif',
     fontSize: 20,
@@ -26,12 +20,7 @@ abstract class AppTextStyle {
     color: Colors.white,
     fontWeight: FontWeight.bold,
   );
-  static const notoSerif30WhiteBlod = TextStyle(
-    fontFamily: 'NotoSerif',
-    fontSize: 30,
-    color: Colors.white,
-    fontWeight: FontWeight.bold,
-  );
+
   static const notoSerif25WhiteBlod = TextStyle(
     fontFamily: 'NotoSerif',
     fontSize: 25,
@@ -69,7 +58,6 @@ abstract class AppTextStyle {
     color: AppColors.lightBlack,
   );
 
-  
   static final nunitoSans14Grey800 = TextStyle(
     fontFamily: 'NunitoSans',
     fontSize: 14,
@@ -77,23 +65,33 @@ abstract class AppTextStyle {
   );
 
   //
-  static final nunitoSans20LightBlack = TextStyle(
-      fontFamily: 'NunitoSans', fontSize: 20, color: AppColors.lightBlack);
-  static final nunitoSans18WhiteBlod = const TextStyle(
+  static final notoSerifPrimary = TextStyle(
+    fontFamily: 'NotoSerif',
+    fontSize: 30,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primaryColor,
+  );
+  static final nunitoSansBlack = const TextStyle(
+    fontFamily: 'NunitoSans',
+    fontSize: 18,
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+  );
+  static final nunitoSansWhite = const TextStyle(
     fontFamily: 'NunitoSans',
     fontSize: 18,
     color: Colors.white,
     fontWeight: FontWeight.bold,
   );
-  static final nunitoSans16LightBlackBold = TextStyle(
-    fontFamily: 'NunitoSans',
-    fontSize: 16,
-    fontWeight: FontWeight.bold,
-    color: AppColors.lightBlack,
-  );
-  static final nunitoSans13Grey700 = TextStyle(
+  static final nunitoSansGrey = TextStyle(
     fontFamily: 'NunitoSans',
     fontSize: 13,
     color: Colors.grey[700],
+  );
+  static const notoSerifWhite = TextStyle(
+    fontFamily: 'NotoSerif',
+    fontSize: 18,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
   );
 }

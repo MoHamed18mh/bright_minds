@@ -1,3 +1,4 @@
+import 'package:bright_minds/core/functions/calc_padding.dart';
 import 'package:bright_minds/core/functions/navigation.dart';
 import 'package:bright_minds/core/functions/show_toast.dart';
 import 'package:bright_minds/core/routes/route_keys.dart';
@@ -17,6 +18,8 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final padding = calcPadding(context);
+
     return SafeArea(
       child: Scaffold(
         body: BlocListener<AuthCubit, AuthState>(
@@ -30,7 +33,7 @@ class LoginView extends StatelessWidget {
             }
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: padding),
             child: CustomScrollView(
               slivers: [
                 const SliverToBoxAdapter(child: SizedBox(height: 40)),

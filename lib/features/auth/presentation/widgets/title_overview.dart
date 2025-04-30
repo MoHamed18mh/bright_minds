@@ -17,7 +17,7 @@ class TitleOverView extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           text2,
-          style: AppTextStyle.nunitoSans13Grey700,
+          style: AppTextStyle.nunitoSansGrey,
           textAlign: TextAlign.center,
         ),
       ],

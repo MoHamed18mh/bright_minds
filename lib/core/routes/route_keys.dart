@@ -4,5 +4,8 @@ abstract class RouteKeys {
       register = '/register',
       forgotPassword = '/forgot-password',
       resetPassword = '/reset-password',
-      home = '/home';
+      home = '/home',
+      course = '/course',
+      instructor = '/instructor',
+      contact = '/contact';
 }

@@ -17,7 +17,7 @@ class TextFieldW extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: AppTextStyle.nunitoSans16LightBlackBold,
+      style: AppTextStyle.nunitoSansBlack.copyWith(fontSize: 16),
       controller: controller,
       validator: validatFields,
       cursorColor: AppColors.lightBlack,
@@ -31,7 +31,7 @@ class TextFieldW extends StatelessWidget {
       prefixIconColor: AppColors.primaryColor,
       label: Text(
         text,
-        style: AppTextStyle.nunitoSans13Grey700,
+        style: AppTextStyle.nunitoSansGrey,
       ),
       suffixIconColor: AppColors.primaryColor,
       border: outLineInputBorder(),
