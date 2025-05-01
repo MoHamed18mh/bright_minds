@@ -1,5 +1,5 @@
 abstract class RouteKeys {
-  static const String onBoarding = '/onBoarding',
+  static const String onBoarding = '/onboarding',
       login = '/login',
       register = '/register',
       forgotPassword = '/forgot-password',
@@ -7,5 +7,6 @@ abstract class RouteKeys {
       home = '/home',
       course = '/course',
       instructor = '/instructor',
+      instructorDetails = '/instructor-details',
       contact = '/contact';
 }

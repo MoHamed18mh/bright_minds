@@ -12,7 +12,10 @@ import 'package:bright_minds/features/auth/presentation/views/reset_password_vie
 import 'package:bright_minds/features/contact/contact_view.dart';
 import 'package:bright_minds/features/course/course_view.dart';
 import 'package:bright_minds/features/home/presentation/views/home_view.dart';
-import 'package:bright_minds/features/instructor/instructor_view.dart';
+import 'package:bright_minds/features/instructor/cubit/instructor_cubit.dart';
+import 'package:bright_minds/features/instructor/models/instructor_model.dart';
+import 'package:bright_minds/features/instructor/presentation/views/instructor_details_view.dart';
+import 'package:bright_minds/features/instructor/presentation/views/instructor_view.dart';
 import 'package:bright_minds/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:bright_minds/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -112,7 +115,18 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
         /// instructor
         GoRoute(
           path: RouteKeys.instructor,
-          builder: (context, state) => const InstructorView(),
+          builder: (context, state) => BlocProvider(
+            create: (context) => InstructorCubit(_dio)..getInstructors(),
+            child: const InstructorView(),
+          ),
+        ),
+
+        /// instructor details
+        GoRoute(
+          path: RouteKeys.instructorDetails,
+          builder: (context, state) => InstructorDetailsView(
+            instructor: state.extra as InstructorItems,
+          ),
         ),
 
         /// contact
