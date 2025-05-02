@@ -6,6 +6,8 @@ abstract class RouteKeys {
       resetPassword = '/reset-password',
       home = '/home',
       course = '/course',
+      courseDetails = '/course-details',
+      video = '/video',
       instructor = '/instructor',
       instructorDetails = '/instructor-details',
       contact = '/contact';

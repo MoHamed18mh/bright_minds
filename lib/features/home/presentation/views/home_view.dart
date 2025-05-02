@@ -2,7 +2,7 @@ import 'package:bright_minds/core/functions/calc_padding.dart';
 import 'package:bright_minds/core/utils/app_assets.dart';
 import 'package:bright_minds/features/home/models/actions_model.dart';
 import 'package:bright_minds/features/home/models/service_model.dart';
-import 'package:bright_minds/features/home/presentation/widgets/action_card.dart';
+import 'package:bright_minds/features/home/presentation/widgets/action_tile.dart';
 import 'package:bright_minds/features/home/presentation/widgets/services_item.dart';
 import 'package:bright_minds/features/home/presentation/widgets/skills.dart';
 import 'package:bright_minds/features/home/presentation/widgets/sliver_appbar.dart';
@@ -31,7 +31,8 @@ class HomeView extends StatelessWidget {
                 itemBuilder: (context, index) {
                   String title = actionsList.keys.elementAt(index);
                   ActionModel actionData = actionsList[title]!;
-                  return ActionCard(title: title, actionData: actionData);
+
+                  return ActionTile(title: title, actionData: actionData);
                 },
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 80)),

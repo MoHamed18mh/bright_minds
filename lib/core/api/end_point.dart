@@ -6,7 +6,15 @@ abstract class EndPoint {
       postConfirm = '/api/Account/confirm-email',
       postForgotPass = '/api/Account/forget-password',
       postResetPass = '/api/Account/reset-password',
-      getInstructors = '/api/Instructor';
+      getInstructors = '/api/Instructor',
+      getCourses = '/api/Course';
+  static String getSections(int courseId) {
+    return '/api/Section/course/$courseId';
+  }
+
+  static String getVideos(int sectionId) {
+    return '/api/Video/section/$sectionId';
+  }
 }
 
 abstract class ApiKey {
@@ -38,6 +46,24 @@ abstract class ApiKey {
       jobTitle = 'jobTitle',
       userId = 'userId',
       mobile = 'mobile',
+      id = 'id',
+      name = 'name',
+      updatedDate = 'updatedDate',
+      createdDate = 'createdDate',
+      pictureUrl = 'pictureUrl',
+      instructorName = 'instructorName',
+      description = 'description',
+      categoryName = 'categoryName',
+      categoryId = 'categoryId',
+      price = 'price',
+      rate = 'rate',
+      order = 'order',
+      courseId = 'courseId',
+      duration = 'duration',
+      coverUrl = 'coverUrl',
+      videoUrl = 'videoUrl',
+      sectionName = 'sectionName',
+      sectionId = 'sectionId',
 
       // schemas
       imageNull = 'https://brightminds.runasp.net//files/UsersImages/',

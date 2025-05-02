@@ -10,11 +10,11 @@ class ActionModel {
 
 Map<String, ActionModel> actionsList = {
   'Courses': ActionModel(
-    imagePath: Assets.assetsImagesCourse1,
+    imagePath: Assets.assetsImagesCourse,
     route: RouteKeys.course,
   ),
   'Instructors': ActionModel(
-    imagePath: Assets.assetsImagesTeam1,
+    imagePath: Assets.assetsImagesTeam,
     route: RouteKeys.instructor,
   ),
   'Contact': ActionModel(

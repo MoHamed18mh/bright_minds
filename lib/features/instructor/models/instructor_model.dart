@@ -27,7 +27,7 @@ class InstructorData {
   final int pageSize;
   final int count;
   final int pageIndex;
-  final List<InstructorItems> items;
+  final List<InstructorItem> items;
 
   InstructorData({
     required this.pageSize,
@@ -41,14 +41,14 @@ class InstructorData {
       pageSize: json[ApiKey.pageSize],
       count: json[ApiKey.count],
       pageIndex: json[ApiKey.pageIndex],
-      items: List<InstructorItems>.from(
-        json[ApiKey.items].map((item) => InstructorItems.fromJson(item)),
+      items: List<InstructorItem>.from(
+        json[ApiKey.items].map((item) => InstructorItem.fromJson(item)),
       ),
     );
   }
 }
 
-class InstructorItems {
+class InstructorItem {
   final String userId;
   final String displayName;
   final String jobTitle;
@@ -57,7 +57,7 @@ class InstructorItems {
   final String imageCover;
   final String qualifications;
 
-  InstructorItems({
+  InstructorItem({
     required this.userId,
     required this.displayName,
     required this.jobTitle,
@@ -67,8 +67,8 @@ class InstructorItems {
     required this.qualifications,
   });
 
-  factory InstructorItems.fromJson(Map<String, dynamic> json) {
-    return InstructorItems(
+  factory InstructorItem.fromJson(Map<String, dynamic> json) {
+    return InstructorItem(
       userId: json[ApiKey.userId],
       displayName: json[ApiKey.displayName],
       jobTitle: json[ApiKey.jobTitle],

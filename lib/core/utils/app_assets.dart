@@ -18,21 +18,21 @@ class Assets {
   /// assets/images/contactus.jpg
   static const String assetsImagesContactus = "assets/images/contactus.jpg";
 
-  /// Assets for assetsImagesCourse1
-  /// assets/images/course-1.jpg
-  static const String assetsImagesCourse1 = "assets/images/course-1.jpg";
+  /// Assets for assetsImagesCourse
+  /// assets/images/course.jpg
+  static const String assetsImagesCourse = "assets/images/course.jpg";
 
   /// Assets for assetsImagesLogo
   /// assets/images/logo.png
   static const String assetsImagesLogo = "assets/images/logo.png";
 
-  /// Assets for assetsImagesTeam1
-  /// assets/images/team-1.jpg
-  static const String assetsImagesTeam1 = "assets/images/team-1.jpg";
+  /// Assets for assetsImagesTeam
+  /// assets/images/team.jpg
+  static const String assetsImagesTeam = "assets/images/team.jpg";
 
-  /// Assets for assetsImagesTestimonial1
-  /// assets/images/testimonial-1.jpg
-  static const String assetsImagesTestimonial1 = "assets/images/testimonial-1.jpg";
+  /// Assets for assetsImagesTestimonial
+  /// assets/images/testimonial.jpg
+  static const String assetsImagesTestimonial = "assets/images/testimonial.jpg";
 
   /// Assets for assetsImagesUser
   /// assets/images/User.png

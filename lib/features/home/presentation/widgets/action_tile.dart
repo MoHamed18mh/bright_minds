@@ -3,8 +3,8 @@ import 'package:bright_minds/core/utils/app_text_style.dart';
 import 'package:bright_minds/features/home/models/actions_model.dart';
 import 'package:flutter/material.dart';
 
-class ActionCard extends StatelessWidget {
-  const ActionCard({super.key, required this.title, required this.actionData});
+class ActionTile extends StatelessWidget {
+  const ActionTile({super.key, required this.title, required this.actionData});
   final String title;
   final ActionModel actionData;
 
@@ -22,8 +22,8 @@ class ActionCard extends StatelessWidget {
           image: DecorationImage(
             image: AssetImage(actionData.imagePath),
             fit: BoxFit.cover,
-            colorFilter:
-                ColorFilter.mode(Colors.black.withAlpha(125), BlendMode.darken),
+            colorFilter: ColorFilter.mode(
+                Colors.black.withAlpha(125), BlendMode.srcOver),
           ),
         ),
         child: Text(

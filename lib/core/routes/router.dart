@@ -10,7 +10,11 @@ import 'package:bright_minds/features/auth/presentation/views/login_view.dart';
 import 'package:bright_minds/features/auth/presentation/views/register_view.dart';
 import 'package:bright_minds/features/auth/presentation/views/reset_password_view.dart';
 import 'package:bright_minds/features/contact/contact_view.dart';
-import 'package:bright_minds/features/course/course_view.dart';
+import 'package:bright_minds/features/course/cubit/course_cubit.dart';
+import 'package:bright_minds/features/course/models/course_model.dart';
+import 'package:bright_minds/features/course/presentation/views/course_details_view.dart';
+import 'package:bright_minds/features/course/presentation/views/course_view.dart';
+import 'package:bright_minds/features/course/presentation/views/video_view.dart';
 import 'package:bright_minds/features/home/presentation/views/home_view.dart';
 import 'package:bright_minds/features/instructor/cubit/instructor_cubit.dart';
 import 'package:bright_minds/features/instructor/models/instructor_model.dart';
@@ -58,9 +62,7 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
                 }
                 return cubit;
               },
-              child: LoginView(
-                prefillEmail: email,
-              ),
+              child: LoginView(prefillEmail: email),
             );
           },
         ),
@@ -109,14 +111,47 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
         /// course
         GoRoute(
           path: RouteKeys.course,
-          builder: (context, state) => const CourseView(),
+          builder: (context, state) => BlocProvider(
+            create: (_) => CourseCubit(_dio)..getCourses(),
+            child: const CourseView(),
+          ),
+        ),
+
+        /// course details
+        GoRoute(
+          path: RouteKeys.courseDetails,
+          builder: (context, state) {
+            final course = state.extra as CourseItem;
+
+            return BlocProvider(
+              create: (context) => CourseCubit(_dio)..getSections(course.id),
+              child: CourseDetailsView(
+                course: course,
+              ),
+            );
+          },
+        ),
+
+        /// video screen
+        GoRoute(
+          path: RouteKeys.video,
+          builder: (context, state) {
+            final extra = state.extra as Map<String, dynamic>;
+            final int sectionId = extra[ApiKey.sectionId];
+            final String sectionName = extra[ApiKey.sectionName];
+
+            return BlocProvider(
+              create: (_) => CourseCubit(_dio)..getVideos(sectionId),
+              child: VideoView(sectionName: sectionName),
+            );
+          },
         ),
 
         /// instructor
         GoRoute(
           path: RouteKeys.instructor,
           builder: (context, state) => BlocProvider(
-            create: (context) => InstructorCubit(_dio)..getInstructors(),
+            create: (_) => InstructorCubit(_dio)..getInstructors(),
             child: const InstructorView(),
           ),
         ),
@@ -125,7 +160,7 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
         GoRoute(
           path: RouteKeys.instructorDetails,
           builder: (context, state) => InstructorDetailsView(
-            instructor: state.extra as InstructorItems,
+            instructor: state.extra as InstructorItem,
           ),
         ),
 

@@ -1,11 +1,12 @@
 import 'package:bright_minds/core/functions/calc_padding.dart';
+import 'package:bright_minds/features/instructor/models/instructor_model.dart';
 import 'package:bright_minds/features/instructor/presentation/widgets/instructor_tile.dart';
 import 'package:flutter/material.dart';
 
-class SearchDisplay extends StatelessWidget {
-  const SearchDisplay({super.key, required this.list});
+class SearchInstructorDisplay extends StatelessWidget {
+  const SearchInstructorDisplay({super.key, required this.list});
 
-  final List list;
+  final List<InstructorItem> list;
 
   @override
   Widget build(BuildContext context) {

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 class InstructorDetailsView extends StatelessWidget {
   const InstructorDetailsView({super.key, required this.instructor});
 
-  final InstructorItems instructor;
+  final InstructorItem instructor;
 
   @override
   Widget build(BuildContext context) {

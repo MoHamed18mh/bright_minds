@@ -1,19 +1,21 @@
 import 'package:bright_minds/core/utils/app_colors.dart';
 import 'package:bright_minds/core/utils/app_text_style.dart';
 import 'package:bright_minds/core/widgets/back_button.dart';
-import 'package:bright_minds/features/instructor/presentation/widgets/search_display.dart';
+import 'package:bright_minds/features/instructor/models/instructor_model.dart';
+import 'package:bright_minds/features/instructor/presentation/widgets/search_instructor_display.dart';
 import 'package:flutter/material.dart';
 
-class InstructorSearchView extends SearchDelegate {
-  final List list;
+class InstructorSearchDelegate extends SearchDelegate {
+  final List<InstructorItem> list;
 
-  InstructorSearchView({required this.list});
+  InstructorSearchDelegate({required this.list});
 
   @override
   TextStyle? get searchFieldStyle => AppTextStyle.nunitoSansBlack;
 
   @override
   InputDecorationTheme get searchFieldDecorationTheme => InputDecorationTheme(
+        contentPadding: const EdgeInsets.symmetric(vertical: 10),
         hintStyle: AppTextStyle.nunitoSansGrey.copyWith(fontSize: 18),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8), // حواف دائرية
@@ -41,19 +43,19 @@ class InstructorSearchView extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    List fillterdList = list
+    List<InstructorItem> fillterdList = list
         .where((e) => e.displayName.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
-    return SearchDisplay(list: fillterdList);
+    return SearchInstructorDisplay(list: fillterdList);
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List fillterdList = list
+    List<InstructorItem> fillterdList = list
         .where((e) => e.displayName.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
-    return SearchDisplay(list: fillterdList);
+    return SearchInstructorDisplay(list: fillterdList);
   }
 }

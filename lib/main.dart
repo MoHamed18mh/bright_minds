@@ -15,10 +15,12 @@ void main() async {
   final isLoggedin =
       await getIt<CacheHelper>().containsKey(key: CacheKey.userId);
 
-  runApp(MainApp(
-    isBoardingVisited: isBoardingVisited,
-    isLoggedin: isLoggedin,
-  ));
+  runApp(
+    MainApp(
+      isBoardingVisited: isBoardingVisited,
+      isLoggedin: isLoggedin,
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
