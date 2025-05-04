@@ -12,7 +12,7 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final padding = calcPadding(context);
-    
+
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -31,11 +31,12 @@ class ProfileView extends StatelessWidget {
                 ),
               ),
 
-              // my courses screen
-              const SliverToBoxAdapter(
+              // cart screen
+              SliverToBoxAdapter(
                 child: ProfileTile(
                   iconData: Icons.backpack_outlined,
                   itemTitle: AppStrings.myBag,
+                  onTap: () => navigate(context, RouteKeys.cart),
                 ),
               ),
 

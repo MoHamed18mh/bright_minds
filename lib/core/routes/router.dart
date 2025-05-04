@@ -23,6 +23,8 @@ import 'package:bright_minds/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:bright_minds/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:bright_minds/features/profile/cubit/profile_cubit.dart';
 import 'package:bright_minds/features/profile/models/user_model.dart';
+import 'package:bright_minds/features/profile/presentation/views/cart_course_view.dart';
+import 'package:bright_minds/features/profile/presentation/views/cart_view.dart';
 import 'package:bright_minds/features/profile/presentation/views/edit_mydetails_view.dart';
 import 'package:bright_minds/features/profile/presentation/views/my_details_view.dart';
 import 'package:bright_minds/features/profile/presentation/views/profile_view.dart';
@@ -195,6 +197,24 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
               child: const EditMyDetailsView(),
             );
           },
+        ),
+
+        /// cart screen
+        GoRoute(
+          path: RouteKeys.cart,
+          builder: (context, state) => BlocProvider(
+            create: (_) => ProfileCubit(_dio)..getCart(),
+            child: const CartView(),
+          ),
+        ),
+
+        /// cart screen
+        GoRoute(
+          path: RouteKeys.cartCourse,
+          builder: (context, state) => BlocProvider(
+            create: (_) => ProfileCubit(_dio)..getCartCourses(state.extra as String),
+            child: const CartCourseView(),
+          ),
         ),
 
         ///

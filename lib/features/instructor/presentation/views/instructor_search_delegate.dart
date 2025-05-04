@@ -15,18 +15,18 @@ class InstructorSearchDelegate extends SearchDelegate {
 
   @override
   InputDecorationTheme get searchFieldDecorationTheme => InputDecorationTheme(
-        contentPadding: const EdgeInsets.symmetric(vertical: 10),
+        contentPadding: const EdgeInsets.all(10),
         hintStyle: AppTextStyle.nunitoSansGrey.copyWith(fontSize: 18),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8), 
+          borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
-            color: Colors.grey, 
+            color: Colors.grey,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
-            color: AppColors.primaryColor, 
+            color: AppColors.primaryColor,
           ),
         ),
       );

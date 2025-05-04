@@ -16,11 +16,11 @@ class CourseSearchDelegate extends SearchDelegate {
   @override
   InputDecorationTheme get searchFieldDecorationTheme => InputDecorationTheme(
         hintStyle: AppTextStyle.nunitoSansGrey.copyWith(fontSize: 18),
-        contentPadding: const EdgeInsets.symmetric(vertical: 10),
+        contentPadding: const EdgeInsets.all(10),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
-            color: Colors.grey, 
+            color: Colors.grey,
           ),
         ),
         focusedBorder: OutlineInputBorder(

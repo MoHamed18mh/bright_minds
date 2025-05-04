@@ -9,9 +9,16 @@ abstract class EndPoint {
       getInstructors = '/api/Instructor',
       putUserEdit = '/api/Account',
       putChangePass = '/api/Account/changepassword',
+      postAddCart = '/api/Cart',
+      getCart = '/api/Cart',
       getCourses = '/api/Course';
+
   static String getSections(int courseId) {
     return '/api/Section/course/$courseId';
+  }
+
+  static String getCartCourse(String courseId) {
+    return '/api/Course/$courseId';
   }
 
   static String getVideos(int sectionId) {
@@ -20,6 +27,10 @@ abstract class EndPoint {
 
   static String getUser(String userId) {
     return '/api/Account/$userId';
+  }
+
+  static String deleteCart(int courseId) {
+    return '/api/Cart/$courseId';
   }
 }
 
@@ -76,6 +87,10 @@ abstract class ApiKey {
       roles = 'roles',
       walletBalance = 'waletBalance',
       authorization = 'Authorization',
+      totalPirce = 'totalPirce',
+      courseName = 'courseName',
+      imageUrl = 'imageUrl',
+      sections = 'sections',
 
       // schemas
       imageNull = 'https://brightminds.runasp.net//files/UsersImages/',

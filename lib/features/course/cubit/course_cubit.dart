@@ -58,4 +58,21 @@ class CourseCubit extends Cubit<CourseState> {
       type: 'video/mp4',
     ).launch();
   }
+
+  Future<void> postAddCart(int courseId) async {
+    emit(CartLoading());
+    try {
+      await api.post(
+        EndPoint.postAddCart,
+        data: {ApiKey.courseId: courseId},
+      );
+      emit(CartSuccess());
+
+      await getSections(courseId);
+    } on ServerException catch (e) {
+      emit(CartFailure(error: e.errorModel.error));
+    } catch (e) {
+      emit(CartFailure(error: e.toString()));
+    }
+  }
 }

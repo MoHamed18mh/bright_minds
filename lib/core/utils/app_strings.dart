@@ -62,6 +62,7 @@ abstract class AppStrings {
       done = 'Done',
       logOut = 'Log Out',
       deleteAccount = 'Delete Account',
+      delete= 'Delete',
       edit = 'Edit',
       payment = 'Payment',
       oldPassword = 'Old Password',

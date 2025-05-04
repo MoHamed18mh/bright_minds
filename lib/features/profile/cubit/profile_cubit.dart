@@ -6,6 +6,8 @@ import 'package:bright_minds/core/database/cache_key.dart';
 import 'package:bright_minds/core/functions/upload_imgae_to_api.dart';
 import 'package:bright_minds/core/services/service_locator.dart';
 import 'package:bright_minds/features/profile/cubit/profile_state.dart';
+import 'package:bright_minds/features/profile/models/cart_model.dart';
+import 'package:bright_minds/features/profile/models/course_cart_model.dart';
 import 'package:bright_minds/features/profile/models/user_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -110,6 +112,45 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(MenueNotVisible());
     } else {
       emit(MenueVisible());
+    }
+  }
+
+  Future<void> getCart() async {
+    emit(CartLoading());
+    try {
+      final response = await api.get(EndPoint.getCart);
+
+      emit(CartSuccess(cart: CartModel.fromJson(response)));
+    } on ServerException catch (e) {
+      emit(CartFailure(error: e.errorModel.error));
+    } catch (e) {
+      emit(CartFailure(error: e.toString()));
+    }
+  }
+
+  Future<void> deleteCart(int courseId) async {
+    emit(DeleteCartLoading());
+    try {
+      await api.delete(EndPoint.deleteCart(courseId));
+      emit(DeleteCartSuccess());
+
+      await getCart();
+    } on ServerException catch (e) {
+      emit(DeleteCartFailure(error: e.errorModel.error));
+    } catch (e) {
+      emit(DeleteCartFailure(error: e.toString()));
+    }
+  }
+
+  Future<void> getCartCourses(String courseId) async {
+    emit(CourseCartLoading());
+    try {
+      final response = await api.get(EndPoint.getCartCourse(courseId));
+      emit(CourseCartSucces(course: CourseCartModel.fromJson(response)));
+    } on ServerException catch (e) {
+      emit(CourseCartFailure(error: e.errorModel.error));
+    } catch (e) {
+      emit(CourseCartFailure(error: e.toString()));
     }
   }
 
