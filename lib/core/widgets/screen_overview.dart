@@ -2,8 +2,8 @@ import 'package:bright_minds/core/utils/app_text_style.dart';
 import 'package:bright_minds/core/widgets/decoration_lines.dart';
 import 'package:flutter/material.dart';
 
-class PartTitle extends StatelessWidget {
-  const PartTitle({
+class ScreenOverview extends StatelessWidget {
+  const ScreenOverview({
     super.key,
     required this.title,
     required this.subTitle,

@@ -1,4 +1,5 @@
 import 'package:bright_minds/core/functions/calc_padding.dart';
+import 'package:bright_minds/core/functions/details_decoration.dart';
 import 'package:bright_minds/core/utils/app_colors.dart';
 import 'package:bright_minds/core/utils/app_text_style.dart';
 import 'package:bright_minds/core/widgets/back_button.dart';
@@ -16,36 +17,42 @@ class InstructorDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final padding = calcPadding(context);
+
     return SafeArea(
       child: Scaffold(
         body: Container(
-          margin: EdgeInsets.only(
-              left: padding / 2, right: padding / 2, bottom: padding / 3),
-          padding: EdgeInsets.symmetric(horizontal: padding / 1.5),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              border: Border(
-                left: BorderSide(color: AppColors.primaryColor, width: 1),
-                right: BorderSide(color: AppColors.primaryColor, width: 1),
-                bottom: BorderSide(color: AppColors.primaryColor, width: 1),
-              )),
+          margin: detailsMargin(padding),
+          padding: detailsPadding(padding),
+          decoration: detailsDecoration(),
           child: CustomScrollView(
             slivers: [
-              const SliverToBoxAdapter(child: SizedBox(height: 8)),
               const SliverToBoxAdapter(child: BackButtonW()),
+              const SliverToBoxAdapter(child: SizedBox(height: 12)),
 
               /// instructor image
               SliverToBoxAdapter(
                 child: Center(
-                  child: ClipOval(
-                    child: CachedNetworkImage(
-                      imageUrl: instructor.imageCover,
-                      fit: BoxFit.cover,
-                      height: 180,
-                      width: 190,
-                      placeholder: (context, url) => const ContainerShimmer(),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                  child: Container(
+                    height: 160,
+                    width: 160,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primaryColor,
+                          blurRadius: 6,
+                        ),
+                      ],
+                    ),
+                    child: ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl: instructor.imageCover,
+                        fit: BoxFit.cover,
+                        memCacheHeight: 300,
+                        placeholder: (context, url) => const ContainerShimmer(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      ),
                     ),
                   ),
                 ),

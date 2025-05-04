@@ -1,39 +1,42 @@
 import 'package:bright_minds/core/functions/validate_fields.dart';
 import 'package:bright_minds/core/utils/app_colors.dart';
 import 'package:bright_minds/core/utils/app_text_style.dart';
-import 'package:bright_minds/features/auth/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PassWordFieldW extends StatelessWidget {
+class PassWordFieldW extends StatefulWidget {
   const PassWordFieldW({super.key, this.controller, required this.text});
 
   final TextEditingController? controller;
   final String text;
 
   @override
-  Widget build(BuildContext context) {
-    final cubit = context.watch<AuthCubit>();
+  State<PassWordFieldW> createState() => _PassWordFieldWState();
+}
 
+class _PassWordFieldWState extends State<PassWordFieldW> {
+  bool _obscure = true;
+
+  @override
+  Widget build(BuildContext context) {
     return TextFormField(
       style: AppTextStyle.nunitoSansBlack.copyWith(fontSize: 16),
-      controller: controller,
+      controller: widget.controller,
       validator: validatFields,
-      obscureText: cubit.obscurePasswordValue,
+      obscureText: _obscure,
       cursorColor: AppColors.lightBlack,
-      decoration: inputDecoration(cubit),
+      decoration: inputDecoration(),
     );
   }
 
-  InputDecoration inputDecoration(AuthCubit cubit) {
+  InputDecoration inputDecoration() {
     return InputDecoration(
       prefixIcon: const Icon(Icons.lock_open_outlined),
       prefixIconColor: AppColors.primaryColor,
       label: Text(
-        text,
+        widget.text,
         style: AppTextStyle.nunitoSansGrey,
       ),
-      suffixIcon: suffixIcon(cubit),
+      suffixIcon: suffixIcon(),
       suffixIconColor: AppColors.primaryColor,
       border: outLineInputBorder(),
       enabledBorder: outLineInputBorder(),
@@ -42,12 +45,12 @@ class PassWordFieldW extends StatelessWidget {
     );
   }
 
-  IconButton suffixIcon(final cubit) {
+  IconButton suffixIcon() {
     return IconButton(
-      onPressed: () => cubit.changeObscurePasswordValue(),
-      icon: cubit.obscurePasswordValue
-          ? const Icon(Icons.visibility_outlined)
-          : const Icon(Icons.visibility_off_outlined),
+      onPressed: () => setState(() => _obscure = !_obscure),
+      icon: Icon(
+        _obscure ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+      ),
     );
   }
 

@@ -16,9 +16,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthCubit(this.api) : super(AuthInitial());
 
-  /// text form field password obscure
-  bool obscurePasswordValue = true;
-
   /// login keys
   GlobalKey<FormState> loginKey = GlobalKey<FormState>();
   TextEditingController emailLoginController = TextEditingController();
@@ -42,12 +39,6 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController passResetController = TextEditingController();
   TextEditingController confirmResetController = TextEditingController();
 
-  ///  change the value of obscurePasswordValue
-  void changeObscurePasswordValue() {
-    obscurePasswordValue = !obscurePasswordValue;
-    emit(ObscurePassword());
-  }
-
   /// login function
   Future<void> login() async {
     emit(LoginLoading());
@@ -55,8 +46,8 @@ class AuthCubit extends Cubit<AuthState> {
       final response = await api.post(
         EndPoint.postLogin,
         data: {
-          ApiKey.email: emailLoginController.text,
-          ApiKey.password: passwordLoginController.text,
+          ApiKey.email: emailLoginController.text.trim(),
+          ApiKey.password: passwordLoginController.text.trim(),
         },
       );
       final loginModel = LoginModel.fromJson(response);
@@ -83,12 +74,12 @@ class AuthCubit extends Cubit<AuthState> {
       await api.post(
         EndPoint.postRegister,
         data: {
-          ApiKey.rFirstName: firstNameRegController.text,
-          ApiKey.rLastName: lastNameRegController.text,
-          ApiKey.rEmail: emailRegController.text,
-          ApiKey.rMobile: mobileRegController.text,
-          ApiKey.rPassword: passRegController.text,
-          ApiKey.rConfirmPass: confirmRegController.text,
+          ApiKey.rFirstName: firstNameRegController.text.trim(),
+          ApiKey.rLastName: lastNameRegController.text.trim(),
+          ApiKey.rEmail: emailRegController.text.trim(),
+          ApiKey.rMobile: mobileRegController.text.trim(),
+          ApiKey.rPassword: passRegController.text.trim(),
+          ApiKey.rConfirmPass: confirmRegController.text.trim(),
         },
         isFormData: true,
       );
@@ -160,8 +151,8 @@ class AuthCubit extends Cubit<AuthState> {
         data: {
           ApiKey.email: email,
           ApiKey.token: token,
-          ApiKey.password: passResetController.text,
-          ApiKey.confirmPass: confirmResetController.text,
+          ApiKey.password: passResetController.text.trim(),
+          ApiKey.confirmPass: confirmResetController.text.trim(),
         },
       );
       emit(ResetSuccess());
@@ -170,6 +161,11 @@ class AuthCubit extends Cubit<AuthState> {
     } catch (e) {
       emit(ResetFailure(error: e.toString()));
     }
+  }
+
+  /// prefill email field
+  void prefillEmail(String email) {
+    emailLoginController.text = email;
   }
 
   /// dispose controllers

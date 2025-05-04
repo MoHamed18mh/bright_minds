@@ -34,7 +34,7 @@ class InstructorTile extends StatelessWidget {
                 imageUrl: instructor.imageCover,
                 height: 110,
                 width: 100,
-                memCacheHeight: 110,
+                memCacheHeight: 300,
                 fit: BoxFit.cover,
                 placeholder: (context, url) => const ContainerShimmer(),
                 errorWidget: (context, url, error) => const Icon(Icons.error),

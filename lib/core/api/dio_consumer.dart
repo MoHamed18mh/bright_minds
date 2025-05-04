@@ -1,4 +1,5 @@
 import 'package:bright_minds/core/api/api_consumer.dart';
+import 'package:bright_minds/core/api/api_interceptor.dart';
 import 'package:bright_minds/core/api/end_point.dart';
 import 'package:bright_minds/core/api/errors/exception.dart';
 import 'package:dio/dio.dart';
@@ -15,7 +16,7 @@ class DioConsumer extends ApiConsumer {
       responseBody: true,
       responseHeader: true,
     ));
-    // dio.interceptors.add(ApiInterceptor());
+    dio.interceptors.add(ApiInterceptor());
   }
 
   @override

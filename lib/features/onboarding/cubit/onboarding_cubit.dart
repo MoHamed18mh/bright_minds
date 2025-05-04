@@ -18,7 +18,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     currentIndex = index;
   }
 
-  // go the next page in boarding
+  /// go the next page in boarding
   void nextView() {
     if (currentIndex == boardingData.length - 1) {
       navigateToLogin();
@@ -30,7 +30,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     }
   }
 
-  // affter finish boarding save value that isBoardingVisited and go to LoginView screen
+  /// affter finish boarding save value that isBoardingVisited and go to LoginView screen
   void navigateToLogin() {
     _cacheHelper.saveData(key: CacheKey.isBoardingVisited, value: true);
     emit(OnBoardingCompleted());

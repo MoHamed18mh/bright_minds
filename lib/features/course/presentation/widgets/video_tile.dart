@@ -32,7 +32,7 @@ class VideoTile extends StatelessWidget {
                 height: 110,
                 width: 100,
                 fit: BoxFit.cover,
-                memCacheHeight: 130,
+                memCacheHeight: 300,
                 placeholder: (context, url) => const ContainerShimmer(),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               ),

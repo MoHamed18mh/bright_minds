@@ -10,5 +10,8 @@ abstract class RouteKeys {
       video = '/video',
       instructor = '/instructor',
       instructorDetails = '/instructor-details',
+      profile = '/profile',
+      myDetails = '/my-details',
+      editProfile = '/edit-profile',
       contact = '/contact';
 }

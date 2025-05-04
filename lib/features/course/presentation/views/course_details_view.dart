@@ -43,7 +43,11 @@ class CourseDetailsView extends StatelessWidget {
                 ),
               ),
               const SliverToBoxAdapter(
-                child: Divider(indent: 70, endIndent: 70),
+                child: Divider(
+                  indent: 70,
+                  endIndent: 70,
+                  thickness: 2,
+                ),
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 22)),
 
@@ -101,10 +105,10 @@ class CourseDetailsView extends StatelessWidget {
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 7)),
 
-              /// cart button
+              /// bag button
               SliverToBoxAdapter(
                 child: MaterialButtonW(
-                  text: AppStrings.addToCart,
+                  text: AppStrings.addToBag,
                   onPressed: () {},
                 ),
               )

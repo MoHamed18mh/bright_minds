@@ -11,3 +11,7 @@ void navigateReplacement(context, String path, {Object? extra}) {
 void navigatePop(context) {
   GoRouter.of(context).pop();
 }
+
+void navigateAndRemoveUntil(context, String path, {Object? extra}) {
+  GoRouter.of(context).go(path, extra: extra);
+}

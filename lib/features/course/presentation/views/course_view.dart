@@ -4,7 +4,7 @@ import 'package:bright_minds/core/utils/app_colors.dart';
 import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:bright_minds/core/widgets/back_button.dart';
 import 'package:bright_minds/core/widgets/container_shimmer.dart';
-import 'package:bright_minds/core/widgets/part_title.dart';
+import 'package:bright_minds/core/widgets/screen_overview.dart';
 import 'package:bright_minds/features/course/cubit/course_cubit.dart';
 import 'package:bright_minds/features/course/cubit/course_state.dart';
 import 'package:bright_minds/features/course/presentation/views/course_search_delegate.dart';
@@ -64,7 +64,7 @@ class CourseView extends StatelessWidget {
 
                 /// screen title
                 const SliverToBoxAdapter(
-                  child: PartTitle(
+                  child: ScreenOverview(
                     title: AppStrings.courses,
                     subTitle: AppStrings.popularCourses,
                   ),
@@ -83,7 +83,7 @@ class CourseView extends StatelessWidget {
                       ),
                       itemCount: (state is CourseSucces)
                           ? state.course.data.items.length
-                          : 3,
+                          : 5,
                       itemBuilder: (context, index) {
                         if (state is CourseSucces) {
                           return CourseTile(

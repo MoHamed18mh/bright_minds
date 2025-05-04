@@ -1,11 +1,14 @@
 import 'package:bright_minds/core/functions/calc_padding.dart';
+import 'package:bright_minds/core/functions/navigation.dart';
+import 'package:bright_minds/core/routes/route_keys.dart';
 import 'package:bright_minds/core/utils/app_assets.dart';
-import 'package:bright_minds/features/home/models/actions_model.dart';
+import 'package:bright_minds/core/utils/app_colors.dart';
+import 'package:bright_minds/core/widgets/app_name.dart';
+import 'package:bright_minds/features/home/models/navigation_model.dart';
 import 'package:bright_minds/features/home/models/service_model.dart';
-import 'package:bright_minds/features/home/presentation/widgets/action_tile.dart';
+import 'package:bright_minds/features/home/presentation/widgets/navigation_tile.dart';
 import 'package:bright_minds/features/home/presentation/widgets/services_item.dart';
 import 'package:bright_minds/features/home/presentation/widgets/skills.dart';
-import 'package:bright_minds/features/home/presentation/widgets/sliver_appbar.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
@@ -22,17 +25,35 @@ class HomeView extends StatelessWidget {
           child: CustomScrollView(
             physics: const ClampingScrollPhysics(),
             slivers: [
-              const SliverAppBarW(),
+              /// app bar
+              SliverAppBar(
+                leading: Image.asset(Assets.assetsImagesLogo),
+                titleSpacing: 6,
+                title: const AppName(alignment: Alignment.centerLeft),
+                actions: [
+                  /// profile button
+                  IconButton(
+                    onPressed: () => navigate(context, RouteKeys.profile),
+                    icon: Icon(
+                      Icons.person,
+                      size: 45,
+                      color: AppColors.primaryColor,
+                    ),
+                  ),
+                ],
+                floating: true,
+                backgroundColor: Colors.white,
+              ),
               const SliverToBoxAdapter(child: SizedBox(height: 20)),
 
               /// navigate screens
               SliverList.builder(
-                itemCount: actionsList.length,
+                itemCount: navigationList.length,
                 itemBuilder: (context, index) {
-                  String title = actionsList.keys.elementAt(index);
-                  ActionModel actionData = actionsList[title]!;
+                  String title = navigationList.keys.elementAt(index);
+                  NavigationModel actionData = navigationList[title]!;
 
-                  return ActionTile(title: title, actionData: actionData);
+                  return NavigationTile(title: title, actionData: actionData);
                 },
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 80)),

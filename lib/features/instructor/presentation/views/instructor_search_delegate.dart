@@ -18,15 +18,15 @@ class InstructorSearchDelegate extends SearchDelegate {
         contentPadding: const EdgeInsets.symmetric(vertical: 10),
         hintStyle: AppTextStyle.nunitoSansGrey.copyWith(fontSize: 18),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8), // حواف دائرية
+          borderRadius: BorderRadius.circular(8), 
           borderSide: const BorderSide(
-            color: Colors.grey, // لون الإطار
+            color: Colors.grey, 
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
-            color: AppColors.primaryColor, // لون الإطار عند التركيز
+            color: AppColors.primaryColor, 
           ),
         ),
       );

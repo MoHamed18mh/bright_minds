@@ -7,6 +7,8 @@ abstract class EndPoint {
       postForgotPass = '/api/Account/forget-password',
       postResetPass = '/api/Account/reset-password',
       getInstructors = '/api/Instructor',
+      putUserEdit = '/api/Account',
+      putChangePass = '/api/Account/changepassword',
       getCourses = '/api/Course';
   static String getSections(int courseId) {
     return '/api/Section/course/$courseId';
@@ -14,6 +16,10 @@ abstract class EndPoint {
 
   static String getVideos(int sectionId) {
     return '/api/Video/section/$sectionId';
+  }
+
+  static String getUser(String userId) {
+    return '/api/Account/$userId';
   }
 }
 
@@ -25,6 +31,8 @@ abstract class ApiKey {
       email = 'email',
       password = 'password',
       confirmPass = 'confirmPassword',
+      oldPass = 'oldPassword',
+      newPass = 'newPassword',
       displayName = 'displayName',
       user = 'user',
       rEmail = 'Email',
@@ -64,6 +72,10 @@ abstract class ApiKey {
       videoUrl = 'videoUrl',
       sectionName = 'sectionName',
       sectionId = 'sectionId',
+      messaget = 'messaget',
+      roles = 'roles',
+      walletBalance = 'waletBalance',
+      authorization = 'Authorization',
 
       // schemas
       imageNull = 'https://brightminds.runasp.net//files/UsersImages/',

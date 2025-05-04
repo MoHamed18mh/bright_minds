@@ -25,7 +25,7 @@ class CourseImage extends StatelessWidget {
             height: 200,
             width: double.infinity,
             fit: BoxFit.cover,
-            memCacheHeight: 230,
+            memCacheHeight: 300,
             placeholder: (context, url) => const ContainerShimmer(),
             errorWidget: (context, url, error) => const Icon(Icons.error),
           ),

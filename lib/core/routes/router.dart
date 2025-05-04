@@ -9,7 +9,6 @@ import 'package:bright_minds/features/auth/presentation/views/forgot_password_vi
 import 'package:bright_minds/features/auth/presentation/views/login_view.dart';
 import 'package:bright_minds/features/auth/presentation/views/register_view.dart';
 import 'package:bright_minds/features/auth/presentation/views/reset_password_view.dart';
-import 'package:bright_minds/features/contact/contact_view.dart';
 import 'package:bright_minds/features/course/cubit/course_cubit.dart';
 import 'package:bright_minds/features/course/models/course_model.dart';
 import 'package:bright_minds/features/course/presentation/views/course_details_view.dart';
@@ -22,6 +21,11 @@ import 'package:bright_minds/features/instructor/presentation/views/instructor_d
 import 'package:bright_minds/features/instructor/presentation/views/instructor_view.dart';
 import 'package:bright_minds/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:bright_minds/features/onboarding/presentation/views/onboarding_view.dart';
+import 'package:bright_minds/features/profile/cubit/profile_cubit.dart';
+import 'package:bright_minds/features/profile/models/user_model.dart';
+import 'package:bright_minds/features/profile/presentation/views/edit_mydetails_view.dart';
+import 'package:bright_minds/features/profile/presentation/views/my_details_view.dart';
+import 'package:bright_minds/features/profile/presentation/views/profile_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -59,10 +63,11 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
 
                 if (email != null && token != null) {
                   cubit.confirm(email, token);
+                  cubit.prefillEmail(email);
                 }
                 return cubit;
               },
-              child: LoginView(prefillEmail: email),
+              child: const LoginView(),
             );
           },
         ),
@@ -124,7 +129,7 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
             final course = state.extra as CourseItem;
 
             return BlocProvider(
-              create: (context) => CourseCubit(_dio)..getSections(course.id),
+              create: (_) => CourseCubit(_dio)..getSections(course.id),
               child: CourseDetailsView(
                 course: course,
               ),
@@ -164,10 +169,34 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
           ),
         ),
 
-        /// contact
+        /// profile screen
         GoRoute(
-          path: RouteKeys.contact,
-          builder: (context, state) => const ContactView(),
+          path: RouteKeys.profile,
+          builder: (context, state) => const ProfileView(),
         ),
+
+        /// myDetails screen
+        GoRoute(
+          path: RouteKeys.myDetails,
+          builder: (context, state) => BlocProvider(
+            create: (_) => ProfileCubit(_dio)..getUser(),
+            child: const MyDetailsView(),
+          ),
+        ),
+
+        /// edit profile screen
+        GoRoute(
+          path: RouteKeys.editProfile,
+          builder: (context, state) {
+            final user = state.extra as UserData;
+
+            return BlocProvider(
+              create: (_) => ProfileCubit(_dio)..prefillFields(user),
+              child: const EditMyDetailsView(),
+            );
+          },
+        ),
+
+        ///
       ],
     );

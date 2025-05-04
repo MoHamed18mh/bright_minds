@@ -4,7 +4,7 @@ import 'package:bright_minds/core/utils/app_colors.dart';
 import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:bright_minds/core/widgets/back_button.dart';
 import 'package:bright_minds/core/widgets/container_shimmer.dart';
-import 'package:bright_minds/core/widgets/part_title.dart';
+import 'package:bright_minds/core/widgets/screen_overview.dart';
 import 'package:bright_minds/features/instructor/cubit/instructor_cubit.dart';
 import 'package:bright_minds/features/instructor/cubit/instructor_state.dart';
 import 'package:bright_minds/features/instructor/presentation/views/instructor_search_delegate.dart';
@@ -64,7 +64,7 @@ class InstructorView extends StatelessWidget {
 
                 /// screen title
                 const SliverToBoxAdapter(
-                  child: PartTitle(
+                  child: ScreenOverview(
                     title: AppStrings.instructors,
                     subTitle: AppStrings.expertInstructors,
                   ),

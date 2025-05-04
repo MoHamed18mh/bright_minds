@@ -35,7 +35,7 @@ class Assets {
   static const String assetsImagesTestimonial = "assets/images/testimonial.jpg";
 
   /// Assets for assetsImagesUser
-  /// assets/images/User.png
-  static const String assetsImagesUser = "assets/images/User.png";
+  /// assets/images/user.png
+  static const String assetsImagesUser = "assets/images/user.png";
 }
 

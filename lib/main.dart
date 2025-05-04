@@ -3,39 +3,36 @@ import 'package:bright_minds/core/database/cache_key.dart';
 import 'package:bright_minds/core/routes/router.dart';
 import 'package:bright_minds/core/services/service_locator.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeApp();
 
+  /// open aplication settings
   final isBoardingVisited =
       await getIt<CacheHelper>().getData(key: CacheKey.isBoardingVisited) ??
           false;
-
   final isLoggedin =
       await getIt<CacheHelper>().containsKey(key: CacheKey.userId);
 
-  runApp(
-    MainApp(
-      isBoardingVisited: isBoardingVisited,
-      isLoggedin: isLoggedin,
-    ),
-  );
+  final appRouter = router(isBoardingVisited, isLoggedin);
+
+  runApp(MainApp(appRouter: appRouter));
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp(
-      {super.key, required this.isBoardingVisited, required this.isLoggedin});
+  const MainApp({super.key, required this.appRouter});
 
-  final bool isBoardingVisited;
-  final bool isLoggedin;
+  final GoRouter appRouter;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Bright Minds',
+      locale: const Locale('en'),
       debugShowCheckedModeBanner: false,
-      routerConfig: router(isBoardingVisited, isLoggedin),
+      routerConfig: appRouter,
     );
   }
 }
