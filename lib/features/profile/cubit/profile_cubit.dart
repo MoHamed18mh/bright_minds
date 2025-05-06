@@ -6,8 +6,6 @@ import 'package:bright_minds/core/database/cache_key.dart';
 import 'package:bright_minds/core/functions/upload_imgae_to_api.dart';
 import 'package:bright_minds/core/services/service_locator.dart';
 import 'package:bright_minds/features/profile/cubit/profile_state.dart';
-import 'package:bright_minds/features/profile/models/cart_model.dart';
-import 'package:bright_minds/features/profile/models/course_cart_model.dart';
 import 'package:bright_minds/features/profile/models/user_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -115,42 +113,30 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  Future<void> getCart() async {
-    emit(CartLoading());
+  Future<void> logOut() async {
+    emit(LogOutLoading());
     try {
-      final response = await api.get(EndPoint.getCart);
-
-      emit(CartSuccess(cart: CartModel.fromJson(response)));
-    } on ServerException catch (e) {
-      emit(CartFailure(error: e.errorModel.error));
+      await getIt<CacheHelper>().removeData(key: CacheKey.userId);
+      await getIt<CacheHelper>().removeData(key: CacheKey.token);
+      emit(LogOutSuccess());
     } catch (e) {
-      emit(CartFailure(error: e.toString()));
+      emit(LogOutFailure(error: e.toString()));
     }
   }
 
-  Future<void> deleteCart(int courseId) async {
-    emit(DeleteCartLoading());
+  Future<void> deletAccount() async {
+    emit(DeleteLoading());
     try {
-      await api.delete(EndPoint.deleteCart(courseId));
-      emit(DeleteCartSuccess());
+      await api.delete(EndPoint.deletAccount(
+          await getIt<CacheHelper>().getData(key: CacheKey.userId)));
+      await getIt<CacheHelper>().removeData(key: CacheKey.userId);
+      await getIt<CacheHelper>().removeData(key: CacheKey.token);
 
-      await getCart();
+      emit(DeleteSuccess());
     } on ServerException catch (e) {
-      emit(DeleteCartFailure(error: e.errorModel.error));
+      emit(DeleteFailure(error: e.errorModel.error));
     } catch (e) {
-      emit(DeleteCartFailure(error: e.toString()));
-    }
-  }
-
-  Future<void> getCartCourses(String courseId) async {
-    emit(CourseCartLoading());
-    try {
-      final response = await api.get(EndPoint.getCartCourse(courseId));
-      emit(CourseCartSucces(course: CourseCartModel.fromJson(response)));
-    } on ServerException catch (e) {
-      emit(CourseCartFailure(error: e.errorModel.error));
-    } catch (e) {
-      emit(CourseCartFailure(error: e.toString()));
+      emit(DeleteFailure(error: e.toString()));
     }
   }
 

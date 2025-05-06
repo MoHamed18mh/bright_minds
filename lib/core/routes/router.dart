@@ -9,6 +9,7 @@ import 'package:bright_minds/features/auth/presentation/views/forgot_password_vi
 import 'package:bright_minds/features/auth/presentation/views/login_view.dart';
 import 'package:bright_minds/features/auth/presentation/views/register_view.dart';
 import 'package:bright_minds/features/auth/presentation/views/reset_password_view.dart';
+import 'package:bright_minds/features/cart/cubit/cart_cubit.dart';
 import 'package:bright_minds/features/course/cubit/course_cubit.dart';
 import 'package:bright_minds/features/course/models/course_model.dart';
 import 'package:bright_minds/features/course/presentation/views/course_details_view.dart';
@@ -23,8 +24,8 @@ import 'package:bright_minds/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:bright_minds/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:bright_minds/features/profile/cubit/profile_cubit.dart';
 import 'package:bright_minds/features/profile/models/user_model.dart';
-import 'package:bright_minds/features/profile/presentation/views/cart_course_view.dart';
-import 'package:bright_minds/features/profile/presentation/views/cart_view.dart';
+import 'package:bright_minds/features/cart/presentation/views/cart_course_view.dart';
+import 'package:bright_minds/features/cart/presentation/views/cart_view.dart';
 import 'package:bright_minds/features/profile/presentation/views/edit_mydetails_view.dart';
 import 'package:bright_minds/features/profile/presentation/views/my_details_view.dart';
 import 'package:bright_minds/features/profile/presentation/views/profile_view.dart';
@@ -174,7 +175,10 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
         /// profile screen
         GoRoute(
           path: RouteKeys.profile,
-          builder: (context, state) => const ProfileView(),
+          builder: (context, state) => BlocProvider(
+            create: (context) => ProfileCubit(_dio),
+            child: const ProfileView(),
+          ),
         ),
 
         /// myDetails screen
@@ -203,7 +207,7 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
         GoRoute(
           path: RouteKeys.cart,
           builder: (context, state) => BlocProvider(
-            create: (_) => ProfileCubit(_dio)..getCart(),
+            create: (_) => CartCubit(_dio)..getCart(),
             child: const CartView(),
           ),
         ),
@@ -212,7 +216,8 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
         GoRoute(
           path: RouteKeys.cartCourse,
           builder: (context, state) => BlocProvider(
-            create: (_) => ProfileCubit(_dio)..getCartCourses(state.extra as String),
+            create: (_) =>
+                CartCubit(_dio)..getCartCourses(state.extra as String),
             child: const CartCourseView(),
           ),
         ),

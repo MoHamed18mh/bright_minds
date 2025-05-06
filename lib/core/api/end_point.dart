@@ -11,7 +11,12 @@ abstract class EndPoint {
       putChangePass = '/api/Account/changepassword',
       postAddCart = '/api/Cart',
       getCart = '/api/Cart',
+      postCheckOut = '/api/Payment/checkout',
       getCourses = '/api/Course';
+
+  static String deletAccount(String userId) {
+    return '/api/Account/$userId';
+  }
 
   static String getSections(int courseId) {
     return '/api/Section/course/$courseId';
@@ -91,6 +96,8 @@ abstract class ApiKey {
       courseName = 'courseName',
       imageUrl = 'imageUrl',
       sections = 'sections',
+      basketId = 'basketId',
+      url = 'url',
 
       // schemas
       imageNull = 'https://brightminds.runasp.net//files/UsersImages/',

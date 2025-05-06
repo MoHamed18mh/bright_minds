@@ -54,7 +54,7 @@ abstract class AppStrings {
       subject = 'Subject',
       expertInstructors = 'Expert Instructors',
       addToBag = 'Add To Bag',
-      buyNow = 'Buy Now',
+      buy = 'Buy',
       skip = 'Skip',
       thisFieldCannotBeEmpty = 'This field cannot be empty',
       myDetails = 'My Details',
@@ -62,10 +62,11 @@ abstract class AppStrings {
       done = 'Done',
       logOut = 'Log Out',
       deleteAccount = 'Delete Account',
-      delete= 'Delete',
+      delete = 'Delete',
       edit = 'Edit',
       payment = 'Payment',
       oldPassword = 'Old Password',
       changePassword = 'Change Password',
+      couldNotLaunch = 'Could not launch',
       next = 'Next';
 }

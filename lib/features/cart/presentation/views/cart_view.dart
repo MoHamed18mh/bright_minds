@@ -1,12 +1,13 @@
 import 'package:bright_minds/core/functions/calc_padding.dart';
 import 'package:bright_minds/core/functions/show_toast.dart';
+import 'package:bright_minds/core/utils/app_colors.dart';
 import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:bright_minds/core/utils/app_text_style.dart';
 import 'package:bright_minds/core/widgets/back_button.dart';
 import 'package:bright_minds/core/widgets/container_shimmer.dart';
-import 'package:bright_minds/features/profile/cubit/profile_cubit.dart';
-import 'package:bright_minds/features/profile/cubit/profile_state.dart';
-import 'package:bright_minds/features/profile/presentation/widgets/cart_tile.dart';
+import 'package:bright_minds/features/cart/cubit/cart_cubit.dart';
+import 'package:bright_minds/features/cart/cubit/cart_state.dart';
+import 'package:bright_minds/features/cart/presentation/widgets/cart_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,10 +17,13 @@ class CartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final padding = calcPadding(context);
+    int cartId = 0;
 
-    return BlocListener<ProfileCubit, ProfileState>(
+    return BlocListener<CartCubit, CartState>(
       listener: (context, state) {
         if (state is CartFailure) {
+          showToast(msg: state.error);
+        } else if (state is CheckoutFailure) {
           showToast(msg: state.error);
         }
       },
@@ -35,10 +39,26 @@ class CartView extends StatelessWidget {
                     AppStrings.myBag,
                     style: AppTextStyle.nunitoSansBlack,
                   ),
+                  actions: [
+                    BlocBuilder<CartCubit, CartState>(
+                      builder: (context, state) {
+                        if (state is CartSuccess) {
+                          return Text(
+                            '${state.cart.data.totalPrice}\$',
+                            style: AppTextStyle.notoSerifPrimary
+                                .copyWith(fontSize: 18),
+                          );
+                        }
+                        return CircularProgressIndicator(
+                          color: AppColors.primaryColor,
+                        );
+                      },
+                    ),
+                  ],
                 ),
 
                 /// my courses
-                BlocBuilder<ProfileCubit, ProfileState>(
+                BlocBuilder<CartCubit, CartState>(
                   builder: (context, state) {
                     return SliverGrid.builder(
                       gridDelegate:
@@ -53,7 +73,10 @@ class CartView extends StatelessWidget {
                           : 3,
                       itemBuilder: (context, index) {
                         if (state is CartSuccess) {
-                          return CartTile(course: state.cart.data.items[index]);
+                          final cart = state.cart.data;
+                          cartId = cart.id;
+
+                          return CartTile(course: cart.items[index]);
                         }
                         return const ContainerShimmer();
                       },
@@ -62,6 +85,28 @@ class CartView extends StatelessWidget {
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 30)),
               ],
+            ),
+          ),
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.all(20),
+            child: BlocBuilder<CartCubit, CartState>(
+              builder: (context, state) {
+                if (state is CheckoutLoading) {
+                  return CircularProgressIndicator(
+                      color: AppColors.primaryColor);
+                }
+                return FloatingActionButton.extended(
+                  onPressed: () {
+                    context.read<CartCubit>().checkOut(cartId);
+                  },
+                  backgroundColor: AppColors.primaryColor,
+                  shape: const CircleBorder(),
+                  label: Text(
+                    AppStrings.buy,
+                    style: AppTextStyle.nunitoSansWhite,
+                  ),
+                );
+              },
             ),
           ),
         ),

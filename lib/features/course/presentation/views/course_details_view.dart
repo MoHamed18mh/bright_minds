@@ -106,16 +106,7 @@ class CourseDetailsView extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SliverToBoxAdapter(child: SizedBox(height: 10)),
-
-                /// buy button
-                SliverToBoxAdapter(
-                  child: MaterialButtonW(
-                    text: AppStrings.buyNow,
-                    onPressed: () {},
-                  ),
-                ),
-                const SliverToBoxAdapter(child: SizedBox(height: 7)),
+                const SliverToBoxAdapter(child: SizedBox(height: 12)),
 
                 /// bag button
                 SliverToBoxAdapter(

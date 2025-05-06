@@ -44,6 +44,7 @@ final class ForgotFailure extends AuthState {
   final String error;
   ForgotFailure({required this.error});
 }
+
 /// Reset states
 final class ResetLoading extends AuthState {}
 

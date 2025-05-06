@@ -1,21 +1,20 @@
-
 import 'package:bright_minds/core/api/end_point.dart';
 
-class CourseCartModel {
+class CartCourseModel {
   final bool success;
   final String message;
   final int statusCode;
   final CourseDetail data;
 
-  CourseCartModel({
+  CartCourseModel({
     required this.success,
     required this.message,
     required this.statusCode,
     required this.data,
   });
 
-  factory CourseCartModel.fromJson(Map<String, dynamic> json) {
-    return CourseCartModel(
+  factory CartCourseModel.fromJson(Map<String, dynamic> json) {
+    return CartCourseModel(
       success: json[ApiKey.success] as bool,
       message: json[ApiKey.message] as String,
       statusCode: json[ApiKey.statusCode] as int,

@@ -2,12 +2,11 @@ import 'package:bright_minds/core/functions/calc_padding.dart';
 import 'package:bright_minds/core/utils/app_colors.dart';
 import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:bright_minds/core/utils/app_text_style.dart';
-import 'package:bright_minds/core/widgets/material_button.dart';
+import 'package:bright_minds/features/cart/cubit/cart_cubit.dart';
+import 'package:bright_minds/features/cart/cubit/cart_state.dart';
 import 'package:bright_minds/features/course/presentation/widgets/chip.dart';
 import 'package:bright_minds/features/course/presentation/widgets/course_image.dart';
-import 'package:bright_minds/features/profile/cubit/profile_cubit.dart';
-import 'package:bright_minds/features/profile/cubit/profile_state.dart';
-import 'package:bright_minds/features/profile/models/course_cart_model.dart';
+import 'package:bright_minds/features/cart/model/cart_course_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,9 +21,9 @@ class CartCourseView extends StatelessWidget {
       child: Scaffold(
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: padding),
-          child: BlocBuilder<ProfileCubit, ProfileState>(
+          child: BlocBuilder<CartCubit, CartState>(
             builder: (context, state) {
-              if (state is CourseCartSucces) {
+              if (state is CartCourseSucces) {
                 final CourseDetail course = state.course.data;
 
                 return CustomScrollView(
@@ -92,15 +91,6 @@ class CartCourseView extends StatelessWidget {
                       ),
                     ),
                     const SliverToBoxAdapter(child: SizedBox(height: 10)),
-
-                    /// buy button
-                    SliverToBoxAdapter(
-                      child: MaterialButtonW(
-                        text: AppStrings.buyNow,
-                        onPressed: () {},
-                      ),
-                    ),
-                    const SliverToBoxAdapter(child: SizedBox(height: 7)),
                   ],
                 );
               }
