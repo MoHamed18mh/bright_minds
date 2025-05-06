@@ -18,4 +18,8 @@ Map<String, NavigationModel> navigationList = {
     imagePath: Assets.assetsImagesTeam,
     route: RouteKeys.instructor,
   ),
+  AppStrings.myBag: NavigationModel(
+    imagePath: Assets.assetsImagesMycourses,
+    route: RouteKeys.cart,
+  ),
 };

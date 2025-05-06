@@ -15,8 +15,8 @@ import 'package:bright_minds/features/profile/presentation/widgets/user_image_ed
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class EditMyDetailsView extends StatelessWidget {
-  const EditMyDetailsView({super.key});
+class EditProfileView extends StatelessWidget {
+  const EditProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -16,7 +16,7 @@ class MaterialButtonW extends StatelessWidget {
       height: 45,
       minWidth: double.infinity,
       shape: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(15),
         borderSide: BorderSide.none,
       ),
       child: Text(text, style: AppTextStyle.nunitoSansWhite),

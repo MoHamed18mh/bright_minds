@@ -121,6 +121,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(LogOutSuccess());
     } catch (e) {
       emit(LogOutFailure(error: e.toString()));
+      getUser();
     }
   }
 
@@ -135,8 +136,10 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(DeleteSuccess());
     } on ServerException catch (e) {
       emit(DeleteFailure(error: e.errorModel.error));
+      getUser();
     } catch (e) {
       emit(DeleteFailure(error: e.toString()));
+      getUser();
     }
   }
 

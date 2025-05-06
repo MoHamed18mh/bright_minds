@@ -26,8 +26,7 @@ import 'package:bright_minds/features/profile/cubit/profile_cubit.dart';
 import 'package:bright_minds/features/profile/models/user_model.dart';
 import 'package:bright_minds/features/cart/presentation/views/cart_course_view.dart';
 import 'package:bright_minds/features/cart/presentation/views/cart_view.dart';
-import 'package:bright_minds/features/profile/presentation/views/edit_mydetails_view.dart';
-import 'package:bright_minds/features/profile/presentation/views/my_details_view.dart';
+import 'package:bright_minds/features/profile/presentation/views/edit_profile_view.dart';
 import 'package:bright_minds/features/profile/presentation/views/profile_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -176,17 +175,8 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
         GoRoute(
           path: RouteKeys.profile,
           builder: (context, state) => BlocProvider(
-            create: (context) => ProfileCubit(_dio),
-            child: const ProfileView(),
-          ),
-        ),
-
-        /// myDetails screen
-        GoRoute(
-          path: RouteKeys.myDetails,
-          builder: (context, state) => BlocProvider(
             create: (_) => ProfileCubit(_dio)..getUser(),
-            child: const MyDetailsView(),
+            child: const ProfileView(),
           ),
         ),
 
@@ -198,7 +188,7 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
 
             return BlocProvider(
               create: (_) => ProfileCubit(_dio)..prefillFields(user),
-              child: const EditMyDetailsView(),
+              child: const EditProfileView(),
             );
           },
         ),
