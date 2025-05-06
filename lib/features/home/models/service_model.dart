@@ -1,3 +1,4 @@
+import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 
 class ServiceModel {
@@ -8,30 +9,26 @@ class ServiceModel {
 }
 
 Map<String, ServiceModel> servicesList = {
-  'Skilled Instructors': ServiceModel(
-    subTitle:
-        'Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam',
+  AppStrings.skilledInstructors: ServiceModel(
+    subTitle: AppStrings.dimaElitr,
     iconData: Icons.school,
   ),
-  'Online Classes': ServiceModel(
-    subTitle:
-        'Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam',
+  AppStrings.onlineClasses: ServiceModel(
+    subTitle: AppStrings.dimaElitr,
     iconData: Icons.language_rounded,
   ),
-  'Home Projects': ServiceModel(
-    subTitle:
-        'Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam',
+  AppStrings.homeProjects: ServiceModel(
+    subTitle: AppStrings.dimaElitr,
     iconData: Icons.home_rounded,
   ),
-  'Book Library': ServiceModel(
-    subTitle:
-        'Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam',
+  AppStrings.bookLibrary: ServiceModel(
+    subTitle: AppStrings.dimaElitr,
     iconData: Icons.menu_book_outlined,
   ),
 };
 
 List<String> skills = [
-  'Skilled Instructors',
-  'Online Classes',
-  'International Certificate',
+  AppStrings.skilledInstructors,
+  AppStrings.onlineClasses,
+  AppStrings.internationalCerificate,
 ];

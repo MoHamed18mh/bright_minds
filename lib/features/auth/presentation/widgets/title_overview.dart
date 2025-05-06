@@ -12,7 +12,7 @@ class TitleOverView extends StatelessWidget {
       children: [
         Text(
           text1,
-          style: AppTextStyle.nunitoSans26LightBlackBold,
+          style: AppTextStyle.nunitoSansBlack.copyWith(fontSize: 26),
         ),
         const SizedBox(height: 8),
         Text(

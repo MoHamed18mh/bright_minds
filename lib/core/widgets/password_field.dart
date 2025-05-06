@@ -23,7 +23,7 @@ class _PassWordFieldWState extends State<PassWordFieldW> {
       controller: widget.controller,
       validator: validatFields,
       obscureText: _obscure,
-      cursorColor: AppColors.lightBlack,
+      cursorColor: Colors.black,
       decoration: inputDecoration(),
     );
   }

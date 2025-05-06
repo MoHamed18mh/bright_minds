@@ -20,7 +20,7 @@ class TextFieldW extends StatelessWidget {
       style: AppTextStyle.nunitoSansBlack.copyWith(fontSize: 16),
       controller: controller,
       validator: validatFields,
-      cursorColor: AppColors.lightBlack,
+      cursorColor: Colors.black,
       decoration: inputDecoration(),
     );
   }

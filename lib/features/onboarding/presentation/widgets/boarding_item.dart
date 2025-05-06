@@ -20,7 +20,7 @@ class BoardingItem extends StatelessWidget {
         const SizedBox(height: 24),
         Text(
           boardingData[index].title,
-          style: AppTextStyle.nunitoSans22LightBlackBold,
+          style: AppTextStyle.nunitoSansBlack.copyWith(fontSize: 22),
         ),
         Text(
           boardingData[index].subTitle,

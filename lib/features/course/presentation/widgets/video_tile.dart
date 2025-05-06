@@ -67,7 +67,7 @@ class VideoTile extends StatelessWidget {
                       vertical: 2,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.lightBlack.withAlpha(200),
+                      color: Colors.black12.withAlpha(130),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
