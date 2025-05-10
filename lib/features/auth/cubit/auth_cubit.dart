@@ -5,6 +5,7 @@ import 'package:bright_minds/core/database/cache_helper.dart';
 import 'package:bright_minds/core/database/cache_key.dart';
 import 'package:bright_minds/core/routes/deep_links.dart';
 import 'package:bright_minds/core/services/service_locator.dart';
+import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:bright_minds/features/auth/cubit/auth_state.dart';
 import 'package:bright_minds/features/auth/models/login_model.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,7 @@ class AuthCubit extends Cubit<AuthState> {
       await getIt<CacheHelper>()
           .saveData(key: CacheKey.userId, value: decodedToken[ApiKey.idSchema]);
 
-      emit(LoginSuccess());
+      emit(LoginSuccess(success: AppStrings.wellcom));
     } on ServerException catch (e) {
       emit(LoginFailure(error: e.errorModel.error));
     } catch (e) {
@@ -115,7 +116,7 @@ class AuthCubit extends Cubit<AuthState> {
       /// store token
       await getIt<CacheHelper>().saveData(key: CacheKey.token, value: token);
 
-      emit(ConfirmSuccess());
+      emit(ConfirmSuccess(success: AppStrings.loginNow));
     } on ServerException catch (e) {
       emit(ConfirmFailure(error: e.errorModel.error));
     } catch (e) {
@@ -134,7 +135,7 @@ class AuthCubit extends Cubit<AuthState> {
           ApiKey.clientUrl: DeepLinks.resetPassword,
         },
       );
-      emit(ForgotSuccess());
+      emit(ForgotSuccess(success: AppStrings.pleaseCheckEmail));
     } on ServerException catch (e) {
       emit(ForgotFailure(error: e.errorModel.error));
     } catch (e) {
@@ -155,7 +156,7 @@ class AuthCubit extends Cubit<AuthState> {
           ApiKey.confirmPass: confirmResetController.text.trim(),
         },
       );
-      emit(ResetSuccess());
+      emit(ResetSuccess(success: AppStrings.loginNow));
     } on ServerException catch (e) {
       emit(ResetFailure(error: e.errorModel.error));
     } catch (e) {

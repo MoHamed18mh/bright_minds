@@ -5,14 +5,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CourseImage extends StatelessWidget {
-  const CourseImage(
-      {super.key,
-      required this.pictureUrl,
-      required this.courseName,
-      required this.instructorName});
+  const CourseImage({
+    super.key,
+    required this.pictureUrl,
+    required this.courseName,
+    required this.instructorName,
+    this.rate,
+  });
   final String pictureUrl;
   final String courseName;
   final String instructorName;
+  final String? rate;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +68,26 @@ class CourseImage extends StatelessWidget {
         const Positioned(
           top: 20,
           child: BackButtonW(),
-        )
+        ),
+        (rate != null)
+            ? Positioned(
+                right: 30,
+                bottom: 20,
+                child: Row(
+                  children: [
+                    Text(
+                      rate!,
+                      style: AppTextStyle.notoSerifWhite,
+                    ),
+                    const SizedBox(width: 6),
+                    const Icon(
+                      Icons.star,
+                      color: Colors.yellow,
+                    )
+                  ],
+                ),
+              )
+            : const SizedBox(),
       ],
     );
   }

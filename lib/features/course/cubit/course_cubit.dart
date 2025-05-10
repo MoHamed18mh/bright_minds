@@ -2,6 +2,7 @@ import 'package:android_intent_plus/android_intent.dart';
 import 'package:bright_minds/core/api/api_consumer.dart';
 import 'package:bright_minds/core/api/end_point.dart';
 import 'package:bright_minds/core/api/errors/exception.dart';
+import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:bright_minds/features/course/cubit/course_state.dart';
 import 'package:bright_minds/features/course/models/course_model.dart';
 import 'package:bright_minds/features/course/models/section_model.dart';
@@ -66,7 +67,7 @@ class CourseCubit extends Cubit<CourseState> {
         EndPoint.postAddCart,
         data: {ApiKey.courseId: courseId},
       );
-      emit(CartSuccess());
+      emit(CartSuccess(success: AppStrings.done));
 
       await getSections(courseId);
     } on ServerException catch (e) {

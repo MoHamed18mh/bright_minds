@@ -26,7 +26,7 @@ class ResetPasswordView extends StatelessWidget {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is ResetSuccess) {
-          showToast(msg: AppStrings.loginNow);
+          showToast(msg: state.success);
           navigateReplacement(context, RouteKeys.login);
         } else if (state is ResetFailure) {
           showToast(msg: state.error);

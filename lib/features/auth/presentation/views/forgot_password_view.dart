@@ -24,7 +24,7 @@ class ForgotPasswordView extends StatelessWidget {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is ForgotSuccess) {
-          showToast(msg: AppStrings.pleaseCheckEmail);
+          showToast(msg: state.success);
           navigateReplacement(context, RouteKeys.login);
         } else if (state is ForgotFailure) {
           showToast(msg: state.error);

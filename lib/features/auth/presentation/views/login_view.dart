@@ -26,12 +26,12 @@ class LoginView extends StatelessWidget {
         body: BlocListener<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state is LoginSuccess) {
-              showToast(msg: AppStrings.wellcom);
+              showToast(msg: state.success);
               navigateReplacement(context, RouteKeys.home);
             } else if (state is LoginFailure) {
               showToast(msg: state.error);
             } else if (state is ConfirmSuccess) {
-              showToast(msg: AppStrings.loginNow);
+              showToast(msg: state.success);
             } else if (state is ConfirmLoading) {
               showToast(msg: AppStrings.checkingInProgress);
             } else if (state is ConfirmFailure) {

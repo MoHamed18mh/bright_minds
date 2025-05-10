@@ -48,7 +48,10 @@ final class VideoFailure extends CourseState {
 /// Cart states
 final class CartLoading extends CourseState {}
 
-final class CartSuccess extends CourseState {}
+final class CartSuccess extends CourseState {
+  final String success;
+  CartSuccess({required this.success});
+}
 
 final class CartFailure extends CourseState {
   final String error;

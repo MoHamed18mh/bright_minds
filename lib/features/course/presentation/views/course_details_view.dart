@@ -25,7 +25,7 @@ class CourseDetailsView extends StatelessWidget {
     return BlocListener<CourseCubit, CourseState>(
       listener: (context, state) {
         if (state is CartSuccess) {
-          showToast(msg: AppStrings.done);
+          showToast(msg: state.success);
         } else if (state is CartFailure) {
           showToast(msg: state.error);
         }
@@ -42,6 +42,7 @@ class CourseDetailsView extends StatelessWidget {
                     pictureUrl: course.pictureUrl,
                     courseName: course.name,
                     instructorName: course.instructorName,
+                    rate: course.rate.toString(),
                   ),
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 22)),
