@@ -44,7 +44,7 @@ class CartCubit extends Cubit<CartState> {
   Future<void> getCartCourses(String courseId) async {
     emit(CartCourseLoading());
     try {
-      final response = await api.get(EndPoint.getCartCourse(courseId));
+      final response = await api.get(EndPoint.getCourseWhitId(courseId));
       emit(CartCourseSucces(course: CartCourseModel.fromJson(response)));
     } on ServerException catch (e) {
       emit(CartCourseFailure(error: e.errorModel.error));
@@ -84,6 +84,25 @@ class CartCubit extends Cubit<CartState> {
     } catch (e) {
       emit(CheckoutFailure(error: e.toString()));
       getCart();
+    }
+  }
+
+  Future<void> submitFeedBack(int courseId, String comment, double rate) async {
+    emit(FeedBackLoading());
+    try {
+      await api.post(
+        EndPoint.postFeedBack,
+        data: {
+          ApiKey.courseId: courseId,
+          ApiKey.content: comment,
+          ApiKey.rating: rate,
+        },
+      );
+      emit(FeedBackSuccess(success: AppStrings.done));
+    } on ServerException catch (e) {
+      emit(FeedBackFailure(error: e.errorModel.errors.toString()));
+    } catch (e) {
+      emit(FeedBackFailure(error: e.toString()));
     }
   }
 }

@@ -9,10 +9,13 @@ class TextFieldW extends StatelessWidget {
     required this.text,
     this.prefixIcon,
     this.controller,
+    this.onChanged,
   });
+
   final String text;
   final Icon? prefixIcon;
   final TextEditingController? controller;
+  final Function(String value)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +25,7 @@ class TextFieldW extends StatelessWidget {
       validator: validatFields,
       cursorColor: Colors.black,
       decoration: inputDecoration(),
+      onChanged: onChanged,
     );
   }
 

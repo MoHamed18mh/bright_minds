@@ -202,7 +202,7 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
           ),
         ),
 
-        /// cart screen
+        /// cart course screen
         GoRoute(
           path: RouteKeys.cartCourse,
           builder: (context, state) => BlocProvider(

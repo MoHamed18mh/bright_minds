@@ -1,9 +1,13 @@
 import 'package:bright_minds/core/functions/calc_padding.dart';
+import 'package:bright_minds/core/functions/navigation.dart';
+import 'package:bright_minds/core/functions/show_toast.dart';
+import 'package:bright_minds/core/routes/route_keys.dart';
 import 'package:bright_minds/core/utils/app_colors.dart';
 import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:bright_minds/core/utils/app_text_style.dart';
 import 'package:bright_minds/features/cart/cubit/cart_cubit.dart';
 import 'package:bright_minds/features/cart/cubit/cart_state.dart';
+import 'package:bright_minds/features/cart/presentation/widgets/show_feed_back_dialog.dart';
 import 'package:bright_minds/features/course/presentation/widgets/chip.dart';
 import 'package:bright_minds/features/course/presentation/widgets/course_image.dart';
 import 'package:bright_minds/features/cart/model/cart_course_model.dart';
@@ -18,15 +22,26 @@ class CartCourseView extends StatelessWidget {
     final padding = calcPadding(context);
 
     return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: padding),
-          child: BlocBuilder<CartCubit, CartState>(
-            builder: (context, state) {
-              if (state is CartCourseSucces) {
-                final CourseDetail course = state.course.data;
+      child: BlocConsumer<CartCubit, CartState>(
+        listener: (context, state) {
+          if (state is FeedBackSuccess) {
+            showToast(msg: state.success);
+            navigatePop(context);
+            navigateReplacement(context, RouteKeys.cart);
+          } else if (state is FeedBackFailure) {
+            showToast(msg: state.error);
+            navigatePop(context);
+            navigateReplacement(context, RouteKeys.cart);
+          }
+        },
+        builder: (context, state) {
+          if (state is CartCourseSucces) {
+            final CartCourseData course = state.course.data;
 
-                return CustomScrollView(
+            return Scaffold(
+              body: Padding(
+                padding: EdgeInsets.symmetric(horizontal: padding),
+                child: CustomScrollView(
                   slivers: [
                     /// course image
                     SliverToBoxAdapter(
@@ -65,13 +80,13 @@ class CartCourseView extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return ChipW(
                               sectionName: course.sections[index].name,
-                              sectionId: course.id,
+                              sectionId: course.sections[index].id,
                             );
                           },
                         ),
                       ),
                     ),
-                    const SliverToBoxAdapter(child: SizedBox(height: 60)),
+                    const SliverToBoxAdapter(child: SizedBox(height: 50)),
 
                     /// price
                     SliverToBoxAdapter(
@@ -92,14 +107,29 @@ class CartCourseView extends StatelessWidget {
                     ),
                     const SliverToBoxAdapter(child: SizedBox(height: 10)),
                   ],
-                );
-              }
-              return Center(
-                child: CircularProgressIndicator(color: AppColors.primaryColor),
-              );
-            },
-          ),
-        ),
+                ),
+              ),
+
+              /// feedback button
+              floatingActionButton: Padding(
+                padding: const EdgeInsets.all(20),
+                child: IconButton(
+                  onPressed: () {
+                    showFeedbackDialog(context, course.id);
+                  },
+                  icon: Icon(
+                    Icons.message_outlined,
+                    color: AppColors.primaryColor,
+                    size: 45,
+                  ),
+                ),
+              ),
+            );
+          }
+          return Center(
+            child: CircularProgressIndicator(color: AppColors.primaryColor),
+          );
+        },
       ),
     );
   }

@@ -47,5 +47,10 @@ abstract class AppStrings {
       oldPassword = 'Old Password',
       changePassword = 'Change Password',
       couldNotLaunch = 'Could not launch',
+      commint = 'Commint',
+      addCommint = 'Add Commint',
+      evaluation = 'Evaluation:',
+      cancel = 'Cancel',
+      submmit = 'Submmit',
       next = 'Next';
 }

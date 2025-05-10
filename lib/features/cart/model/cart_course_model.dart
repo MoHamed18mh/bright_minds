@@ -4,7 +4,7 @@ class CartCourseModel {
   final bool success;
   final String message;
   final int statusCode;
-  final CourseDetail data;
+  final CartCourseData data;
 
   CartCourseModel({
     required this.success,
@@ -18,12 +18,12 @@ class CartCourseModel {
       success: json[ApiKey.success] as bool,
       message: json[ApiKey.message] as String,
       statusCode: json[ApiKey.statusCode] as int,
-      data: CourseDetail.fromJson(json[ApiKey.data] as Map<String, dynamic>),
+      data: CartCourseData.fromJson(json[ApiKey.data] as Map<String, dynamic>),
     );
   }
 }
 
-class CourseDetail {
+class CartCourseData {
   final int id;
   final String name;
   final double price;
@@ -32,9 +32,9 @@ class CourseDetail {
   final String pictureUrl;
   final DateTime createdDate;
   final DateTime updatedDate;
-  final List<CourseSection> sections;
+  final List<CartCourseSection> sections;
 
-  CourseDetail({
+  CartCourseData({
     required this.id,
     required this.name,
     required this.price,
@@ -46,8 +46,8 @@ class CourseDetail {
     required this.sections,
   });
 
-  factory CourseDetail.fromJson(Map<String, dynamic> json) {
-    return CourseDetail(
+  factory CartCourseData.fromJson(Map<String, dynamic> json) {
+    return CartCourseData(
       id: json[ApiKey.id] as int,
       name: json[ApiKey.name] as String,
       price: (json[ApiKey.price] as num).toDouble(),
@@ -57,31 +57,40 @@ class CourseDetail {
       createdDate: DateTime.parse(json[ApiKey.createdDate] as String),
       updatedDate: DateTime.parse(json[ApiKey.updatedDate] as String),
       sections: (json[ApiKey.sections] as List<dynamic>)
-          .map((e) => CourseSection.fromJson(e as Map<String, dynamic>))
+          .map((e) => CartCourseSection.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
   }
 }
 
-class CourseSection {
+class CartCourseSection {
+  final int id;
   final String name;
   final int courseId;
   final String description;
   final int order;
+  final String createdDate;
+  final String updatedDate; 
 
-  CourseSection({
+  CartCourseSection({
+    required this.id,
     required this.name,
     required this.courseId,
     required this.description,
     required this.order,
+    required this.createdDate,
+    required this.updatedDate, 
   });
 
-  factory CourseSection.fromJson(Map<String, dynamic> json) {
-    return CourseSection(
+  factory CartCourseSection.fromJson(Map<String, dynamic> json) {
+    return CartCourseSection(
+      id: json[ApiKey.id] as int,
       name: json[ApiKey.name] as String,
       courseId: json[ApiKey.courseId] as int,
       description: json[ApiKey.description] as String,
       order: json[ApiKey.order] as int,
+      createdDate: (json[ApiKey.createdDate] as String), 
+      updatedDate: (json[ApiKey.updatedDate] as String),
     );
   }
 }

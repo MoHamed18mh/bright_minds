@@ -13,8 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartTile extends StatelessWidget {
-  const CartTile({super.key, required this.course});
-  final CartItem course;
+  const CartTile({super.key, required this.cartCourse});
+  final CartItem cartCourse;
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +37,11 @@ class CartTile extends StatelessWidget {
             /// course image
             InkWell(
               onTap: () => navigate(context, RouteKeys.cartCourse,
-                  extra: course.courseId),
+                  extra: cartCourse.courseId),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(6),
                 child: CachedNetworkImage(
-                  imageUrl: course.imageUrl,
+                  imageUrl: cartCourse.imageUrl,
                   height: 120,
                   width: 100,
                   memCacheHeight: 300,
@@ -61,9 +61,9 @@ class CartTile extends StatelessWidget {
                     /// course name
                     InkWell(
                       onTap: () => navigate(context, RouteKeys.cartCourse,
-                          extra: course.courseId),
+                          extra: cartCourse.courseId),
                       child: Text(
-                        course.courseName,
+                        cartCourse.courseName,
                         style:
                             AppTextStyle.nunitoSansBlack.copyWith(fontSize: 22),
                         overflow: TextOverflow.ellipsis,
@@ -73,7 +73,7 @@ class CartTile extends StatelessWidget {
 
                     /// course price
                     Text(
-                      '${course.price} \$',
+                      '${cartCourse.price} \$',
                       style:
                           AppTextStyle.notoSerifPrimary.copyWith(fontSize: 20),
                       overflow: TextOverflow.ellipsis,
@@ -90,7 +90,7 @@ class CartTile extends StatelessWidget {
                         return Align(
                           alignment: Alignment.centerLeft,
                           child: InkWell(
-                            onTap: () => cubit.deleteCart(course.id),
+                            onTap: () => cubit.deleteCart(cartCourse.id),
                             child: Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 6,
@@ -102,7 +102,7 @@ class CartTile extends StatelessWidget {
                               ),
                               child: Text(
                                 AppStrings.delete,
-                                style: AppTextStyle.notoSerifWhite
+                                style: AppTextStyle.nunitoSansWhite
                                     .copyWith(fontSize: 14),
                               ),
                             ),

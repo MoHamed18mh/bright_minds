@@ -40,6 +40,7 @@ class CartView extends StatelessWidget {
                     style: AppTextStyle.nunitoSansBlack,
                   ),
                   actions: [
+                    /// total price of courses
                     BlocBuilder<CartCubit, CartState>(
                       builder: (context, state) {
                         if (state is CartSuccess) {
@@ -76,7 +77,7 @@ class CartView extends StatelessWidget {
                           final cart = state.cart.data;
                           cartId = cart.id;
 
-                          return CartTile(course: cart.items[index]);
+                          return CartTile(cartCourse: cart.items[index]);
                         }
                         return const ContainerShimmer();
                       },

@@ -50,3 +50,16 @@ final class CheckoutFailure extends CartState {
   final String error;
   CheckoutFailure({required this.error});
 }
+
+/// feed back states
+final class FeedBackLoading extends CartState {}
+
+final class FeedBackSuccess extends CartState {
+  final String success;
+  FeedBackSuccess({required this.success});
+}
+
+final class FeedBackFailure extends CartState {
+  final String error;
+  FeedBackFailure({required this.error});
+}

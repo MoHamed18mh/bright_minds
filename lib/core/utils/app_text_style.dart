@@ -8,6 +8,12 @@ abstract class AppTextStyle {
     fontWeight: FontWeight.bold,
     color: AppColors.primaryColor,
   );
+  static const notoSerifWhite = TextStyle(
+    fontFamily: 'NotoSerif',
+    fontSize: 18,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
   static final nunitoSansBlack = const TextStyle(
     fontFamily: 'NunitoSans',
     fontSize: 18,
@@ -25,10 +31,10 @@ abstract class AppTextStyle {
     fontSize: 13,
     color: Colors.grey[700],
   );
-  static const notoSerifWhite = TextStyle(
-    fontFamily: 'NotoSerif',
+  static final nunitoSansRed = const TextStyle(
+    fontFamily: 'NunitoSans',
     fontSize: 18,
-    color: Colors.white,
-    fontWeight: FontWeight.bold,
+    color: Colors.red,
   );
+  
 }
