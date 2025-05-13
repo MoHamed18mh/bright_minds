@@ -21,18 +21,22 @@ class UserData {
   final String id;
   final String email;
   final String displayName;
+  final String firstName;
+  final String lastName;
   final String imageCover;
   final String mobile;
-  final double waletBalance;
+  final double? walletBalance;
   final List<String>? roles;
 
   UserData({
     required this.id,
     required this.email,
     required this.displayName,
+    required this.firstName,
+    required this.lastName,
     required this.imageCover,
     required this.mobile,
-    required this.waletBalance,
+    this.walletBalance,
     this.roles,
   });
 
@@ -41,9 +45,13 @@ class UserData {
       id: json[ApiKey.id],
       email: json[ApiKey.email],
       displayName: json[ApiKey.displayName],
+      firstName: json[ApiKey.firstName],
+      lastName: json[ApiKey.lastName],
       imageCover: json[ApiKey.imageCover],
       mobile: json[ApiKey.mobile],
-      waletBalance: (json[ApiKey.walletBalance] as num).toDouble(),
+      walletBalance: json[ApiKey.walletBalance] != null
+          ? (json[ApiKey.walletBalance] as num).toDouble()
+          : null,
       roles: (json[ApiKey.roles] as List?)?.map((e) => e.toString()).toList(),
     );
   }

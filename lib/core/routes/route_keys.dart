@@ -13,6 +13,8 @@ abstract class RouteKeys {
       profile = '/profile',
       editProfile = '/edit-profile',
       cart = '/cart',
+      bag = '/bag',
+      userCourse = '/user-course',
       cartCourse = '/cart-course',
       contact = '/contact';
 }

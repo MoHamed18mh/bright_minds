@@ -36,7 +36,7 @@ class CartView extends StatelessWidget {
                 SliverAppBar(
                   leading: const BackButtonW(),
                   title: Text(
-                    AppStrings.myBag,
+                    AppStrings.myCrt,
                     style: AppTextStyle.nunitoSansBlack,
                   ),
                   actions: [
@@ -88,6 +88,8 @@ class CartView extends StatelessWidget {
               ],
             ),
           ),
+
+          /// buy button
           floatingActionButton: Padding(
             padding: const EdgeInsets.all(20),
             child: BlocBuilder<CartCubit, CartState>(

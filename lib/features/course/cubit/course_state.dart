@@ -46,14 +46,29 @@ final class VideoFailure extends CourseState {
 }
 
 /// Cart states
-final class CartLoading extends CourseState {}
+final class AddToCartLoading extends CourseState {}
 
-final class CartSuccess extends CourseState {
+final class AddToCartSuccess extends CourseState {
   final String success;
-  CartSuccess({required this.success});
+  AddToCartSuccess({required this.success});
 }
 
-final class CartFailure extends CourseState {
+final class AddToCartFailure extends CourseState {
   final String error;
-  CartFailure({required this.error});
+  AddToCartFailure({required this.error});
 }
+/// Cart states
+final class FeedBackLoading extends CourseState {}
+
+final class FeedBackSuccess extends CourseState {
+  final String success;
+  FeedBackSuccess({required this.success});
+}
+
+final class FeedBackFailure extends CourseState {
+  final String error;
+  FeedBackFailure({required this.error});
+}
+
+
+

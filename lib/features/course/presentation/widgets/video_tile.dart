@@ -1,4 +1,6 @@
+import 'package:bright_minds/core/functions/show_toast.dart';
 import 'package:bright_minds/core/utils/app_colors.dart';
+import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:bright_minds/core/utils/app_text_style.dart';
 import 'package:bright_minds/core/widgets/container_shimmer.dart';
 import 'package:bright_minds/features/course/cubit/course_cubit.dart';
@@ -15,7 +17,13 @@ class VideoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => context.read<CourseCubit>().playVideo(video.videoUrl),
+      onTap: () {
+        if (video.isPaid) {
+          context.read<CourseCubit>().playVideo(video.videoUrl);
+        } else {
+          showToast(msg: AppStrings.firstBuyCourse);
+        }
+      },
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.primaryHighLight,

@@ -1,5 +1,6 @@
 import 'package:bright_minds/features/cart/model/cart_course_model.dart';
 import 'package:bright_minds/features/cart/model/cart_model.dart';
+import 'package:bright_minds/features/course/models/course_model.dart';
 
 class CartState {}
 
@@ -62,4 +63,17 @@ final class FeedBackSuccess extends CartState {
 final class FeedBackFailure extends CartState {
   final String error;
   FeedBackFailure({required this.error});
+}
+
+/// user courses states
+final class UserCourseLoading extends CartState {}
+
+final class UserCourseSuccess extends CartState {
+  final CourseModel course;
+  UserCourseSuccess({required this.course});
+}
+
+final class UserCourseFailure extends CartState {
+  final String error;
+  UserCourseFailure({required this.error});
 }

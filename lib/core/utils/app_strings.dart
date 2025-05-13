@@ -39,6 +39,7 @@ abstract class AppStrings {
       skip = 'Skip',
       thisFieldCannotBeEmpty = 'This field cannot be empty',
       myBag = 'My Bag',
+      myCrt = 'My Cart',
       done = 'Done',
       logOut = 'Log Out',
       delete = 'Delete',
@@ -52,5 +53,15 @@ abstract class AppStrings {
       evaluation = 'Evaluation:',
       cancel = 'Cancel',
       submmit = 'Submmit',
+      compleatPurchase = 'Please check the cart to complete the purchase',
+      firstBuyCourse = 'First, buy the course or play it from bag',
+      wellcomToBright = 'Welcome To Bright Minds',
+      boardingSub1 =
+          'Discover a World of knowledge at your fingertips with \'Bright Minds\' comprehensive learning platform',
+      boardingSub2 =
+          'Access high-quality courses from top educators and industry experts, anytime, anywhere',
+      learnFromBeast = 'Learn From The Best',
+      youCanWathc = 'You can watch the course',
+      errorTryAgain = 'An error occurred, please try again',
       next = 'Next';
 }

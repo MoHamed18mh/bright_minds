@@ -9,10 +9,12 @@ abstract class EndPoint {
       getInstructors = '/api/Instructor',
       putUserEdit = '/api/Account',
       putChangePass = '/api/Account/changepassword',
-      postAddCart = '/api/Cart',
+      postAddToCart = '/api/Cart',
       getCart = '/api/Cart',
       postCheckOut = '/api/Payment/checkout',
       getCourses = '/api/Course',
+      getUserCourses = '/api/Course/usercourses',
+      getUser = '/api/Account/UserProfile',
       postFeedBack = '/api/Feedback';
 
   static String deletAccount(String userId) {
@@ -31,11 +33,7 @@ abstract class EndPoint {
     return '/api/Video/section/$sectionId';
   }
 
-  static String getUser(String userId) {
-    return '/api/Account/$userId';
-  }
-
-  static String deleteCart(int courseId) {
+  static String deleteFromCart(int courseId) {
     return '/api/Cart/$courseId';
   }
 }
@@ -56,6 +54,8 @@ abstract class ApiKey {
       rPassword = 'Password',
       rConfirmPass = 'ConfirmPassword',
       rFirstName = 'FirstName',
+      firstName = 'firstName',
+      lastName = 'lastName',
       rLastName = 'LastName',
       rMobile = 'Mobile',
       rImage = 'Image',
@@ -91,9 +91,9 @@ abstract class ApiKey {
       sectionId = 'sectionId',
       messaget = 'messaget',
       roles = 'roles',
-      walletBalance = 'waletBalance',
+      walletBalance = 'walletBalance',
       authorization = 'Authorization',
-      totalPirce = 'totalPirce',
+      totalPrice = 'totalPirce',
       courseName = 'courseName',
       imageUrl = 'imageUrl',
       sections = 'sections',
@@ -101,6 +101,9 @@ abstract class ApiKey {
       url = 'url',
       rating = 'rating',
       content = 'content',
+      isPaid = 'isPaid',
+      paymentFailedUrl = 'paymentFailedUrl',
+      paymentSucessUrl = 'paymentSucessUrl',
 
       // schemas
       imageNull = 'https://brightminds.runasp.net//files/UsersImages/',

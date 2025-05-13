@@ -7,7 +7,6 @@ import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:bright_minds/core/utils/app_text_style.dart';
 import 'package:bright_minds/features/cart/cubit/cart_cubit.dart';
 import 'package:bright_minds/features/cart/cubit/cart_state.dart';
-import 'package:bright_minds/features/cart/presentation/widgets/show_feed_back_dialog.dart';
 import 'package:bright_minds/features/course/presentation/widgets/chip.dart';
 import 'package:bright_minds/features/course/presentation/widgets/course_image.dart';
 import 'package:bright_minds/features/cart/model/cart_course_model.dart';
@@ -107,21 +106,6 @@ class CartCourseView extends StatelessWidget {
                     ),
                     const SliverToBoxAdapter(child: SizedBox(height: 10)),
                   ],
-                ),
-              ),
-
-              /// feedback button
-              floatingActionButton: Padding(
-                padding: const EdgeInsets.all(20),
-                child: IconButton(
-                  onPressed: () {
-                    showFeedbackDialog(context, course.id);
-                  },
-                  icon: Icon(
-                    Icons.message_outlined,
-                    color: AppColors.primaryColor,
-                    size: 45,
-                  ),
                 ),
               ),
             );

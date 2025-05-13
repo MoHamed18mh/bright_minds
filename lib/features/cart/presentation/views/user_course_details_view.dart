@@ -1,9 +1,10 @@
 import 'package:bright_minds/core/functions/calc_padding.dart';
+import 'package:bright_minds/core/functions/navigation.dart';
 import 'package:bright_minds/core/functions/show_toast.dart';
+import 'package:bright_minds/core/routes/route_keys.dart';
 import 'package:bright_minds/core/utils/app_colors.dart';
-import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:bright_minds/core/utils/app_text_style.dart';
-import 'package:bright_minds/core/widgets/material_button.dart';
+import 'package:bright_minds/features/cart/presentation/widgets/show_feed_back_dialog.dart';
 import 'package:bright_minds/features/course/cubit/course_cubit.dart';
 import 'package:bright_minds/features/course/cubit/course_state.dart';
 import 'package:bright_minds/features/course/models/course_model.dart';
@@ -12,23 +13,26 @@ import 'package:bright_minds/features/course/presentation/widgets/course_image.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CourseDetailsView extends StatelessWidget {
-  const CourseDetailsView({super.key, required this.course});
+class UserCourseDetailsView extends StatelessWidget {
+  const UserCourseDetailsView({super.key, required this.course});
 
   final CourseItem course;
 
   @override
   Widget build(BuildContext context) {
     final padding = calcPadding(context);
-    final cubit = context.read<CourseCubit>();
 
     return BlocListener<CourseCubit, CourseState>(
       listener: (context, state) {
-        if (state is AddToCartSuccess) {
-          showToast(msg: state.success);
-        } else if (state is AddToCartFailure) {
-          showToast(msg: state.error);
-        }
+        if (state is FeedBackSuccess) {
+            showToast(msg: state.success);
+            navigatePop(context);
+            navigateReplacement(context, RouteKeys.bag);
+          } else if (state is FeedBackFailure) {
+            showToast(msg: state.error);
+            navigatePop(context);
+            navigateReplacement(context, RouteKeys.bag);
+          }
       },
       child: SafeArea(
         child: Scaffold(
@@ -89,44 +93,22 @@ class CourseDetailsView extends StatelessWidget {
                   },
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 60)),
-
-                /// price
-                SliverToBoxAdapter(
-                  child: Text.rich(
-                    TextSpan(
-                      text: '${AppStrings.price}: ',
-                      style:
-                          AppTextStyle.nunitoSansBlack.copyWith(fontSize: 22),
-                      children: [
-                        TextSpan(
-                          text: '${course.price} \$',
-                          style: AppTextStyle.notoSerifPrimary
-                              .copyWith(fontSize: 20),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SliverToBoxAdapter(child: SizedBox(height: 12)),
-
-                /// cart button
-                SliverToBoxAdapter(
-                  child: BlocBuilder<CourseCubit, CourseState>(
-                    builder: (context, state) {
-                      if (state is AddToCartLoading) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                              color: AppColors.primaryColor),
-                        );
-                      }
-                      return MaterialButtonW(
-                        text: AppStrings.addToBag,
-                        onPressed: () => cubit.postAddCart(course.id),
-                      );
-                    },
-                  ),
-                )
               ],
+            ),
+          ),
+
+          /// feedback button
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.all(20),
+            child: IconButton(
+              onPressed: () {
+                showFeedbackDialog(context, course.id);
+              },
+              icon: Icon(
+                Icons.message_outlined,
+                color: AppColors.primaryColor,
+                size: 45,
+              ),
             ),
           ),
         ),

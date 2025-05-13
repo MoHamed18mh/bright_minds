@@ -40,7 +40,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> getUser() async {
     emit(UserLoading());
     try {
-      final response = await api.get(EndPoint.getUser(userId));
+      final response = await api.get(EndPoint.getUser);
       final userModel = UserModel.fromJson(response);
 
       emit(UserSuccess(user: userModel));
@@ -55,12 +55,8 @@ class ProfileCubit extends Cubit<ProfileState> {
   void prefillFields(UserData currentUser) {
     {
       currentImageUrl = currentUser.imageCover;
-      final parts = currentUser.displayName.trim().split(' ');
-      if (parts.isNotEmpty) {
-        firstNameEditController.text = parts[0];
-        lastNameEditController.text =
-            parts.length > 1 ? parts.sublist(1).join(' ') : '';
-      }
+      firstNameEditController.text = currentUser.firstName;
+      lastNameEditController.text = currentUser.lastName;
       phoneEditEditController.text = currentUser.mobile;
     }
   }

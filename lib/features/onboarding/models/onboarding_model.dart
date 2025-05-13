@@ -1,5 +1,5 @@
-
 import 'package:bright_minds/core/utils/app_assets.dart';
+import 'package:bright_minds/core/utils/app_strings.dart';
 
 class BoardingModel {
   final String imagePath;
@@ -13,14 +13,12 @@ class BoardingModel {
 List<BoardingModel> boardingData = [
   BoardingModel(
     imagePath: Assets.assetsImagesBoarding1,
-    title: 'Welcome To Bright Minds',
-    subTitle:
-        'Discover a World of knowledge at your fingertips with \'Bright Minds\' comprehensive learning platform',
+    title: AppStrings.wellcomToBright,
+    subTitle: AppStrings.boardingSub1,
   ),
   BoardingModel(
     imagePath: Assets.assetsImagesBoarding2,
-    title: 'Learn From The Best',
-    subTitle:
-        'Access high-quality courses from top educators and industry experts, anytime, anywhere',
+    title: AppStrings.learnFromBeast,
+    subTitle: AppStrings.boardingSub2,
   ),
 ];

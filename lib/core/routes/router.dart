@@ -9,7 +9,9 @@ import 'package:bright_minds/features/auth/presentation/views/forgot_password_vi
 import 'package:bright_minds/features/auth/presentation/views/login_view.dart';
 import 'package:bright_minds/features/auth/presentation/views/register_view.dart';
 import 'package:bright_minds/features/auth/presentation/views/reset_password_view.dart';
+import 'package:bright_minds/features/cart/presentation/views/bag_view.dart';
 import 'package:bright_minds/features/cart/cubit/cart_cubit.dart';
+import 'package:bright_minds/features/cart/presentation/views/user_course_details_view.dart';
 import 'package:bright_minds/features/course/cubit/course_cubit.dart';
 import 'package:bright_minds/features/course/models/course_model.dart';
 import 'package:bright_minds/features/course/presentation/views/course_details_view.dart';
@@ -193,6 +195,15 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
           },
         ),
 
+        /// Bag screen
+        GoRoute(
+          path: RouteKeys.bag,
+          builder: (context, state) => BlocProvider(
+            create: (_) => CartCubit(_dio)..getUserCourses(),
+            child: const BagView(),
+          ),
+        ),
+
         /// cart screen
         GoRoute(
           path: RouteKeys.cart,
@@ -211,6 +222,15 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
             child: const CartCourseView(),
           ),
         ),
+
+        /// user course details screen
+        GoRoute(
+          path: RouteKeys.userCourse,
+          builder: (context, state) => BlocProvider(
+            create: (context) => CourseCubit(_dio),
+            child: UserCourseDetailsView(course: state.extra as CourseItem),
+          ),
+        )
 
         ///
       ],

@@ -1,9 +1,10 @@
+
 import 'package:bright_minds/core/functions/navigation.dart';
 import 'package:bright_minds/core/utils/app_colors.dart';
 import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:bright_minds/core/utils/app_text_style.dart';
 import 'package:bright_minds/core/widgets/text_field.dart';
-import 'package:bright_minds/features/cart/cubit/cart_cubit.dart';
+import 'package:bright_minds/features/course/cubit/course_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -67,7 +68,7 @@ void showFeedbackDialog(BuildContext context, int courseId) {
             ElevatedButton(
               onPressed: () {
                 context
-                    .read<CartCubit>()
+                    .read<CourseCubit>()
                     .submitFeedBack(courseId, comment.trim(), rate);
               },
               child: Text(

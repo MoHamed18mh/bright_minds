@@ -2,24 +2,24 @@ import 'package:bright_minds/core/routes/route_keys.dart';
 import 'package:bright_minds/core/utils/app_assets.dart';
 import 'package:bright_minds/core/utils/app_strings.dart';
 
-class NavigationModel {
+class NavigationData {
   final String imagePath;
   final String route;
 
-  NavigationModel({required this.imagePath, required this.route});
+  NavigationData({required this.imagePath, required this.route});
 }
 
-Map<String, NavigationModel> navigationList = {
-  AppStrings.courses: NavigationModel(
+Map<String, NavigationData> navigationList = {
+  AppStrings.courses: NavigationData(
     imagePath: Assets.assetsImagesCourse,
     route: RouteKeys.course,
   ),
-  AppStrings.instructors: NavigationModel(
+  AppStrings.instructors: NavigationData(
     imagePath: Assets.assetsImagesTeam,
     route: RouteKeys.instructor,
   ),
-  AppStrings.myBag: NavigationModel(
+  AppStrings.myBag: NavigationData(
     imagePath: Assets.assetsImagesMycourses,
-    route: RouteKeys.cart,
+    route: RouteKeys.bag,
   ),
 };

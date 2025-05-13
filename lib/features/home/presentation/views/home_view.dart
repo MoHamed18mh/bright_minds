@@ -4,7 +4,7 @@ import 'package:bright_minds/core/routes/route_keys.dart';
 import 'package:bright_minds/core/utils/app_assets.dart';
 import 'package:bright_minds/core/utils/app_colors.dart';
 import 'package:bright_minds/core/widgets/app_name.dart';
-import 'package:bright_minds/features/home/models/navigation_model.dart';
+import 'package:bright_minds/features/home/models/navigation_data.dart';
 import 'package:bright_minds/features/home/models/service_model.dart';
 import 'package:bright_minds/features/home/presentation/widgets/navigation_tile.dart';
 import 'package:bright_minds/features/home/presentation/widgets/services_item.dart';
@@ -51,9 +51,9 @@ class HomeView extends StatelessWidget {
                 itemCount: navigationList.length,
                 itemBuilder: (context, index) {
                   String title = navigationList.keys.elementAt(index);
-                  NavigationModel actionData = navigationList[title]!;
+                  NavigationData data = navigationList[title]!;
 
-                  return NavigationTile(title: title, actionData: actionData);
+                  return NavigationTile(title: title, data: data);
                 },
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 80)),
@@ -103,3 +103,9 @@ class HomeView extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+

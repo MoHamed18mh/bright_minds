@@ -60,20 +60,39 @@ class CourseCubit extends Cubit<CourseState> {
     ).launch();
   }
 
-  Future<void> postAddCart(int courseId) async {
-    emit(CartLoading());
+  Future<void> submitFeedBack(int courseId, String comment, double rate) async {
+    emit(FeedBackLoading());
     try {
       await api.post(
-        EndPoint.postAddCart,
+        EndPoint.postFeedBack,
+        data: {
+          ApiKey.courseId: courseId,
+          ApiKey.content: comment,
+          ApiKey.rating: rate,
+        },
+      );
+      emit(FeedBackSuccess(success: AppStrings.done));
+    } on ServerException catch (e) {
+      emit(FeedBackFailure(error: e.errorModel.errors.toString()));
+    } catch (e) {
+      emit(FeedBackFailure(error: e.toString()));
+    }
+  }
+
+  Future<void> postAddCart(int courseId) async {
+    emit(AddToCartLoading());
+    try {
+      await api.post(
+        EndPoint.postAddToCart,
         data: {ApiKey.courseId: courseId},
       );
-      emit(CartSuccess(success: AppStrings.done));
+      emit(AddToCartSuccess(success: AppStrings.compleatPurchase));
 
       await getSections(courseId);
     } on ServerException catch (e) {
-      emit(CartFailure(error: e.errorModel.error));
+      emit(AddToCartFailure(error: e.errorModel.error));
     } catch (e) {
-      emit(CartFailure(error: e.toString()));
+      emit(AddToCartFailure(error: e.toString()));
     }
   }
 }

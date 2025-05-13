@@ -33,6 +33,8 @@ class VideoData {
   final String coverUrl;
   final double duration;
   final String description;
+  final bool isPaid;
+  final int order;
   final String createdDate;
   final String updatedDate;
 
@@ -45,6 +47,8 @@ class VideoData {
     required this.coverUrl,
     required this.duration,
     required this.description,
+    required this.isPaid,
+    required this.order,
     required this.createdDate,
     required this.updatedDate,
   });
@@ -59,6 +63,8 @@ class VideoData {
       coverUrl: json[ApiKey.coverUrl],
       duration: json[ApiKey.duration],
       description: json[ApiKey.description],
+      isPaid: json[ApiKey.isPaid],
+      order: json[ApiKey.order],
       createdDate: json[ApiKey.createdDate],
       updatedDate: json[ApiKey.updatedDate],
     );

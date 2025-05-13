@@ -1,11 +1,13 @@
 import 'package:bright_minds/core/api/api_consumer.dart';
 import 'package:bright_minds/core/api/end_point.dart';
 import 'package:bright_minds/core/api/errors/exception.dart';
+import 'package:bright_minds/core/routes/deep_links.dart';
 import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:bright_minds/features/cart/cubit/cart_state.dart';
 import 'package:bright_minds/features/cart/model/cart_course_model.dart';
 import 'package:bright_minds/features/cart/model/cart_model.dart';
 import 'package:bright_minds/features/cart/model/checkout_model.dart';
+import 'package:bright_minds/features/course/models/course_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -30,7 +32,7 @@ class CartCubit extends Cubit<CartState> {
   Future<void> deleteCart(int courseId) async {
     emit(DeleteCartLoading());
     try {
-      await api.delete(EndPoint.deleteCart(courseId));
+      await api.delete(EndPoint.deleteFromCart(courseId));
       emit(DeleteCartSuccess());
 
       await getCart();
@@ -58,8 +60,10 @@ class CartCubit extends Cubit<CartState> {
     try {
       final response = await api.post(
         EndPoint.postCheckOut,
-        queryParameters: {
-          ApiKey.basketId: cartId.toString(),
+        data: {
+          ApiKey.basketId: cartId,
+          ApiKey.paymentFailedUrl: DeepLinks.paymentFailure,
+          ApiKey.paymentSucessUrl: DeepLinks.paymentSuccess,
         },
       );
 
@@ -87,22 +91,18 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
-  Future<void> submitFeedBack(int courseId, String comment, double rate) async {
-    emit(FeedBackLoading());
+  Future<void> getUserCourses() async {
+    emit(UserCourseLoading());
     try {
-      await api.post(
-        EndPoint.postFeedBack,
-        data: {
-          ApiKey.courseId: courseId,
-          ApiKey.content: comment,
-          ApiKey.rating: rate,
-        },
-      );
-      emit(FeedBackSuccess(success: AppStrings.done));
+      final response = await api.get(EndPoint.getUserCourses);
+
+      emit(UserCourseSuccess(course: CourseModel.fromJson(response)));
     } on ServerException catch (e) {
-      emit(FeedBackFailure(error: e.errorModel.errors.toString()));
+      emit(UserCourseFailure(error: e.errorModel.error));
     } catch (e) {
-      emit(FeedBackFailure(error: e.toString()));
+      emit(UserCourseFailure(error: e.toString()));
     }
   }
+
+  void submitFeedBack(int courseId, String trim, double rate) {}
 }

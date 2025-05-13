@@ -34,7 +34,7 @@ class CartData {
   factory CartData.fromJson(Map<String, dynamic> json) {
     return CartData(
       id: json[ApiKey.id] as int,
-      totalPrice: (json[ApiKey.totalPirce] as num).toDouble(),
+      totalPrice: (json[ApiKey.totalPrice] as num).toDouble(),
       items: (json[ApiKey.items] as List<dynamic>)
           .map((e) => CartItem.fromJson(e as Map<String, dynamic>))
           .toList(),
