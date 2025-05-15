@@ -1,21 +1,18 @@
-import 'package:bright_minds/core/api/api_consumer.dart';
 import 'package:bright_minds/core/api/end_point.dart';
-import 'package:bright_minds/core/api/errors/exception.dart';
 import 'package:bright_minds/core/database/cache_helper.dart';
 import 'package:bright_minds/core/database/cache_key.dart';
-import 'package:bright_minds/core/routes/deep_links.dart';
+import 'package:bright_minds/core/repository/auth_repo/auth_repo.dart';
 import 'package:bright_minds/core/services/service_locator.dart';
 import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:bright_minds/features/auth/cubit/auth_state.dart';
-import 'package:bright_minds/features/auth/models/login_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final ApiConsumer api;
+  final AuthRepo repo;
 
-  AuthCubit(this.api) : super(AuthInitial());
+  AuthCubit(this.repo) : super(AuthInitial());
 
   /// login keys
   GlobalKey<FormState> loginKey = GlobalKey<FormState>();
@@ -40,128 +37,101 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController passResetController = TextEditingController();
   TextEditingController confirmResetController = TextEditingController();
 
-  /// login function
   Future<void> login() async {
+    if (loginKey.currentState?.validate() != true) return;
+
     emit(LoginLoading());
-    try {
-      final response = await api.post(
-        EndPoint.postLogin,
-        data: {
-          ApiKey.email: emailLoginController.text.trim(),
-          ApiKey.password: passwordLoginController.text.trim(),
-        },
-      );
-      final loginModel = LoginModel.fromJson(response);
-      final decodedToken = JwtDecoder.decode(loginModel.token);
+    final result = await repo.login(
+      email: emailLoginController.text.trim(),
+      password: passwordLoginController.text.trim(),
+    );
 
-      /// stord token
-      await getIt<CacheHelper>()
-          .saveData(key: CacheKey.token, value: loginModel.token);
-      await getIt<CacheHelper>()
-          .saveData(key: CacheKey.userId, value: decodedToken[ApiKey.idSchema]);
+    result.fold(
+      (error) => emit(LoginFailure(error: error)),
+      (model) async {
+        final decodedToken = JwtDecoder.decode(model.token);
 
-      emit(LoginSuccess(success: AppStrings.wellcom));
-    } on ServerException catch (e) {
-      emit(LoginFailure(error: e.errorModel.error));
-    } catch (e) {
-      emit(LoginFailure(error: e.toString()));
-    }
+        /// stord token and user id
+        await getIt<CacheHelper>().saveData(
+          key: CacheKey.token,
+          value: model.token,
+        );
+        await getIt<CacheHelper>().saveData(
+          key: CacheKey.userId,
+          value: decodedToken[ApiKey.idSchema],
+        );
+        emit(LoginSuccess(
+            success: '${AppStrings.wellcom} ${model.user.displayName}'));
+      },
+    );
   }
 
-  /// register function
   Future<void> register() async {
+    if (registerKey.currentState?.validate() != true) return;
+
     emit(RegisterLoading());
-    try {
-      await api.post(
-        EndPoint.postRegister,
-        data: {
-          ApiKey.rFirstName: firstNameRegController.text.trim(),
-          ApiKey.rLastName: lastNameRegController.text.trim(),
-          ApiKey.rEmail: emailRegController.text.trim(),
-          ApiKey.rMobile: mobileRegController.text.trim(),
-          ApiKey.rPassword: passRegController.text.trim(),
-          ApiKey.rConfirmPass: confirmRegController.text.trim(),
-        },
-        isFormData: true,
-      );
+    final result = await repo.register(
+      firstName: firstNameRegController.text.trim(),
+      lastName: lastNameRegController.text.trim(),
+      email: emailRegController.text.trim(),
+      mobile: mobileRegController.text.trim(),
+      password: passRegController.text.trim(),
+      confirmPassword: confirmRegController.text.trim(),
+    );
 
-      await api.post(
-        EndPoint.postAuthentication,
-        data: {
-          ApiKey.email: emailRegController.text,
-          ApiKey.clientUrl: DeepLinks.verify,
-        },
-      );
+    await result.fold(
+      (error) async => emit(RegisterFailure(error: error)),
+      (_) async {
+        final sendRes = await repo.sendVerificationEmail(
+          email: emailRegController.text.trim(),
+        );
 
-      emit(RegisterSuccess());
-    } on ServerException catch (e) {
-      emit(RegisterFailure(error: e.errorModel.errors.toString()));
-    } catch (e) {
-      emit(RegisterFailure(error: e.toString()));
-    }
+        sendRes.fold(
+          (error) => emit(RegisterFailure(error: error)),
+          (success) => emit(RegisterSuccess(success: success)),
+        );
+      },
+    );
   }
 
-  /// confirm email
-  Future<void> confirm(String email, String token) async {
-    try {
-      emit(ConfirmLoading());
-      await api.post(
-        EndPoint.postConfirm,
-        data: {
-          ApiKey.email: email,
-          ApiKey.token: token,
-        },
-      );
-
-      /// store token
-      await getIt<CacheHelper>().saveData(key: CacheKey.token, value: token);
-
-      emit(ConfirmSuccess(success: AppStrings.loginNow));
-    } on ServerException catch (e) {
-      emit(ConfirmFailure(error: e.errorModel.error));
-    } catch (e) {
-      emit(ConfirmFailure(error: e.toString()));
-    }
+  Future<void> confirmEmail(String email, String token) async {
+    emit(ConfirmLoading());
+    final result = await repo.confirmEmail(email: email, token: token);
+    result.fold(
+      (error) => emit(ConfirmFailure(error: error)),
+      (success) async {
+        await getIt<CacheHelper>().saveData(key: CacheKey.token, value: token);
+        emit(ConfirmSuccess(success: success));
+      },
+    );
   }
 
-  /// forgot password
   Future<void> forgotPassword() async {
+    if (forgotKey.currentState?.validate() != true) return;
+
     emit(ForgotLoading());
-    try {
-      await api.post(
-        EndPoint.postForgotPass,
-        data: {
-          ApiKey.email: emailForgotController.text,
-          ApiKey.clientUrl: DeepLinks.resetPassword,
-        },
-      );
-      emit(ForgotSuccess(success: AppStrings.pleaseCheckEmail));
-    } on ServerException catch (e) {
-      emit(ForgotFailure(error: e.errorModel.error));
-    } catch (e) {
-      emit(ForgotFailure(error: e.toString()));
-    }
+    final result =
+        await repo.forgotPassword(email: emailForgotController.text.trim());
+    result.fold(
+      (error) => emit(ForgotFailure(error: error)),
+      (success) => emit(ForgotSuccess(success: success)),
+    );
   }
 
-  /// reset password
   Future<void> resetPass(String email, String token) async {
+    if (resetKey.currentState?.validate() != true) return;
+
     emit(ResetLoading());
-    try {
-      await api.post(
-        EndPoint.postResetPass,
-        data: {
-          ApiKey.email: email,
-          ApiKey.token: token,
-          ApiKey.password: passResetController.text.trim(),
-          ApiKey.confirmPass: confirmResetController.text.trim(),
-        },
-      );
-      emit(ResetSuccess(success: AppStrings.loginNow));
-    } on ServerException catch (e) {
-      emit(ResetFailure(error: e.errorModel.error));
-    } catch (e) {
-      emit(ResetFailure(error: e.toString()));
-    }
+    final result = await repo.resetPassword(
+      email: email,
+      token: token,
+      newPassword: passResetController.text.trim(),
+      confirmPassword: confirmResetController.text.trim(),
+    );
+    result.fold(
+      (error) => emit(ResetFailure(error: error)),
+      (success) => emit(ResetSuccess(success: success)),
+    );
   }
 
   /// prefill email field

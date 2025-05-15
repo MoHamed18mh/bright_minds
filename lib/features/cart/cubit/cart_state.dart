@@ -32,9 +32,9 @@ final class DeleteCartFailure extends CartState {
 /// course cart states
 final class CartCourseLoading extends CartState {}
 
-final class CartCourseSucces extends CartState {
+final class CartCourseSuccess extends CartState {
   final CartCourseModel course;
-  CartCourseSucces({required this.course});
+  CartCourseSuccess({required this.course});
 }
 
 final class CartCourseFailure extends CartState {
@@ -45,7 +45,7 @@ final class CartCourseFailure extends CartState {
 /// course cart states
 final class CheckoutLoading extends CartState {}
 
-final class CheckoutSucces extends CartState {}
+final class CheckoutSuccess extends CartState {}
 
 final class CheckoutFailure extends CartState {
   final String error;

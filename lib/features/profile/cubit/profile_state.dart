@@ -25,7 +25,10 @@ final class UserFailure extends ProfileState {
 /// edit user state
 final class EditUserLoading extends ProfileState {}
 
-final class EditUserSuccess extends ProfileState {}
+final class EditUserSuccess extends ProfileState {
+  final String success;
+  EditUserSuccess({required this.success});
+}
 
 final class EditUserFailure extends ProfileState {
   final String error;

@@ -73,9 +73,7 @@ class LoginView extends StatelessWidget {
                         return MaterialButtonW(
                           text: AppStrings.login,
                           onPressed: () {
-                            if (cubit.loginKey.currentState!.validate()) {
-                              cubit.login();
-                            }
+                            cubit.login();
                           },
                         );
                       }

@@ -71,11 +71,11 @@ class CourseDetailsView extends StatelessWidget {
                         height: 35,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: (state is SectionSucces)
+                          itemCount: (state is SectionSuccess)
                               ? state.section.data.length
                               : 3,
                           itemBuilder: (context, index) {
-                            if (state is SectionSucces) {
+                            if (state is SectionSuccess) {
                               return ChipW(
                                 sectionName: state.section.data[index].name,
                                 sectionId: state.section.data[index].id,
@@ -121,7 +121,7 @@ class CourseDetailsView extends StatelessWidget {
                       }
                       return MaterialButtonW(
                         text: AppStrings.addToBag,
-                        onPressed: () => cubit.postAddCart(course.id),
+                        onPressed: () => cubit.addToCart(course.id),
                       );
                     },
                   ),

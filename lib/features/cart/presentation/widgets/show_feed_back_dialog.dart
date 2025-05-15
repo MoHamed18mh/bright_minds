@@ -69,7 +69,7 @@ void showFeedbackDialog(BuildContext context, int courseId) {
               onPressed: () {
                 context
                     .read<CourseCubit>()
-                    .submitFeedBack(courseId, comment.trim(), rate);
+                    .submitFeedback(courseId, comment.trim(), rate);
               },
               child: Text(
                 AppStrings.submmit,

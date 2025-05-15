@@ -32,12 +32,22 @@ class CartData {
   });
 
   factory CartData.fromJson(Map<String, dynamic> json) {
+    // معالجة مفتاح "totalPirce" إن كان موجودًا
+    final rawTotal = json[ApiKey.totalPrice] ?? json['totalPirce'] ?? 0;
+    final total = (rawTotal is num ? rawTotal : 0).toDouble();
+
+    // تحويل الـ items إلى قائمة فارغة إذا كانت null
+    final itemsJson = json[ApiKey.items] as List<dynamic>?;
+    final itemList = itemsJson != null
+        ? itemsJson
+            .map((e) => CartItem.fromJson(e as Map<String, dynamic>))
+            .toList()
+        : <CartItem>[];
+
     return CartData(
       id: json[ApiKey.id] as int,
-      totalPrice: (json[ApiKey.totalPrice] as num).toDouble(),
-      items: (json[ApiKey.items] as List<dynamic>)
-          .map((e) => CartItem.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      totalPrice: total,
+      items: itemList,
     );
   }
 }

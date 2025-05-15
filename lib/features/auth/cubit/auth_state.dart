@@ -21,7 +21,10 @@ final class LoginFailure extends AuthState {
 /// register states
 final class RegisterLoading extends AuthState {}
 
-final class RegisterSuccess extends AuthState {}
+final class RegisterSuccess extends AuthState {
+  final String success;
+  RegisterSuccess({required this.success});
+}
 
 final class RegisterFailure extends AuthState {
   final String error;

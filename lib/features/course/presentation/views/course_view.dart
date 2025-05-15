@@ -44,7 +44,7 @@ class CourseView extends StatelessWidget {
                             showSearch(
                               context: context,
                               delegate: CourseSearchDelegate(
-                                list: (state is CourseSucces)
+                                list: (state is CourseSuccess)
                                     ? state.course.data.items
                                     : [],
                               ),
@@ -81,11 +81,11 @@ class CourseView extends StatelessWidget {
                         mainAxisSpacing: 10,
                         crossAxisSpacing: 10,
                       ),
-                      itemCount: (state is CourseSucces)
+                      itemCount: (state is CourseSuccess)
                           ? state.course.data.items.length
                           : 5,
                       itemBuilder: (context, index) {
-                        if (state is CourseSucces) {
+                        if (state is CourseSuccess) {
                           return CourseTile(
                             course: state.course.data.items[index],
                           );

@@ -24,7 +24,7 @@ class RegisterView extends StatelessWidget {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is RegisterSuccess) {
-          showToast(msg: AppStrings.pleaseCheckEmail);
+          showToast(msg: state.success);
           navigateReplacement(context, RouteKeys.login);
         } else if (state is RegisterFailure) {
           showToast(msg: state.error);
@@ -57,9 +57,7 @@ class RegisterView extends StatelessWidget {
                         return MaterialButtonW(
                           text: AppStrings.register,
                           onPressed: () {
-                            if (cubit.registerKey.currentState!.validate()) {
-                              cubit.register();
-                            }
+                            cubit.register();
                           },
                         );
                       }

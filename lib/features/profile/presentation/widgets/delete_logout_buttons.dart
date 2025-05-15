@@ -26,7 +26,7 @@ class DeleteAndLogOutButtons extends StatelessWidget {
             ),
             const SizedBox(width: 15),
             Buttons(
-              onPressed: () => cubit.deletAccount(),
+              onPressed: () => cubit.deleteAccount(),
               text: AppStrings.delete,
               iconData: (state is DeleteLoading)
                   ? Icons.autorenew

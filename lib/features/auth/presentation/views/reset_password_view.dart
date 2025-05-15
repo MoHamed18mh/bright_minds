@@ -64,9 +64,7 @@ class ResetPasswordView extends StatelessWidget {
                       }
                       return MaterialButtonW(
                         onPressed: () {
-                          if (cubit.resetKey.currentState!.validate()) {
-                            cubit.resetPass(email, token);
-                          }
+                          cubit.resetPass(email, token);
                         },
                         text: AppStrings.createNewPassword,
                       );

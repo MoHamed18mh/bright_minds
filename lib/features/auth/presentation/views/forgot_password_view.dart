@@ -71,9 +71,7 @@ class ForgotPasswordView extends StatelessWidget {
                       }
                       return MaterialButtonW(
                         onPressed: () {
-                          if (cubit.forgotKey.currentState!.validate()) {
-                            cubit.forgotPassword();
-                          }
+                          cubit.forgotPassword();
                         },
                         text: AppStrings.sendEmail,
                       );

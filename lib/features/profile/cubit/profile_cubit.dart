@@ -1,9 +1,6 @@
-import 'package:bright_minds/core/api/api_consumer.dart';
-import 'package:bright_minds/core/api/end_point.dart';
-import 'package:bright_minds/core/api/errors/exception.dart';
 import 'package:bright_minds/core/database/cache_helper.dart';
 import 'package:bright_minds/core/database/cache_key.dart';
-import 'package:bright_minds/core/functions/upload_imgae_to_api.dart';
+import 'package:bright_minds/core/repository/profile_repo/profile_repo.dart';
 import 'package:bright_minds/core/services/service_locator.dart';
 import 'package:bright_minds/features/profile/cubit/profile_state.dart';
 import 'package:bright_minds/features/profile/models/user_model.dart';
@@ -12,9 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
-  final ApiConsumer api;
-
-  ProfileCubit(this.api) : super(ProfileInitial());
+  final ProfileRepo repo;
+  ProfileCubit(this.repo) : super(ProfileInitial());
 
   /// get user id from store
   final userId = getIt<CacheHelper>().getData(key: CacheKey.userId);
@@ -39,65 +35,50 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> getUser() async {
     emit(UserLoading());
-    try {
-      final response = await api.get(EndPoint.getUser);
-      final userModel = UserModel.fromJson(response);
-
-      emit(UserSuccess(user: userModel));
-    } on ServerException catch (e) {
-      emit(UserFailure(error: e.errorModel.error));
-    } catch (e) {
-      emit(UserFailure(error: e.toString()));
-    }
+    final result = await repo.getUser();
+    result.fold(
+      (error) => emit(UserFailure(error: error)),
+      (model) => emit(UserSuccess(user: model)),
+    );
   }
 
-  /// prefill function
-  void prefillFields(UserData currentUser) {
+  void prefillFields(UserData user) {
     {
-      currentImageUrl = currentUser.imageCover;
-      firstNameEditController.text = currentUser.firstName;
-      lastNameEditController.text = currentUser.lastName;
-      phoneEditEditController.text = currentUser.mobile;
+      currentImageUrl = user.imageCover;
+      firstNameEditController.text = user.firstName;
+      lastNameEditController.text = user.lastName;
+      phoneEditEditController.text = user.mobile;
     }
   }
 
-  /// upload image
   void upLoadUserImage(XFile image) {
     pickedImage = image;
     emit(UpLoadUserImage());
   }
 
-  /// edit User profil
   Future<void> editUser() async {
+    if (editKey.currentState?.validate() != true) return;
+
     emit(EditUserLoading());
-    try {
-      await api.put(
-        EndPoint.putUserEdit,
-        data: {
-          ApiKey.rFirstName: firstNameEditController.text.trim(),
-          ApiKey.rLastName: lastNameEditController.text.trim(),
-          ApiKey.rMobile: phoneEditEditController.text.trim(),
-          if (pickedImage != null)
-            ApiKey.rImage: await uploadImageToApi(pickedImage!),
-        },
-        isFormData: true,
-      );
-      if (changePassKey.currentState!.validate()) {
-        await api.put(
-          EndPoint.putChangePass,
-          data: {
-            ApiKey.oldPass: oldPassController.text.trim(),
-            ApiKey.newPass: newPassController.text.trim(),
-            ApiKey.confirmPass: confirmPassController.text.trim(),
-          },
-        );
-      }
-      emit(EditUserSuccess());
-    } on ServerException catch (e) {
-      emit(EditUserFailure(error: e.errorModel.errors.toString()));
-    } catch (e) {
-      emit(EditUserFailure(error: e.toString()));
-    }
+    final result = await repo.editUser(
+      firstName: firstNameEditController.text,
+      lastName: lastNameEditController.text,
+      mobile: phoneEditEditController.text,
+      imageFile: pickedImage,
+      oldPassword: changePassKey.currentState!.validate()
+          ? oldPassController.text
+          : null,
+      newPassword: changePassKey.currentState!.validate()
+          ? newPassController.text
+          : null,
+      confirmPassword: changePassKey.currentState!.validate()
+          ? confirmPassController.text
+          : null,
+    );
+    result.fold(
+      (error) => emit(EditUserFailure(error: error)),
+      (success) => emit(EditUserSuccess(success: success)),
+    );
   }
 
   /// Toggles between visible/not
@@ -121,22 +102,20 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  Future<void> deletAccount() async {
+  Future<void> deleteAccount() async {
     emit(DeleteLoading());
-    try {
-      await api.delete(EndPoint.deletAccount(
-          await getIt<CacheHelper>().getData(key: CacheKey.userId)));
-      await getIt<CacheHelper>().removeData(key: CacheKey.userId);
-      await getIt<CacheHelper>().removeData(key: CacheKey.token);
-
-      emit(DeleteSuccess());
-    } on ServerException catch (e) {
-      emit(DeleteFailure(error: e.errorModel.error));
-      getUser();
-    } catch (e) {
-      emit(DeleteFailure(error: e.toString()));
-      getUser();
-    }
+    final result = await repo.deleteAccount(userId);
+    result.fold(
+      (error) {
+        emit(DeleteFailure(error: error));
+        getUser();
+      },
+      (_) async {
+        await getIt<CacheHelper>().removeData(key: CacheKey.userId);
+        await getIt<CacheHelper>().removeData(key: CacheKey.token);
+        emit(DeleteSuccess());
+      },
+    );
   }
 
   @override

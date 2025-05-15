@@ -9,9 +9,9 @@ final class CourseInitial extends CourseState {}
 /// course states
 final class CourseLoading extends CourseState {}
 
-final class CourseSucces extends CourseState {
+final class CourseSuccess extends CourseState {
   final CourseModel course;
-  CourseSucces({required this.course});
+  CourseSuccess({required this.course});
 }
 
 final class CourseFailure extends CourseState {
@@ -22,9 +22,9 @@ final class CourseFailure extends CourseState {
 /// section states
 final class SectionLoading extends CourseState {}
 
-final class SectionSucces extends CourseState {
+final class SectionSuccess extends CourseState {
   final SectionModel section;
-  SectionSucces({required this.section});
+  SectionSuccess({required this.section});
 }
 
 final class SectionFailure extends CourseState {
@@ -57,6 +57,7 @@ final class AddToCartFailure extends CourseState {
   final String error;
   AddToCartFailure({required this.error});
 }
+
 /// Cart states
 final class FeedBackLoading extends CourseState {}
 
@@ -69,6 +70,3 @@ final class FeedBackFailure extends CourseState {
   final String error;
   FeedBackFailure({required this.error});
 }
-
-
-

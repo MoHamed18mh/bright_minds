@@ -34,7 +34,7 @@ class CartCourseView extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          if (state is CartCourseSucces) {
+          if (state is CartCourseSuccess) {
             final CartCourseData course = state.course.data;
 
             return Scaffold(

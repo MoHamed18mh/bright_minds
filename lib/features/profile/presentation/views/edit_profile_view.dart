@@ -26,7 +26,7 @@ class EditProfileView extends StatelessWidget {
     return BlocListener<ProfileCubit, ProfileState>(
       listener: (context, state) {
         if (state is EditUserSuccess) {
-          showToast(msg: AppStrings.done);
+          showToast(msg: state.success);
           navigateAndRemoveUntil(context, RouteKeys.home);
         } else if (state is EditUserFailure) {
           showToast(msg: state.error);
@@ -62,9 +62,7 @@ class EditProfileView extends StatelessWidget {
                             ),
                             child: InkWell(
                               onTap: () {
-                                if (cubit.editKey.currentState!.validate()) {
-                                  cubit.editUser();
-                                }
+                                cubit.editUser();
                               },
                               child: Text(
                                 AppStrings.done,

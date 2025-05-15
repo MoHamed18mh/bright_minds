@@ -54,7 +54,7 @@ abstract class AppStrings {
       cancel = 'Cancel',
       submmit = 'Submmit',
       compleatPurchase = 'Please check the cart to complete the purchase',
-      firstBuyCourse = 'First, buy the course or play it from bag',
+      firstBuyCourse = 'First, buy the course',
       wellcomToBright = 'Welcome To Bright Minds',
       boardingSub1 =
           'Discover a World of knowledge at your fingertips with \'Bright Minds\' comprehensive learning platform',

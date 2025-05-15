@@ -25,14 +25,14 @@ class UserCourseDetailsView extends StatelessWidget {
     return BlocListener<CourseCubit, CourseState>(
       listener: (context, state) {
         if (state is FeedBackSuccess) {
-            showToast(msg: state.success);
-            navigatePop(context);
-            navigateReplacement(context, RouteKeys.bag);
-          } else if (state is FeedBackFailure) {
-            showToast(msg: state.error);
-            navigatePop(context);
-            navigateReplacement(context, RouteKeys.bag);
-          }
+          showToast(msg: state.success);
+          navigatePop(context);
+          navigateReplacement(context, RouteKeys.bag);
+        } else if (state is FeedBackFailure) {
+          showToast(msg: state.error);
+          navigatePop(context);
+          navigateReplacement(context, RouteKeys.bag);
+        }
       },
       child: SafeArea(
         child: Scaffold(
@@ -75,11 +75,11 @@ class UserCourseDetailsView extends StatelessWidget {
                         height: 35,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: (state is SectionSucces)
+                          itemCount: (state is SectionSuccess)
                               ? state.section.data.length
                               : 3,
                           itemBuilder: (context, index) {
-                            if (state is SectionSucces) {
+                            if (state is SectionSuccess) {
                               return ChipW(
                                 sectionName: state.section.data[index].name,
                                 sectionId: state.section.data[index].id,

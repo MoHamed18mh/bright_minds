@@ -90,7 +90,7 @@ class CartTile extends StatelessWidget {
                         return Align(
                           alignment: Alignment.centerLeft,
                           child: InkWell(
-                            onTap: () => cubit.deleteCart(cartCourse.id),
+                            onTap: () => cubit.deleteFromCart(cartCourse.id),
                             child: Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 6,
