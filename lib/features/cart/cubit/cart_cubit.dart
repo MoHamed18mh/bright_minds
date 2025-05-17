@@ -30,15 +30,6 @@ class CartCubit extends Cubit<CartState> {
     );
   }
 
-  Future<void> getCartCourses(String courseId) async {
-    emit(CartCourseLoading());
-    final result = await repo.getCartCourseById(courseId);
-    result.fold(
-      (error) => emit(CartCourseFailure(error: error)),
-      (model) => emit(CartCourseSuccess(course: model)),
-    );
-  }
-
   Future<void> checkOut(int cartId) async {
     emit(CheckoutLoading());
     final result = await repo.checkOut(cartId);

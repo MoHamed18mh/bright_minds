@@ -4,10 +4,9 @@ import 'package:bright_minds/core/api/errors/exception.dart';
 import 'package:bright_minds/core/repository/cart_repo/cart_repo.dart';
 import 'package:bright_minds/core/routes/deep_links.dart';
 import 'package:bright_minds/core/utils/app_strings.dart';
-import 'package:bright_minds/features/cart/model/cart_course_model.dart';
 import 'package:bright_minds/features/cart/model/cart_model.dart';
 import 'package:bright_minds/features/cart/model/checkout_model.dart';
-import 'package:bright_minds/features/course/models/course_model.dart';
+import 'package:bright_minds/features/cart/model/user_course_model.dart';
 import 'package:dartz/dartz.dart';
 
 class CartRepoImpl implements CartRepo {
@@ -54,19 +53,6 @@ class CartRepoImpl implements CartRepo {
   }
 
   @override
-  Future<Either<String, CartCourseModel>> getCartCourseById(
-      String courseId) async {
-    try {
-      final response = await api.get(EndPoint.getCourseWhitId(courseId));
-      return Right(CartCourseModel.fromJson(response));
-    } on ServerException catch (e) {
-      return Left(e.errorModel.error);
-    } catch (e) {
-      return Left(e.toString());
-    }
-  }
-
-  @override
   Future<Either<String, String>> checkOut(int cartId) async {
     try {
       final response = await api.post(
@@ -87,10 +73,10 @@ class CartRepoImpl implements CartRepo {
   }
 
   @override
-  Future<Either<String, CourseModel>> getUserCourses() async {
+  Future<Either<String, UserCoursesModel>> getUserCourses() async {
     try {
       final response = await api.get(EndPoint.getUserCourses);
-      return Right(CourseModel.fromJson(response));
+      return Right(UserCoursesModel.fromJson(response));
     } on ServerException catch (e) {
       return Left(e.errorModel.error);
     } catch (e) {

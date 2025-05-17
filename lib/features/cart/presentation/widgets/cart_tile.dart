@@ -1,6 +1,4 @@
-import 'package:bright_minds/core/functions/navigation.dart';
 import 'package:bright_minds/core/functions/show_toast.dart';
-import 'package:bright_minds/core/routes/route_keys.dart';
 import 'package:bright_minds/core/utils/app_colors.dart';
 import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:bright_minds/core/utils/app_text_style.dart';
@@ -35,20 +33,16 @@ class CartTile extends StatelessWidget {
         child: Row(
           children: [
             /// course image
-            InkWell(
-              onTap: () => navigate(context, RouteKeys.cartCourse,
-                  extra: cartCourse.courseId),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: CachedNetworkImage(
-                  imageUrl: cartCourse.imageUrl,
-                  height: 120,
-                  width: 100,
-                  memCacheHeight: 300,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => const ContainerShimmer(),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: CachedNetworkImage(
+                imageUrl: cartCourse.imageUrl,
+                height: 120,
+                width: 100,
+                memCacheHeight: 300,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => const ContainerShimmer(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
 
@@ -59,16 +53,11 @@ class CartTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     /// course name
-                    InkWell(
-                      onTap: () => navigate(context, RouteKeys.cartCourse,
-                          extra: cartCourse.courseId),
-                      child: Text(
-                        cartCourse.courseName,
-                        style:
-                            AppTextStyle.nunitoSansBlack.copyWith(fontSize: 22),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
+                    SelectableText(
+                      cartCourse.courseName,
+                      style:
+                          AppTextStyle.nunitoSansBlack.copyWith(fontSize: 22),
+                      maxLines: 1,
                     ),
 
                     /// course price

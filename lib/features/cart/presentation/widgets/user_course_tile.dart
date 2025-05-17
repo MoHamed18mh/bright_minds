@@ -3,14 +3,14 @@ import 'package:bright_minds/core/routes/route_keys.dart';
 import 'package:bright_minds/core/utils/app_colors.dart';
 import 'package:bright_minds/core/utils/app_text_style.dart';
 import 'package:bright_minds/core/widgets/container_shimmer.dart';
-import 'package:bright_minds/features/course/models/course_model.dart';
+import 'package:bright_minds/features/cart/model/user_course_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class UserCourseTile extends StatelessWidget {
   const UserCourseTile({super.key, required this.course});
 
-  final CourseItem course;
+  final UserCourseItem course;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class UserCourseTile extends StatelessWidget {
       onTap: () {
         navigate(
           context,
-          RouteKeys.userCourse,
+          RouteKeys.userCourseDetails,
           extra: course,
         );
       },

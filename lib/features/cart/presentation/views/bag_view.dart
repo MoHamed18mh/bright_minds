@@ -1,5 +1,6 @@
 import 'package:bright_minds/core/functions/calc_padding.dart';
 import 'package:bright_minds/core/functions/navigation.dart';
+import 'package:bright_minds/core/functions/show_toast.dart';
 import 'package:bright_minds/core/routes/route_keys.dart';
 import 'package:bright_minds/core/utils/app_colors.dart';
 import 'package:bright_minds/core/utils/app_strings.dart';
@@ -19,62 +20,68 @@ class BagView extends StatelessWidget {
   Widget build(BuildContext context) {
     final padding = calcPadding(context);
 
-    return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: padding),
-          child: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                leading: const BackButtonW(),
-                title: Text(
-                  AppStrings.myBag,
-                  style: AppTextStyle.nunitoSansBlack,
-                ),
-                actions: [
-                  /// cart button
-                  IconButton(
-                    onPressed: () => navigate(context, RouteKeys.cart),
-                    icon: Icon(
-                      Icons.shopping_cart_outlined,
-                      color: AppColors.primaryColor,
-                    ),
+    return BlocListener<CartCubit, CartState>(
+      listener: (context, state) {
+        if (state is UserCourseFailure) {
+          showToast(msg: state.error);
+        }
+      },
+      child: SafeArea(
+        child: Scaffold(
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: padding),
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  leading: const BackButtonW(),
+                  title: Text(
+                    AppStrings.myBag,
+                    style: AppTextStyle.nunitoSansBlack,
                   ),
-                ],
-              ),
-
-              /// user courses
-              BlocBuilder<CartCubit, CartState>(
-                builder: (context, state) {
-                  return SliverGrid.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 400,
-                      mainAxisExtent: 110,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
+                  actions: [
+                    /// cart button
+                    IconButton(
+                      onPressed: () => navigate(context, RouteKeys.cart),
+                      icon: Icon(
+                        Icons.shopping_cart_outlined,
+                        color: AppColors.primaryColor,
+                      ),
                     ),
-                    itemCount: (state is UserCourseSuccess)
-                        ? state.course.data.items.length
-                        : 3,
-                    itemBuilder: (context, index) {
-                      if (state is UserCourseSuccess) {
-                        return UserCourseTile(
-                          course: state.course.data.items[index],
-                        );
-                      }
-                      return const ContainerShimmer();
-                    },
-                  );
-                },
-              ),
+                  ],
+                ),
 
-              const SliverToBoxAdapter(child: SizedBox(height: 30)),
-            ],
+                /// user courses
+                BlocBuilder<CartCubit, CartState>(
+                  builder: (context, state) {
+                    return SliverGrid.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 400,
+                        mainAxisExtent: 110,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                      ),
+                      itemCount: (state is UserCourseSuccess)
+                          ? state.course.data.items.length
+                          : 3,
+                      itemBuilder: (context, index) {
+                        if (state is UserCourseSuccess) {
+                          return UserCourseTile(
+                            course: state.course.data.items[index],
+                          );
+                        }
+                        return const ContainerShimmer();
+                      },
+                    );
+                  },
+                ),
+
+                const SliverToBoxAdapter(child: SizedBox(height: 30)),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
-

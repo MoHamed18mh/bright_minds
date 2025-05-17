@@ -15,10 +15,10 @@ class CourseModel {
 
   factory CourseModel.fromJson(Map<String, dynamic> json) {
     return CourseModel(
-      success: json[ApiKey.success],
-      message: json[ApiKey.message],
-      statusCode: json[ApiKey.statusCode],
-      data: CourseData.fromJson(json[ApiKey.data]),
+      success: json[ApiKey.success] ?? false,
+      message: json[ApiKey.message] ?? '',
+      statusCode: json[ApiKey.statusCode] ?? 0,
+      data: CourseData.fromJson(json[ApiKey.data] ?? {}),
     );
   }
 }
@@ -38,11 +38,12 @@ class CourseData {
 
   factory CourseData.fromJson(Map<String, dynamic> json) {
     return CourseData(
-      pageSize: json[ApiKey.pageSize],
-      count: json[ApiKey.count],
-      pageIndex: json[ApiKey.pageIndex],
-      items: List<CourseItem>.from(
-          json[ApiKey.items].map((e) => CourseItem.fromJson(e))),
+      pageSize: json[ApiKey.pageSize] ?? 0,
+      count: json[ApiKey.count] ?? 0,
+      pageIndex: json[ApiKey.pageIndex] ?? 0,
+      items: (json[ApiKey.items] as List<dynamic>? ?? [])
+          .map((e) => CourseItem.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
   }
 }
@@ -76,17 +77,17 @@ class CourseItem {
 
   factory CourseItem.fromJson(Map<String, dynamic> json) {
     return CourseItem(
-      id: json[ApiKey.id],
-      name: json[ApiKey.name],
-      price: json[ApiKey.price],
-      categoryId: json[ApiKey.categoryId],
-      categoryName: json[ApiKey.categoryName],
-      description: json[ApiKey.description],
-      instructorName: json[ApiKey.instructorName],
-      pictureUrl: json[ApiKey.pictureUrl],
-      createdDate: json[ApiKey.createdDate],
-      updatedDate: json[ApiKey.updatedDate],
-      rate: json[ApiKey.rate],
+      id: json[ApiKey.id] ?? 0,
+      name: json[ApiKey.name] ?? '',
+      price: json[ApiKey.price] ?? 0.0,
+      categoryId: json[ApiKey.categoryId] ?? 0,
+      categoryName: json[ApiKey.categoryName] ?? '',
+      description: json[ApiKey.description] ?? '',
+      instructorName: json[ApiKey.instructorName] ?? '',
+      pictureUrl: json[ApiKey.pictureUrl] ?? '',
+      createdDate: json[ApiKey.createdDate] ?? '',
+      updatedDate: json[ApiKey.updatedDate] ?? '',
+      rate: json[ApiKey.rate] ?? 0.0,
     );
   }
 }

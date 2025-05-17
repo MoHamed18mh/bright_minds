@@ -4,10 +4,10 @@ import 'package:bright_minds/core/functions/show_toast.dart';
 import 'package:bright_minds/core/routes/route_keys.dart';
 import 'package:bright_minds/core/utils/app_colors.dart';
 import 'package:bright_minds/core/utils/app_text_style.dart';
+import 'package:bright_minds/features/cart/model/user_course_model.dart';
 import 'package:bright_minds/features/cart/presentation/widgets/show_feed_back_dialog.dart';
 import 'package:bright_minds/features/course/cubit/course_cubit.dart';
 import 'package:bright_minds/features/course/cubit/course_state.dart';
-import 'package:bright_minds/features/course/models/course_model.dart';
 import 'package:bright_minds/features/course/presentation/widgets/chip.dart';
 import 'package:bright_minds/features/course/presentation/widgets/course_image.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class UserCourseDetailsView extends StatelessWidget {
   const UserCourseDetailsView({super.key, required this.course});
 
-  final CourseItem course;
+  final UserCourseItem course;
 
   @override
   Widget build(BuildContext context) {

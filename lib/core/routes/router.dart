@@ -8,6 +8,7 @@ import 'package:bright_minds/features/auth/presentation/views/forgot_password_vi
 import 'package:bright_minds/features/auth/presentation/views/login_view.dart';
 import 'package:bright_minds/features/auth/presentation/views/register_view.dart';
 import 'package:bright_minds/features/auth/presentation/views/reset_password_view.dart';
+import 'package:bright_minds/features/cart/model/user_course_model.dart';
 import 'package:bright_minds/features/cart/presentation/views/bag_view.dart';
 import 'package:bright_minds/features/cart/presentation/views/user_course_details_view.dart';
 import 'package:bright_minds/features/course/models/course_model.dart';
@@ -21,7 +22,6 @@ import 'package:bright_minds/features/instructor/presentation/views/instructor_v
 import 'package:bright_minds/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:bright_minds/features/onboarding/presentation/views/onboarding_view.dart';
 import 'package:bright_minds/features/profile/models/user_model.dart';
-import 'package:bright_minds/features/cart/presentation/views/cart_course_view.dart';
 import 'package:bright_minds/features/cart/presentation/views/cart_view.dart';
 import 'package:bright_minds/features/profile/presentation/views/edit_profile_view.dart';
 import 'package:bright_minds/features/profile/presentation/views/profile_view.dart';
@@ -38,7 +38,7 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
         return redirect(state);
       },
       routes: [
-        /// OnBoarding
+        /// OnBoarding screen
         GoRoute(
           path: RouteKeys.onBoarding,
           builder: (context, state) => BlocProvider(
@@ -47,7 +47,7 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
           ),
         ),
 
-        /// Login
+        /// Login screen
         GoRoute(
           path: RouteKeys.login,
           builder: (context, state) {
@@ -69,7 +69,7 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
           },
         ),
 
-        /// Register
+        /// Register screen
         GoRoute(
           path: RouteKeys.register,
           builder: (context, state) => BlocProvider(
@@ -78,7 +78,7 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
           ),
         ),
 
-        /// Forgot Password
+        /// Forgot Password screen
         GoRoute(
           path: RouteKeys.forgotPassword,
           builder: (context, state) => BlocProvider(
@@ -87,7 +87,7 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
           ),
         ),
 
-        /// reset Password
+        /// reset Password screen
         GoRoute(
           path: RouteKeys.resetPassword,
           builder: (context, state) {
@@ -104,13 +104,13 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
           },
         ),
 
-        /// home
+        /// home screen
         GoRoute(
           path: RouteKeys.home,
           builder: (context, state) => const HomeView(),
         ),
 
-        /// course
+        /// course screen
         GoRoute(
           path: RouteKeys.course,
           builder: (context, state) => BlocProvider(
@@ -119,14 +119,14 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
           ),
         ),
 
-        /// course details
+        /// course details screen
         GoRoute(
           path: RouteKeys.courseDetails,
           builder: (context, state) {
             final course = state.extra as CourseItem;
 
             return BlocProvider(
-              create: (_) => createCourse()..getSections(course.id),
+              create: (_) => createCourse()..getSections(courseId: course.id),
               child: CourseDetailsView(
                 course: course,
               ),
@@ -143,19 +143,10 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
             final String sectionName = extra[ApiKey.sectionName];
 
             return BlocProvider(
-              create: (_) => createCourse()..getVideos(sectionId),
+              create: (_) => createCourse()..getVideos(sectionId: sectionId),
               child: VideoView(sectionName: sectionName),
             );
           },
-        ),
-
-        /// user course details screen
-        GoRoute(
-          path: RouteKeys.userCourse,
-          builder: (context, state) => BlocProvider(
-            create: (context) => createCourse(),
-            child: UserCourseDetailsView(course: state.extra as CourseItem),
-          ),
         ),
 
         /// instructor
@@ -206,21 +197,25 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
           ),
         ),
 
+        /// user course details screen
+        GoRoute(
+          path: RouteKeys.userCourseDetails,
+          builder: (context, state) {
+            final course = state.extra as UserCourseItem;
+            return BlocProvider(
+              create: (context) =>
+                  createCourse()..getSections(courseId: course.id),
+              child: UserCourseDetailsView(course: course),
+            );
+          },
+        ),
+
         /// cart screen
         GoRoute(
           path: RouteKeys.cart,
           builder: (context, state) => BlocProvider(
             create: (_) => createCart()..getCart(),
             child: const CartView(),
-          ),
-        ),
-
-        /// cart course screen
-        GoRoute(
-          path: RouteKeys.cartCourse,
-          builder: (context, state) => BlocProvider(
-            create: (_) => createCart()..getCartCourses(state.extra as String),
-            child: const CartCourseView(),
           ),
         ),
 

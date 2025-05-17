@@ -83,7 +83,7 @@ class CourseView extends StatelessWidget {
                       ),
                       itemCount: (state is CourseSuccess)
                           ? state.course.data.items.length
-                          : 5,
+                          : 3,
                       itemBuilder: (context, index) {
                         if (state is CourseSuccess) {
                           return CourseTile(

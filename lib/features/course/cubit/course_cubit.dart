@@ -18,7 +18,7 @@ class CourseCubit extends Cubit<CourseState> {
     );
   }
 
-  Future<void> getSections(int courseId) async {
+  Future<void> getSections({required int courseId}) async {
     emit(SectionLoading());
     final result = await courseRepo.getSections(courseId);
     result.fold(
@@ -27,7 +27,7 @@ class CourseCubit extends Cubit<CourseState> {
     );
   }
 
-  Future<void> getVideos(int sectionId) async {
+  Future<void> getVideos({required int sectionId}) async {
     emit(VideoLoading());
     final result = await courseRepo.getVideos(sectionId);
     result.fold(
@@ -64,7 +64,7 @@ class CourseCubit extends Cubit<CourseState> {
       (error) => emit(AddToCartFailure(error: error)),
       (success) async {
         emit(AddToCartSuccess(success: success));
-        await getSections(courseId);
+        await getSections(courseId: courseId);
       },
     );
   }
