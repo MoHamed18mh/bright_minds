@@ -14,6 +14,8 @@ import 'package:bright_minds/features/cart/presentation/views/user_course_detail
 import 'package:bright_minds/features/course/models/course_model.dart';
 import 'package:bright_minds/features/course/presentation/views/course_details_view.dart';
 import 'package:bright_minds/features/course/presentation/views/course_view.dart';
+import 'package:bright_minds/features/video/cubit/video_cubit.dart';
+import 'package:bright_minds/features/video/presentation/views/video_play_view.dart';
 import 'package:bright_minds/features/course/presentation/views/video_view.dart';
 import 'package:bright_minds/features/home/presentation/views/home_view.dart';
 import 'package:bright_minds/features/instructor/models/instructor_model.dart';
@@ -147,6 +149,15 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
               child: VideoView(sectionName: sectionName),
             );
           },
+        ),
+
+        /// play video screen
+        GoRoute(
+          path: RouteKeys.videoPlay,
+          builder: (context, state) => BlocProvider(
+            create: (_) => VideoCubit(state.extra as String),
+            child: const VideoPlayView(),
+          ),
         ),
 
         /// instructor

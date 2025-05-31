@@ -8,6 +8,7 @@ abstract class RouteKeys {
       course = '/course',
       courseDetails = '/course-details',
       video = '/video',
+      videoPlay = '/video-play',
       instructor = '/instructor',
       instructorDetails = '/instructor-details',
       profile = '/profile',

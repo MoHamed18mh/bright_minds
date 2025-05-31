@@ -1,4 +1,3 @@
-import 'package:android_intent_plus/android_intent.dart';
 import 'package:bright_minds/core/repository/cart_repo/cart_repo.dart';
 import 'package:bright_minds/core/repository/course_repo/course_repo.dart';
 import 'package:bright_minds/features/course/cubit/course_state.dart';
@@ -34,14 +33,6 @@ class CourseCubit extends Cubit<CourseState> {
       (error) => emit(VideoFailure(error: error)),
       (model) => emit(VideoSuccess(video: model)),
     );
-  }
-
-  void playVideo(String url) {
-    AndroidIntent(
-      data: url,
-      action: 'action_view',
-      type: 'video/mp4',
-    ).launch();
   }
 
   Future<void> submitFeedback(int courseId, String comment, double rate) async {

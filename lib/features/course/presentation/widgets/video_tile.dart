@@ -1,13 +1,11 @@
-import 'package:bright_minds/core/functions/show_toast.dart';
+import 'package:bright_minds/core/functions/navigation.dart';
+import 'package:bright_minds/core/routes/route_keys.dart';
 import 'package:bright_minds/core/utils/app_colors.dart';
-import 'package:bright_minds/core/utils/app_strings.dart';
 import 'package:bright_minds/core/utils/app_text_style.dart';
 import 'package:bright_minds/core/widgets/container_shimmer.dart';
-import 'package:bright_minds/features/course/cubit/course_cubit.dart';
 import 'package:bright_minds/features/course/models/video_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VideoTile extends StatelessWidget {
   const VideoTile({super.key, required this.video});
@@ -18,11 +16,7 @@ class VideoTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if (video.isPaid) {
-          context.read<CourseCubit>().playVideo(video.videoUrl);
-        } else {
-          showToast(msg: AppStrings.firstBuyCourse);
-        }
+        navigate(context, RouteKeys.videoPlay, extra: video.videoUrl);
       },
       child: Container(
         decoration: BoxDecoration(
