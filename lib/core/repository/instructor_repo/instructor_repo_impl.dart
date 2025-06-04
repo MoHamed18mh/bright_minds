@@ -7,12 +7,20 @@ import 'package:bright_minds/features/instructor/models/instructor_model.dart';
 
 class InstructorRepoImpl implements InstructorRepo {
   final ApiConsumer api;
+
   InstructorRepoImpl({required this.api});
 
   @override
-  Future<Either<String, InstructorModel>> getInstructors() async {
+  Future<Either<String, InstructorModel>> getInstructors(
+      {required int pageIndex, required int pageSize}) async {
     try {
-      final response = await api.get(EndPoint.getInstructors);
+      final response = await api.get(
+        EndPoint.getInstructors,
+        queryParameters: {
+          ApiKey.qPageIndex: pageIndex,
+          ApiKey.qPageSize: pageSize,
+        },
+      );
       return Right(InstructorModel.fromJson(response));
     } on ServerException catch (e) {
       return Left(e.errorModel.error);

@@ -4,7 +4,8 @@ import 'package:bright_minds/features/course/models/section_model.dart';
 import 'package:bright_minds/features/course/models/video_model.dart';
 
 abstract class CourseRepo {
-  Future<Either<String, CourseModel>> getCourses();
+  Future<Either<String, CourseModel>> getCourses(
+      {required int pageIndex, required int pageSize});
 
   Future<Either<String, SectionModel>> getSections(int courseId);
 

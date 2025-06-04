@@ -13,9 +13,13 @@ class CourseRepoImpl implements CourseRepo {
   CourseRepoImpl({required this.api});
 
   @override
-  Future<Either<String, CourseModel>> getCourses() async {
+  Future<Either<String, CourseModel>> getCourses(
+      {required int pageIndex, required int pageSize}) async {
     try {
-      final response = await api.get(EndPoint.getCourses);
+      final response = await api.get(EndPoint.getCourses, queryParameters: {
+        ApiKey.qPageIndex: pageIndex,
+        ApiKey.qPageSize: pageSize,
+      });
       return Right(CourseModel.fromJson(response));
     } on ServerException catch (e) {
       return Left(e.errorModel.error);

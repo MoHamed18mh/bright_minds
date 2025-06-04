@@ -63,5 +63,6 @@ abstract class AppStrings {
       learnFromBeast = 'Learn From The Best',
       youCanWathc = 'You can watch the course',
       errorTryAgain = 'An error occurred, please try again',
+      noInstructors = 'No instructors found',
       next = 'Next';
 }

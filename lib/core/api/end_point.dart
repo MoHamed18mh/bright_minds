@@ -104,6 +104,8 @@ abstract class ApiKey {
       isPaid = 'isPaid',
       paymentFailedUrl = 'paymentFailedUrl',
       paymentSucessUrl = 'paymentSucessUrl',
+      qPageSize = 'PageSize',
+      qPageIndex = 'PageIndex',
 
       // schemas
       imageNull = 'https://brightminds.runasp.net//files/UsersImages/',

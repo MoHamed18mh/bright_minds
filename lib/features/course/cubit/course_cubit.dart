@@ -1,20 +1,78 @@
 import 'package:bright_minds/core/repository/cart_repo/cart_repo.dart';
 import 'package:bright_minds/core/repository/course_repo/course_repo.dart';
 import 'package:bright_minds/features/course/cubit/course_state.dart';
+import 'package:bright_minds/features/course/models/course_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CourseCubit extends Cubit<CourseState> {
   final CourseRepo courseRepo;
   final CartRepo cartRepo;
+
+  // page size for pagination
+  static const int _pageSize = 6;
+
   CourseCubit(this.courseRepo, this.cartRepo) : super(CourseInitial());
 
   Future<void> getCourses() async {
     emit(CourseLoading());
-    final result = await courseRepo.getCourses();
+    final result =
+        await courseRepo.getCourses(pageIndex: 1, pageSize: _pageSize);
     result.fold(
-      (err) => emit(CourseFailure(error: err)),
-      (model) => emit(CourseSuccess(course: model)),
+      (error) {
+        emit(CourseFailure(
+          error: error,
+          previousItems: const [],
+          previousPageIndex: 0,
+          hasReachedMax: false,
+        ));
+      },
+      (course) {
+        final items = course.data.items;
+        final reachedMax = items.length < _pageSize;
+
+        emit(CourseSuccess(
+          items: items,
+          pageIndex: 1,
+          hasReachedMax: reachedMax,
+          isLoadingMore: false,
+        ));
+      },
     );
+  }
+
+  Future<void> loadMoreCourses() async {
+    final currentState = state;
+
+    if (currentState is CourseSuccess &&
+        !currentState.hasReachedMax &&
+        !currentState.isLoadingMore) {
+      int nextPage = currentState.pageIndex + 1;
+
+      emit(currentState.copyWith(isLoadingMore: true));
+
+      final result =
+          await courseRepo.getCourses(pageIndex: nextPage, pageSize: _pageSize);
+
+      result.fold((error) {
+        emit(CourseFailure(
+          error: error,
+          previousItems: currentState.items,
+          previousPageIndex: currentState.pageIndex,
+          hasReachedMax: currentState.hasReachedMax,
+        ));
+      }, (course) {
+        final newItems = course.data.items;
+        final allItems = List<CourseItem>.from(currentState.items)
+          ..addAll(newItems);
+        final reachedMax = newItems.length < _pageSize;
+
+        emit(CourseSuccess(
+            items: allItems,
+            pageIndex: nextPage,
+            hasReachedMax: reachedMax,
+            isLoadingMore: false));
+      });
+    }
   }
 
   Future<void> getSections({required int courseId}) async {
