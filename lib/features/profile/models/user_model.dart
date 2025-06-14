@@ -11,8 +11,8 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      message: json[ApiKey.messaget],
-      data: UserData.fromJson(json[ApiKey.data]),
+      message: json[ApiKey.messaget] as String? ?? '',
+      data: UserData.fromJson(json[ApiKey.data] as Map<String, dynamic>? ?? {}),
     );
   }
 }
@@ -25,8 +25,8 @@ class UserData {
   final String lastName;
   final String imageCover;
   final String mobile;
-  final double? walletBalance;
-  final List<String>? roles;
+  final double walletBalance;
+  final List<String> roles;
 
   UserData({
     required this.id,
@@ -36,23 +36,24 @@ class UserData {
     required this.lastName,
     required this.imageCover,
     required this.mobile,
-    this.walletBalance,
-    this.roles,
+    required this.walletBalance,
+    required this.roles,
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
     return UserData(
-      id: json[ApiKey.id],
-      email: json[ApiKey.email],
-      displayName: json[ApiKey.displayName],
-      firstName: json[ApiKey.firstName],
-      lastName: json[ApiKey.lastName],
-      imageCover: json[ApiKey.imageCover],
-      mobile: json[ApiKey.mobile],
-      walletBalance: json[ApiKey.walletBalance] != null
-          ? (json[ApiKey.walletBalance] as num).toDouble()
-          : null,
-      roles: (json[ApiKey.roles] as List?)?.map((e) => e.toString()).toList(),
+      id: json[ApiKey.id] as String? ?? '',
+      email: json[ApiKey.email] as String? ?? '',
+      displayName: json[ApiKey.displayName] as String? ?? '',
+      firstName: json[ApiKey.firstName] as String? ?? '',
+      lastName: json[ApiKey.lastName] as String? ?? '',
+      imageCover: json[ApiKey.imageCover] as String? ?? '',
+      mobile: json[ApiKey.mobile] as String? ?? '',
+      walletBalance: (json[ApiKey.walletBalance] as num?)?.toDouble() ?? 0.0,
+      roles: (json[ApiKey.roles] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
     );
   }
 }

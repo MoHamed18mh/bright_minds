@@ -1,9 +1,10 @@
+import 'package:bright_minds/core/api/end_point.dart';
 import 'package:bright_minds/core/functions/navigation.dart';
 import 'package:bright_minds/core/routes/route_keys.dart';
 import 'package:bright_minds/core/utils/app_colors.dart';
 import 'package:bright_minds/core/utils/app_text_style.dart';
 import 'package:bright_minds/core/widgets/container_shimmer.dart';
-import 'package:bright_minds/features/course/models/video_model.dart';
+import 'package:bright_minds/features/video/models/video_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,8 @@ class VideoTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        navigate(context, RouteKeys.videoPlay, extra: video.videoUrl);
+        navigate(context, RouteKeys.videoPlay,
+            extra: {ApiKey.videoUrl: video.videoUrl, ApiKey.id: video.id});
       },
       child: Container(
         decoration: BoxDecoration(

@@ -1,5 +1,5 @@
+import 'package:bright_minds/core/functions/calc_padding.dart';
 import 'package:bright_minds/core/functions/show_toast.dart';
-import 'package:bright_minds/core/utils/app_colors.dart';
 import 'package:bright_minds/core/widgets/back_button.dart';
 import 'package:bright_minds/features/video/cubit/video_cubit.dart';
 import 'package:bright_minds/features/video/cubit/video_state.dart';
@@ -12,36 +12,46 @@ class VideoPlayView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          /// video player
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: BlocConsumer<VideoCubit, VideoState>(
-              listener: (context, state) {
-                if (state is VideoError) {
-                  showToast(msg: 'can not play on this device');
-                }
-              },
-              builder: (context, state) {
-                if (state is VideoChewieReady) {
-                  return Chewie(controller: state.chewieController);
-                }
+    final padding = calcPadding(context);
 
-                return Center(
-                  child:
-                      CircularProgressIndicator(color: AppColors.primaryColor),
-                );
-              },
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: padding),
+        child: CustomScrollView(
+          slivers: [
+            const SliverAppBar(
+              leading: BackButtonW(),
+              floating: true,
             ),
-          ),
-          const Positioned(
-            top: 15,
-            left: 15,
-            child: BackButtonW(),
-          ),
-        ],
+            const SliverToBoxAdapter(child: SizedBox(height: 70)),
+            SliverToBoxAdapter(
+              child: BlocConsumer<VideoCubit, VideoState>(
+                listener: (context, state) {
+                  if (state is VideoError) {
+                    showToast(msg: 'error, try later');
+                  }
+                },
+                builder: (context, state) {
+                  if (state is VideoChewieReady) {
+                    return Chewie(controller: state.chewieController);
+                  }
+
+                  return Center(
+                    child: Container(
+                      color: Colors.grey,
+                      width: double.infinity,
+                      height: 250,
+                    ),
+                    // CircularProgressIndicator(color: AppColors.primaryColor),
+                  );
+                },
+              ),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 50)),
+
+            
+          ],
+        ),
       ),
     );
   }

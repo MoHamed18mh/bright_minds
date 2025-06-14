@@ -7,7 +7,7 @@ class InstructorCubit extends Cubit<InstructorState> {
   final InstructorRepo repo;
 
   // page size for pagination
-  static const int _pageSize = 6;
+  static const int _pageSize = 10;
 
   InstructorCubit(this.repo) : super(InstructorInitial());
 

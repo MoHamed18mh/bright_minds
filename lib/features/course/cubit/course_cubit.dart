@@ -9,7 +9,7 @@ class CourseCubit extends Cubit<CourseState> {
   final CartRepo cartRepo;
 
   // page size for pagination
-  static const int _pageSize = 6;
+  static const int _pageSize = 10;
 
   CourseCubit(this.courseRepo, this.cartRepo) : super(CourseInitial());
 

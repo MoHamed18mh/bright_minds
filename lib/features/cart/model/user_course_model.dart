@@ -17,9 +17,10 @@ class UserCoursesModel {
     return UserCoursesModel(
       success: json[ApiKey.success] as bool? ?? false,
       message: json[ApiKey.message] as String? ?? '',
-      statusCode: json[ApiKey.statusCode] as int? ?? 0,
+      statusCode: (json[ApiKey.statusCode] as num?)?.toInt() ?? 0,
       data: UserCoursesData.fromJson(
-          json[ApiKey.data] as Map<String, dynamic>? ?? {}),
+        json[ApiKey.data] as Map<String, dynamic>? ?? {},
+      ),
     );
   }
 }
@@ -39,11 +40,13 @@ class UserCoursesData {
 
   factory UserCoursesData.fromJson(Map<String, dynamic> json) {
     return UserCoursesData(
-      pageSize: json[ApiKey.pageSize] as int? ?? 0,
-      count: json[ApiKey.count] as int? ?? 0,
-      pageIndex: json[ApiKey.pageIndex] as int? ?? 0,
+      pageSize: (json[ApiKey.pageSize] as num?)?.toInt() ?? 0,
+      count: (json[ApiKey.count] as num?)?.toInt() ?? 0,
+      pageIndex: (json[ApiKey.pageIndex] as num?)?.toInt() ?? 0,
       items: (json[ApiKey.items] as List<dynamic>? ?? [])
-          .map((e) => UserCourseItem.fromJson(e as Map<String, dynamic>))
+          .map(
+            (e) => UserCourseItem.fromJson(e as Map<String, dynamic>),
+          )
           .toList(),
     );
   }
@@ -78,20 +81,22 @@ class UserCourseItem {
 
   factory UserCourseItem.fromJson(Map<String, dynamic> json) {
     return UserCourseItem(
-      id: json[ApiKey.id] as int? ?? 0,
+      id: (json[ApiKey.id] as num?)?.toInt() ?? 0,
       name: json[ApiKey.name] as String? ?? '',
       price: (json[ApiKey.price] as num?)?.toDouble() ?? 0.0,
-      categoryId: json[ApiKey.categoryId] as int? ?? 0,
+      categoryId: (json[ApiKey.categoryId] as num?)?.toInt() ?? 0,
       categoryName: json[ApiKey.categoryName] as String? ?? '',
       description: json[ApiKey.description] as String? ?? '',
       instructorName: json[ApiKey.instructorName] as String? ?? '',
       pictureUrl: json[ApiKey.pictureUrl] as String? ?? '',
-      createdDate:
-          DateTime.tryParse(json[ApiKey.createdDate] as String? ?? '') ??
-              DateTime.fromMillisecondsSinceEpoch(0),
-      updatedDate:
-          DateTime.tryParse(json[ApiKey.updatedDate] as String? ?? '') ??
-              DateTime.fromMillisecondsSinceEpoch(0),
+      createdDate: DateTime.tryParse(
+            json[ApiKey.createdDate] as String? ?? '',
+          ) ??
+          DateTime.fromMillisecondsSinceEpoch(0),
+      updatedDate: DateTime.tryParse(
+            json[ApiKey.updatedDate] as String? ?? '',
+          ) ??
+          DateTime.fromMillisecondsSinceEpoch(0),
       rate: (json[ApiKey.rate] as num?)?.toDouble() ?? 0.0,
     );
   }

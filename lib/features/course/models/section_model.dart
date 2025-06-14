@@ -15,11 +15,12 @@ class SectionModel {
 
   factory SectionModel.fromJson(Map<String, dynamic> json) {
     return SectionModel(
-      success: json[ApiKey.success],
-      message: json[ApiKey.message],
-      statusCode: json[ApiKey.statusCode],
-      data: List<SectionData>.from(
-          json[ApiKey.data].map((e) => SectionData.fromJson(e))),
+      success: json[ApiKey.success] as bool? ?? false,
+      message: json[ApiKey.message] as String? ?? '',
+      statusCode: (json[ApiKey.statusCode] as num?)?.toInt() ?? 0,
+      data: (json[ApiKey.data] as List<dynamic>? ?? [])
+          .map((e) => SectionData.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
   }
 }
@@ -45,13 +46,13 @@ class SectionData {
 
   factory SectionData.fromJson(Map<String, dynamic> json) {
     return SectionData(
-      id: json[ApiKey.id],
-      name: json[ApiKey.name],
-      courseId: json[ApiKey.courseId],
-      description: json[ApiKey.description],
-      order: json[ApiKey.order],
-      createdDate: json[ApiKey.createdDate],
-      updatedDate: json[ApiKey.updatedDate],
+      id: (json[ApiKey.id] as num?)?.toInt() ?? 0,
+      name: json[ApiKey.name] as String? ?? '',
+      courseId: (json[ApiKey.courseId] as num?)?.toInt() ?? 0,
+      description: json[ApiKey.description] as String? ?? '',
+      order: (json[ApiKey.order] as num?)?.toInt() ?? 0,
+      createdDate: json[ApiKey.createdDate] as String? ?? '',
+      updatedDate: json[ApiKey.updatedDate] as String? ?? '',
     );
   }
 }

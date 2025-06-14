@@ -33,6 +33,9 @@ class MainApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Bright Minds',
       locale: const Locale('en'),
+      builder: (context, child) {
+        return Directionality(textDirection: TextDirection.ltr, child: child!);
+      },
       debugShowCheckedModeBanner: false,
       routerConfig: appRouter,
     );

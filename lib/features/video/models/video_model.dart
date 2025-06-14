@@ -15,11 +15,12 @@ class VideoModel {
 
   factory VideoModel.fromJson(Map<String, dynamic> json) {
     return VideoModel(
-      success: json[ApiKey.success],
-      message: json[ApiKey.message],
-      statusCode: json[ApiKey.statusCode],
-      data: List<VideoData>.from(
-          json[ApiKey.data].map((e) => VideoData.fromJson(e))),
+      success: json[ApiKey.success] as bool? ?? false,
+      message: json[ApiKey.message] as String? ?? '',
+      statusCode: (json[ApiKey.statusCode] as num?)?.toInt() ?? 0,
+      data: (json[ApiKey.data] as List<dynamic>? ?? [])
+          .map((e) => VideoData.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
   }
 }
@@ -55,18 +56,18 @@ class VideoData {
 
   factory VideoData.fromJson(Map<String, dynamic> json) {
     return VideoData(
-      id: json[ApiKey.id],
-      name: json[ApiKey.name],
-      sectionId: json[ApiKey.sectionId],
-      sectionName: json[ApiKey.sectionName],
-      videoUrl: json[ApiKey.videoUrl],
-      coverUrl: json[ApiKey.coverUrl],
-      duration: json[ApiKey.duration],
-      description: json[ApiKey.description],
-      isPaid: json[ApiKey.isPaid],
-      order: json[ApiKey.order],
-      createdDate: json[ApiKey.createdDate],
-      updatedDate: json[ApiKey.updatedDate],
+      id: (json[ApiKey.id] as num?)?.toInt() ?? 0,
+      name: json[ApiKey.name] as String? ?? '',
+      sectionId: (json[ApiKey.sectionId] as num?)?.toInt() ?? 0,
+      sectionName: json[ApiKey.sectionName] as String? ?? '',
+      videoUrl: json[ApiKey.videoUrl] as String? ?? '',
+      coverUrl: json[ApiKey.coverUrl] as String? ?? '',
+      duration: (json[ApiKey.duration] as num?)?.toDouble() ?? 0.0,
+      description: json[ApiKey.description] as String? ?? '',
+      isPaid: json[ApiKey.isPaid] as bool? ?? false,
+      order: (json[ApiKey.order] as num?)?.toInt() ?? 0,
+      createdDate: json[ApiKey.createdDate] as String? ?? '',
+      updatedDate: json[ApiKey.updatedDate] as String? ?? '',
     );
   }
 }

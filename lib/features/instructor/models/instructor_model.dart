@@ -15,10 +15,10 @@ class InstructorModel {
 
   factory InstructorModel.fromJson(Map<String, dynamic> json) {
     return InstructorModel(
-      success: json[ApiKey.success],
-      message: json[ApiKey.message],
-      statusCode: json[ApiKey.statusCode],
-      data: InstructorData.fromJson(json[ApiKey.data]),
+      success: json[ApiKey.success] as bool? ?? false,
+      message: json[ApiKey.message] as String? ?? '',
+      statusCode: (json[ApiKey.statusCode] as num?)?.toInt() ?? 0,
+      data: InstructorData.fromJson(json[ApiKey.data] as Map<String, dynamic>? ?? {}),
     );
   }
 }
@@ -38,12 +38,12 @@ class InstructorData {
 
   factory InstructorData.fromJson(Map<String, dynamic> json) {
     return InstructorData(
-      pageSize: json[ApiKey.pageSize],
-      count: json[ApiKey.count],
-      pageIndex: json[ApiKey.pageIndex],
-      items: List<InstructorItem>.from(
-        json[ApiKey.items].map((item) => InstructorItem.fromJson(item)),
-      ),
+      pageSize: (json[ApiKey.pageSize] as num?)?.toInt() ?? 0,
+      count: (json[ApiKey.count] as num?)?.toInt() ?? 0,
+      pageIndex: (json[ApiKey.pageIndex] as num?)?.toInt() ?? 0,
+      items: (json[ApiKey.items] as List<dynamic>? ?? [])
+          .map((e) => InstructorItem.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
   }
 }
@@ -69,13 +69,13 @@ class InstructorItem {
 
   factory InstructorItem.fromJson(Map<String, dynamic> json) {
     return InstructorItem(
-      userId: json[ApiKey.userId],
-      displayName: json[ApiKey.displayName],
-      jobTitle: json[ApiKey.jobTitle],
-      email: json[ApiKey.email],
-      mobile: json[ApiKey.mobile],
-      imageCover: json[ApiKey.imageCover],
-      qualifications: json[ApiKey.qualifications],
+      userId: json[ApiKey.userId] as String? ?? '',
+      displayName: json[ApiKey.displayName] as String? ?? '',
+      jobTitle: json[ApiKey.jobTitle] as String? ?? '',
+      email: json[ApiKey.email] as String? ?? '',
+      mobile: json[ApiKey.mobile] as String? ?? '',
+      imageCover: json[ApiKey.imageCover] as String? ?? '',
+      qualifications: json[ApiKey.qualifications] as String? ?? '',
     );
   }
 }

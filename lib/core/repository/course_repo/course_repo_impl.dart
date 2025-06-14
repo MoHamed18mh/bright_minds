@@ -6,7 +6,7 @@ import 'package:bright_minds/core/api/end_point.dart';
 import 'package:bright_minds/core/api/errors/exception.dart';
 import 'package:bright_minds/features/course/models/course_model.dart';
 import 'package:bright_minds/features/course/models/section_model.dart';
-import 'package:bright_minds/features/course/models/video_model.dart';
+import 'package:bright_minds/features/video/models/video_model.dart';
 
 class CourseRepoImpl implements CourseRepo {
   final ApiConsumer api;

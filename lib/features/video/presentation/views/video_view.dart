@@ -5,7 +5,7 @@ import 'package:bright_minds/core/widgets/back_button.dart';
 import 'package:bright_minds/core/widgets/container_shimmer.dart';
 import 'package:bright_minds/features/course/cubit/course_cubit.dart';
 import 'package:bright_minds/features/course/cubit/course_state.dart';
-import 'package:bright_minds/features/course/presentation/widgets/video_tile.dart';
+import 'package:bright_minds/features/video/presentation/widgets/video_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

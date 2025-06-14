@@ -15,10 +15,11 @@ class CourseModel {
 
   factory CourseModel.fromJson(Map<String, dynamic> json) {
     return CourseModel(
-      success: json[ApiKey.success] ?? false,
-      message: json[ApiKey.message] ?? '',
-      statusCode: json[ApiKey.statusCode] ?? 0,
-      data: CourseData.fromJson(json[ApiKey.data] ?? {}),
+      success: json[ApiKey.success] as bool? ?? false,
+      message: json[ApiKey.message] as String? ?? '',
+      statusCode: (json[ApiKey.statusCode] as num?)?.toInt() ?? 0,
+      data:
+          CourseData.fromJson(json[ApiKey.data] as Map<String, dynamic>? ?? {}),
     );
   }
 }
@@ -38,9 +39,9 @@ class CourseData {
 
   factory CourseData.fromJson(Map<String, dynamic> json) {
     return CourseData(
-      pageSize: json[ApiKey.pageSize] ?? 0,
-      count: json[ApiKey.count] ?? 0,
-      pageIndex: json[ApiKey.pageIndex] ?? 0,
+      pageSize: (json[ApiKey.pageSize] as num?)?.toInt() ?? 0,
+      count: (json[ApiKey.count] as num?)?.toInt() ?? 0,
+      pageIndex: (json[ApiKey.pageIndex] as num?)?.toInt() ?? 0,
       items: (json[ApiKey.items] as List<dynamic>? ?? [])
           .map((e) => CourseItem.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -77,17 +78,17 @@ class CourseItem {
 
   factory CourseItem.fromJson(Map<String, dynamic> json) {
     return CourseItem(
-      id: json[ApiKey.id] ?? 0,
-      name: json[ApiKey.name] ?? '',
-      price: json[ApiKey.price] ?? 0.0,
-      categoryId: json[ApiKey.categoryId] ?? 0,
-      categoryName: json[ApiKey.categoryName] ?? '',
-      description: json[ApiKey.description] ?? '',
-      instructorName: json[ApiKey.instructorName] ?? '',
-      pictureUrl: json[ApiKey.pictureUrl] ?? '',
-      createdDate: json[ApiKey.createdDate] ?? '',
-      updatedDate: json[ApiKey.updatedDate] ?? '',
-      rate: json[ApiKey.rate] ?? 0.0,
+      id: (json[ApiKey.id] as num?)?.toInt() ?? 0,
+      name: json[ApiKey.name] as String? ?? '',
+      price: (json[ApiKey.price] as num?)?.toDouble() ?? 0.0,
+      categoryId: (json[ApiKey.categoryId] as num?)?.toInt() ?? 0,
+      categoryName: json[ApiKey.categoryName] as String? ?? '',
+      description: json[ApiKey.description] as String? ?? '',
+      instructorName: json[ApiKey.instructorName] as String? ?? '',
+      pictureUrl: json[ApiKey.pictureUrl] as String? ?? '',
+      createdDate: json[ApiKey.createdDate] as String? ?? '',
+      updatedDate: json[ApiKey.updatedDate] as String? ?? '',
+      rate: (json[ApiKey.rate] as num?)?.toDouble() ?? 0.0,
     );
   }
 }

@@ -16,7 +16,7 @@ import 'package:bright_minds/features/course/presentation/views/course_details_v
 import 'package:bright_minds/features/course/presentation/views/course_view.dart';
 import 'package:bright_minds/features/video/cubit/video_cubit.dart';
 import 'package:bright_minds/features/video/presentation/views/video_play_view.dart';
-import 'package:bright_minds/features/course/presentation/views/video_view.dart';
+import 'package:bright_minds/features/video/presentation/views/video_view.dart';
 import 'package:bright_minds/features/home/presentation/views/home_view.dart';
 import 'package:bright_minds/features/instructor/models/instructor_model.dart';
 import 'package:bright_minds/features/instructor/presentation/views/instructor_details_view.dart';
@@ -153,12 +153,17 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
 
         /// play video screen
         GoRoute(
-          path: RouteKeys.videoPlay,
-          builder: (context, state) => BlocProvider(
-            create: (_) => VideoCubit(state.extra as String),
-            child: const VideoPlayView(),
-          ),
-        ),
+            path: RouteKeys.videoPlay,
+            builder: (context, state) {
+              final extra = state.extra as Map<String, dynamic>;
+              final videoUrl = extra[ApiKey.videoUrl] as String;
+              // final videoId = extra[ApiKey.id] as int;
+
+              return BlocProvider(
+                create: (_) => VideoCubit(videoUrl),
+                child: const VideoPlayView(),
+              );
+            }),
 
         /// instructor
         GoRoute(
