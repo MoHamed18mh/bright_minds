@@ -6,7 +6,6 @@ import 'package:bright_minds/core/api/end_point.dart';
 import 'package:bright_minds/core/api/errors/exception.dart';
 import 'package:bright_minds/features/course/models/course_model.dart';
 import 'package:bright_minds/features/course/models/section_model.dart';
-import 'package:bright_minds/features/video/models/video_model.dart';
 
 class CourseRepoImpl implements CourseRepo {
   final ApiConsumer api;
@@ -33,18 +32,6 @@ class CourseRepoImpl implements CourseRepo {
     try {
       final response = await api.get(EndPoint.getSections(courseId));
       return Right(SectionModel.fromJson(response));
-    } on ServerException catch (e) {
-      return Left(e.errorModel.error);
-    } catch (e) {
-      return Left(e.toString());
-    }
-  }
-
-  @override
-  Future<Either<String, VideoModel>> getVideos(int sectionId) async {
-    try {
-      final response = await api.get(EndPoint.getVideos(sectionId));
-      return Right(VideoModel.fromJson(response));
     } on ServerException catch (e) {
       return Left(e.errorModel.error);
     } catch (e) {

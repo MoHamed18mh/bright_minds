@@ -15,6 +15,8 @@ abstract class EndPoint {
       getCourses = '/api/Course',
       getUserCourses = '/api/Course/usercourses',
       getUser = '/api/Account/UserProfile',
+      postQuiz = '/api/Quizzes',
+      postEvaluate = '/api/Quizzes/evaluate',
       postFeedBack = '/api/Feedback';
 
   static String deletAccount(String userId) {
@@ -106,6 +108,25 @@ abstract class ApiKey {
       paymentSucessUrl = 'paymentSucessUrl',
       qPageSize = 'PageSize',
       qPageIndex = 'PageIndex',
+      title = 'title',
+      grade = 'grade',
+      videoId = 'videoId',
+      questions = 'questions',
+      question = 'question',
+      status = 'status',
+      answer = 'answer',
+      type = 'type',
+      attachmentUrl = 'attachmentUrl',
+      option1 = 'option1',
+      option2 = 'option2',
+      option3 = 'option3',
+      option4 = 'option4',
+      correctAnswer = 'correctAnswer',
+      quizId = 'quizId',
+      quizAnswers = 'quizAnswers',
+      questionId = 'questionId',
+      studentAnswer = 'studentAnswer',
+      studentName = 'studentName',
 
       // schemas
       imageNull = 'https://brightminds.runasp.net//files/UsersImages/',

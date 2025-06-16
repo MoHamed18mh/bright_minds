@@ -17,8 +17,11 @@ class VideoTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        navigate(context, RouteKeys.videoPlay,
-            extra: {ApiKey.videoUrl: video.videoUrl, ApiKey.id: video.id});
+        navigate(context, RouteKeys.videoPlay, extra: {
+          ApiKey.videoUrl:
+              'https://dn721904.ca.archive.org/0/items/bear_20240117/Bear.mp4',
+          ApiKey.id: video.id,
+        });
       },
       child: Container(
         decoration: BoxDecoration(

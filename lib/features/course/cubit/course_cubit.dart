@@ -84,15 +84,6 @@ class CourseCubit extends Cubit<CourseState> {
     );
   }
 
-  Future<void> getVideos({required int sectionId}) async {
-    emit(VideoLoading());
-    final result = await courseRepo.getVideos(sectionId);
-    result.fold(
-      (error) => emit(VideoFailure(error: error)),
-      (model) => emit(VideoSuccess(video: model)),
-    );
-  }
-
   Future<void> submitFeedback(int courseId, String comment, double rate) async {
     emit(FeedBackLoading());
     final result = await courseRepo.submitFeedback(

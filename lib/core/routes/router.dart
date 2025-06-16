@@ -14,7 +14,9 @@ import 'package:bright_minds/features/cart/presentation/views/user_course_detail
 import 'package:bright_minds/features/course/models/course_model.dart';
 import 'package:bright_minds/features/course/presentation/views/course_details_view.dart';
 import 'package:bright_minds/features/course/presentation/views/course_view.dart';
-import 'package:bright_minds/features/video/cubit/video_cubit.dart';
+import 'package:bright_minds/features/video/models/evaluate_model.dart';
+import 'package:bright_minds/features/video/presentation/views/evaluate_view.dart';
+import 'package:bright_minds/features/video/presentation/views/quiz_view.dart';
 import 'package:bright_minds/features/video/presentation/views/video_play_view.dart';
 import 'package:bright_minds/features/video/presentation/views/video_view.dart';
 import 'package:bright_minds/features/home/presentation/views/home_view.dart';
@@ -145,7 +147,7 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
             final String sectionName = extra[ApiKey.sectionName];
 
             return BlocProvider(
-              create: (_) => createCourse()..getVideos(sectionId: sectionId),
+              create: (_) => createVideo()..getVideos(sectionId: sectionId),
               child: VideoView(sectionName: sectionName),
             );
           },
@@ -153,17 +155,41 @@ GoRouter router(bool isBoardingVisited, bool isLoggedin) => GoRouter(
 
         /// play video screen
         GoRoute(
-            path: RouteKeys.videoPlay,
-            builder: (context, state) {
-              final extra = state.extra as Map<String, dynamic>;
-              final videoUrl = extra[ApiKey.videoUrl] as String;
-              // final videoId = extra[ApiKey.id] as int;
+          path: RouteKeys.videoPlay,
+          builder: (context, state) {
+            final extra = state.extra as Map<String, dynamic>;
+            final videoUrl = extra[ApiKey.videoUrl] as String;
+            final videoId = extra[ApiKey.id] as int;
 
-              return BlocProvider(
-                create: (_) => VideoCubit(videoUrl),
-                child: const VideoPlayView(),
-              );
-            }),
+            return BlocProvider(
+              create: (_) => createVideo()..initializeVideo(videoUrl),
+              child: VideoPlayView(videoId: videoId),
+            );
+          },
+        ),
+
+        /// quize screen
+        GoRoute(
+          path: RouteKeys.quiz,
+          builder: (context, state) {
+            final videoId = state.extra as int;
+
+            return BlocProvider(
+              create: (context) {
+                return createVideo()..getQuiz(videoId: videoId);
+              },
+              child: const QuizView(),
+            );
+          },
+        ),
+
+        /// evaluate screen
+        GoRoute(
+          path: RouteKeys.evaluate,
+          builder: (context, state) => EvaluateView(
+            evaluate: state.extra as EvaluateData,
+          ),
+        ),
 
         /// instructor
         GoRoute(

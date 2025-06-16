@@ -3,8 +3,8 @@ import 'package:bright_minds/core/functions/show_toast.dart';
 import 'package:bright_minds/core/utils/app_text_style.dart';
 import 'package:bright_minds/core/widgets/back_button.dart';
 import 'package:bright_minds/core/widgets/container_shimmer.dart';
-import 'package:bright_minds/features/course/cubit/course_cubit.dart';
-import 'package:bright_minds/features/course/cubit/course_state.dart';
+import 'package:bright_minds/features/video/cubit/video_cubit.dart';
+import 'package:bright_minds/features/video/cubit/video_state.dart';
 import 'package:bright_minds/features/video/presentation/widgets/video_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +18,7 @@ class VideoView extends StatelessWidget {
   Widget build(BuildContext context) {
     final padding = calcPadding(context);
 
-    return BlocListener<CourseCubit, CourseState>(
+    return BlocListener<VideoCubit, VideoState>(
       listener: (context, state) {
         if (state is VideoFailure) {
           showToast(msg: state.error);
@@ -41,7 +41,7 @@ class VideoView extends StatelessWidget {
                 ),
 
                 /// videos
-                BlocBuilder<CourseCubit, CourseState>(
+                BlocBuilder<VideoCubit, VideoState>(
                   builder: (context, state) {
                     return SliverGrid.builder(
                       gridDelegate:

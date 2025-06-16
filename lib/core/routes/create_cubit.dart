@@ -4,12 +4,14 @@ import 'package:bright_minds/core/repository/cart_repo/cart_repo_impl.dart';
 import 'package:bright_minds/core/repository/course_repo/course_repo_impl.dart';
 import 'package:bright_minds/core/repository/instructor_repo/instructor_repo_impl.dart';
 import 'package:bright_minds/core/repository/profile_repo/profile_repo_impl.dart';
+import 'package:bright_minds/core/repository/video_repo/video_repo_impl.dart';
 import 'package:bright_minds/core/services/service_locator.dart';
 import 'package:bright_minds/features/auth/cubit/auth_cubit.dart';
 import 'package:bright_minds/features/cart/cubit/cart_cubit.dart';
 import 'package:bright_minds/features/course/cubit/course_cubit.dart';
 import 'package:bright_minds/features/instructor/cubit/instructor_cubit.dart';
 import 'package:bright_minds/features/profile/cubit/profile_cubit.dart';
+import 'package:bright_minds/features/video/cubit/video_cubit.dart';
 
 final DioConsumer _dio = getIt<DioConsumer>();
 
@@ -23,3 +25,5 @@ InstructorCubit createInst() => InstructorCubit(InstructorRepoImpl(api: _dio));
 ProfileCubit createProf() => ProfileCubit(ProfileRepoImpl(api: _dio));
 
 CartCubit createCart() => CartCubit(CartRepoImpl(api: _dio));
+
+VideoCubit createVideo() => VideoCubit(VideoRepoImpl(api: _dio));

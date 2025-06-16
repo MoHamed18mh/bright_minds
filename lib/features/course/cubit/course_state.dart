@@ -1,6 +1,5 @@
 import 'package:bright_minds/features/course/models/course_model.dart';
 import 'package:bright_minds/features/course/models/section_model.dart';
-import 'package:bright_minds/features/video/models/video_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class CourseState extends Equatable {
@@ -75,19 +74,6 @@ final class SectionSuccess extends CourseState {
 final class SectionFailure extends CourseState {
   final String error;
   const SectionFailure({required this.error});
-}
-
-/// video states
-final class VideoLoading extends CourseState {}
-
-final class VideoSuccess extends CourseState {
-  final VideoModel video;
-  const VideoSuccess({required this.video});
-}
-
-final class VideoFailure extends CourseState {
-  final String error;
-  const VideoFailure({required this.error});
 }
 
 /// Cart states

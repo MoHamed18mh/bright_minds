@@ -16,5 +16,7 @@ abstract class RouteKeys {
       cart = '/cart',
       bag = '/bag',
       userCourseDetails = '/user-course-details',
+      quiz = '/quiz',
+      evaluate = '/evaluate',
       contact = '/contact';
 }

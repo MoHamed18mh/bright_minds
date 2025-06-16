@@ -64,5 +64,8 @@ abstract class AppStrings {
       youCanWathc = 'You can watch the course',
       errorTryAgain = 'An error occurred, please try again',
       noInstructors = 'No instructors found',
+      takeQuiz = 'Take Quiz',
+      quiz = 'Quiz',
+      answerAllQuestion = 'Answer All Questions',
       next = 'Next';
 }
