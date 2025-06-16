@@ -21,98 +21,91 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     final padding = calcPadding(context);
 
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          margin: detailsMargin(padding),
-          padding: detailsPadding(padding),
-          decoration: detailsDecoration(),
-          child: CustomScrollView(
-            slivers: [
-              const SliverToBoxAdapter(child: BackButtonW()),
-              const SliverToBoxAdapter(child: SizedBox(height: 12)),
+    return Scaffold(
+      body: Container(
+        margin: detailsMargin(padding),
+        padding: detailsPadding(padding),
+        decoration: detailsDecoration(),
+        child: CustomScrollView(
+          slivers: [
+            const SliverToBoxAdapter(child: SizedBox(height: 20)),
+            const SliverToBoxAdapter(child: BackButtonW()),
+            const SliverToBoxAdapter(child: SizedBox(height: 12)),
 
-              /// main details
-              SliverToBoxAdapter(
-                child: BlocConsumer<ProfileCubit, ProfileState>(
-                  listener: (context, state) {
-                    if (state is LogOutSuccess) {
-                      navigateAndRemoveUntil(context, RouteKeys.login);
-                    } else if (state is LogOutFailure) {
-                      showToast(msg: state.error);
-                    } else if (state is DeleteSuccess) {
-                      navigateAndRemoveUntil(context, RouteKeys.register);
-                    } else if (state is DeleteFailure) {
-                      showToast(msg: state.error);
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state is UserSuccess) {
-                      final user = state.user.data;
+            /// main details
+            SliverToBoxAdapter(
+              child: BlocConsumer<ProfileCubit, ProfileState>(
+                listener: (context, state) {
+                  if (state is LogOutSuccess) {
+                    navigateAndRemoveUntil(context, RouteKeys.login);
+                  } else if (state is LogOutFailure) {
+                    showToast(msg: state.error);
+                  } else if (state is DeleteSuccess) {
+                    navigateAndRemoveUntil(context, RouteKeys.register);
+                  } else if (state is DeleteFailure) {
+                    showToast(msg: state.error);
+                  }
+                },
+                builder: (context, state) {
+                  if (state is UserSuccess) {
+                    final user = state.user.data;
 
-                      return Column(
-                        children: [
-                          /// user image
-                          UserImage(imageCover: user.imageCover),
-                          const SizedBox(height: 40),
+                    return Column(
+                      children: [
+                        /// user image
+                        UserImage(imageCover: user.imageCover),
+                        const SizedBox(height: 40),
 
-                          /// user name
-                          Text(
-                            user.displayName,
-                            style: AppTextStyle.nunitoSansBlack
-                                .copyWith(fontSize: 22),
-                          ),
-                          const SizedBox(height: 10),
+                        /// user name
+                        Text(
+                          user.displayName,
+                          style: AppTextStyle.nunitoSansBlack
+                              .copyWith(fontSize: 22),
+                        ),
+                        const SizedBox(height: 10),
 
-                          /// user email
-                          Text(
-                            user.email,
-                            style: AppTextStyle.nunitoSansBlack
-                                .copyWith(fontSize: 14),
-                          ),
-                          const SizedBox(height: 7),
+                        /// user email
+                        Text(
+                          user.email,
+                          style: AppTextStyle.nunitoSansBlack
+                              .copyWith(fontSize: 14),
+                        ),
+                        const SizedBox(height: 7),
 
-                          /// user phone
-                          Text(
-                            user.mobile,
-                            style: AppTextStyle.nunitoSansBlack
-                                .copyWith(fontSize: 14),
-                          ),
-                          const SizedBox(height: 25),
+                        /// user phone
+                        Text(
+                          user.mobile,
+                          style: AppTextStyle.nunitoSansBlack
+                              .copyWith(fontSize: 14),
+                        ),
+                        const SizedBox(height: 25),
 
-                          /// edit button
-                          EditButton(user: user),
-                          const SizedBox(height: 45),
+                        /// edit button
+                        EditButton(user: user),
+                        const SizedBox(height: 45),
 
-                          const DeleteAndLogOutButtons(),
-                        ],
-                      );
-                    } else if (state is UserFailure) {
-                      return Text(
-                        state.error,
-                        style: AppTextStyle.notoSerifPrimary
-                            .copyWith(fontSize: 18),
-                      );
-                    }
-                    return Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.primaryColor,
-                      ),
+                        const DeleteAndLogOutButtons(),
+                      ],
                     );
-                  },
-                ),
+                  } else if (state is UserFailure) {
+                    return Text(
+                      state.error,
+                      style:
+                          AppTextStyle.notoSerifPrimary.copyWith(fontSize: 18),
+                    );
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryColor,
+                    ),
+                  );
+                },
               ),
-              const SliverToBoxAdapter(child: SizedBox(height: 30)),
-            ],
-          ),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 30)),
+          ],
         ),
       ),
     );
   }
 }
-
-
-
-
-
-

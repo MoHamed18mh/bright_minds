@@ -26,59 +26,57 @@ class BagView extends StatelessWidget {
           showToast(msg: state.error);
         }
       },
-      child: SafeArea(
-        child: Scaffold(
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: padding),
-            child: CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  leading: const BackButtonW(),
-                  title: Text(
-                    AppStrings.myBag,
-                    style: AppTextStyle.nunitoSansBlack,
-                  ),
-                  actions: [
-                    /// cart button
-                    IconButton(
-                      onPressed: () => navigate(context, RouteKeys.cart),
-                      icon: Icon(
-                        Icons.shopping_cart_outlined,
-                        color: AppColors.primaryColor,
-                      ),
+      child: Scaffold(
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: padding),
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                leading: const BackButtonW(),
+                title: Text(
+                  AppStrings.myBag,
+                  style: AppTextStyle.nunitoSansBlack,
+                ),
+                actions: [
+                  /// cart button
+                  IconButton(
+                    onPressed: () => navigate(context, RouteKeys.cart),
+                    icon: Icon(
+                      Icons.shopping_cart_outlined,
+                      color: AppColors.primaryColor,
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
 
-                /// user courses
-                BlocBuilder<CartCubit, CartState>(
-                  builder: (context, state) {
-                    return SliverGrid.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 400,
-                        mainAxisExtent: 110,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                      ),
-                      itemCount: (state is UserCourseSuccess)
-                          ? state.course.data.items.length
-                          : 3,
-                      itemBuilder: (context, index) {
-                        if (state is UserCourseSuccess) {
-                          return UserCourseTile(
-                            course: state.course.data.items[index],
-                          );
-                        }
-                        return const ContainerShimmer();
-                      },
-                    );
-                  },
-                ),
+              /// user courses
+              BlocBuilder<CartCubit, CartState>(
+                builder: (context, state) {
+                  return SliverGrid.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 400,
+                      mainAxisExtent: 110,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                    ),
+                    itemCount: (state is UserCourseSuccess)
+                        ? state.course.data.items.length
+                        : 3,
+                    itemBuilder: (context, index) {
+                      if (state is UserCourseSuccess) {
+                        return UserCourseTile(
+                          course: state.course.data.items[index],
+                        );
+                      }
+                      return const ContainerShimmer();
+                    },
+                  );
+                },
+              ),
 
-                const SliverToBoxAdapter(child: SizedBox(height: 30)),
-              ],
-            ),
+              const SliverToBoxAdapter(child: SizedBox(height: 30)),
+            ],
           ),
         ),
       ),

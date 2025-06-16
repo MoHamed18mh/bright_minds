@@ -32,107 +32,106 @@ class EditProfileView extends StatelessWidget {
           showToast(msg: state.error);
         }
       },
-      child: SafeArea(
-        child: Scaffold(
-          body: Container(
-            margin: detailsMargin(padding),
-            padding: detailsPadding(padding),
-            decoration: detailsDecoration(),
-            child: CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: Row(
-                    children: [
-                      const BackButtonW(),
-                      const Spacer(),
+      child: Scaffold(
+        body: Container(
+          margin: detailsMargin(padding),
+          padding: detailsPadding(padding),
+          decoration: detailsDecoration(),
+          child: CustomScrollView(
+            slivers: [
+              const SliverToBoxAdapter(child: SizedBox(height: 20)),
+              SliverToBoxAdapter(
+                child: Row(
+                  children: [
+                    const BackButtonW(),
+                    const Spacer(),
 
-                      /// done edit button
-                      BlocBuilder<ProfileCubit, ProfileState>(
-                        builder: (_, state) {
-                          if (state is EditUserLoading) {
-                            return CircularProgressIndicator(
-                              color: AppColors.primaryColor,
-                            );
-                          }
-                          return Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            decoration: BoxDecoration(
-                              color: AppColors.primaryColor,
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            child: InkWell(
-                              onTap: () {
-                                cubit.editUser();
-                              },
-                              child: Text(
-                                AppStrings.done,
-                                style: AppTextStyle.nunitoSansWhite,
-                              ),
-                            ),
+                    /// done edit button
+                    BlocBuilder<ProfileCubit, ProfileState>(
+                      builder: (_, state) {
+                        if (state is EditUserLoading) {
+                          return CircularProgressIndicator(
+                            color: AppColors.primaryColor,
                           );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                const SliverToBoxAdapter(child: SizedBox(height: 10)),
-
-                /// user upload image
-                const SliverToBoxAdapter(child: UserImageEdit()),
-                const SliverToBoxAdapter(child: SizedBox(height: 18)),
-
-                /// form of main user details
-                const SliverToBoxAdapter(child: EditForm()),
-
-                const SliverToBoxAdapter(child: Divider(thickness: 2)),
-                const SliverToBoxAdapter(child: SizedBox(height: 10)),
-
-                /// change password title section
-                SliverToBoxAdapter(
-                  child: Row(
-                    children: [
-                      Text(
-                        AppStrings.changePassword,
-                        style: AppTextStyle.notoSerifPrimary
-                            .copyWith(fontSize: 18),
-                      ),
-                      const Spacer(),
-                      BlocBuilder<ProfileCubit, ProfileState>(
-                        builder: (_, state) {
-                          return IconButton(
-                            onPressed: () => cubit.toggleMenu(),
-                            icon: Icon(
-                              (state is MenueVisible)
-                                  ? Icons.expand_less
-                                  : Icons.expand_more,
-                              color: AppColors.primaryColor,
-                              size: 33,
+                        }
+                        return Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryColor,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              cubit.editUser();
+                            },
+                            child: Text(
+                              AppStrings.done,
+                              style: AppTextStyle.nunitoSansWhite,
                             ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 10)),
 
-                /// change password fields
-                SliverToBoxAdapter(
-                  child: BlocBuilder<ProfileCubit, ProfileState>(
-                    builder: (_, state) {
-                      final isVisible = state is MenueVisible;
+              /// user upload image
+              const SliverToBoxAdapter(child: UserImageEdit()),
+              const SliverToBoxAdapter(child: SizedBox(height: 18)),
 
-                      return AnimatedSlide(
-                          offset: isVisible ? Offset.zero : const Offset(-2, 0),
-                          duration: const Duration(seconds: 1),
-                          curve: Curves.easeInOut,
-                          child: const ChangePasswordForm());
-                    },
-                  ),
+              /// form of main user details
+              const SliverToBoxAdapter(child: EditForm()),
+
+              const SliverToBoxAdapter(child: Divider(thickness: 2)),
+              const SliverToBoxAdapter(child: SizedBox(height: 10)),
+
+              /// change password title section
+              SliverToBoxAdapter(
+                child: Row(
+                  children: [
+                    Text(
+                      AppStrings.changePassword,
+                      style:
+                          AppTextStyle.notoSerifPrimary.copyWith(fontSize: 18),
+                    ),
+                    const Spacer(),
+                    BlocBuilder<ProfileCubit, ProfileState>(
+                      builder: (_, state) {
+                        return IconButton(
+                          onPressed: () => cubit.toggleMenu(),
+                          icon: Icon(
+                            (state is MenueVisible)
+                                ? Icons.expand_less
+                                : Icons.expand_more,
+                            color: AppColors.primaryColor,
+                            size: 33,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
+              ),
 
-                const SliverToBoxAdapter(child: SizedBox(height: 8)),
-              ],
-            ),
+              /// change password fields
+              SliverToBoxAdapter(
+                child: BlocBuilder<ProfileCubit, ProfileState>(
+                  builder: (_, state) {
+                    final isVisible = state is MenueVisible;
+
+                    return AnimatedSlide(
+                        offset: isVisible ? Offset.zero : const Offset(-2, 0),
+                        duration: const Duration(seconds: 1),
+                        curve: Curves.easeInOut,
+                        child: const ChangePasswordForm());
+                  },
+                ),
+              ),
+
+              const SliverToBoxAdapter(child: SizedBox(height: 8)),
+            ],
           ),
         ),
       ),

@@ -18,87 +18,84 @@ class InstructorDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final padding = calcPadding(context);
 
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          margin: detailsMargin(padding),
-          padding: detailsPadding(padding),
-          decoration: detailsDecoration(),
-          child: CustomScrollView(
-            slivers: [
-              const SliverToBoxAdapter(child: BackButtonW()),
-              const SliverToBoxAdapter(child: SizedBox(height: 12)),
+    return Scaffold(
+      body: Container(
+        margin: detailsMargin(padding),
+        padding: detailsPadding(padding),
+        decoration: detailsDecoration(),
+        child: CustomScrollView(
+          slivers: [
+            const SliverToBoxAdapter(child: SizedBox(height: 20)),
+            const SliverToBoxAdapter(child: BackButtonW()),
+            const SliverToBoxAdapter(child: SizedBox(height: 12)),
 
-              /// instructor image
-              SliverToBoxAdapter(
-                child: Center(
-                  child: Container(
-                    height: 160,
-                    width: 160,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.primaryColor,
-                          blurRadius: 6,
-                        ),
-                      ],
-                    ),
-                    child: ClipOval(
-                      child: CachedNetworkImage(
-                        imageUrl: instructor.imageCover,
-                        fit: BoxFit.cover,
-                        memCacheHeight: 300,
-                        placeholder: (context, url) => const ContainerShimmer(),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
+            /// instructor image
+            SliverToBoxAdapter(
+              child: Center(
+                child: Container(
+                  height: 160,
+                  width: 160,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primaryColor,
+                        blurRadius: 6,
                       ),
+                    ],
+                  ),
+                  child: ClipOval(
+                    child: CachedNetworkImage(
+                      imageUrl: instructor.imageCover,
+                      fit: BoxFit.cover,
+                      memCacheHeight: 300,
+                      placeholder: (context, url) => const ContainerShimmer(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(child: SizedBox(height: 8)),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 8)),
 
-              /// instructor name and job
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    SelectableText(
-                      instructor.displayName,
-                      style:
-                          AppTextStyle.nunitoSansBlack.copyWith(fontSize: 22),
-                    ),
-                    Text(
-                      instructor.jobTitle,
-                      style:
-                          AppTextStyle.nunitoSansBlack.copyWith(fontSize: 16),
-                    ),
-                  ],
-                ),
+            /// instructor name and job
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  SelectableText(
+                    instructor.displayName,
+                    style: AppTextStyle.nunitoSansBlack.copyWith(fontSize: 22),
+                  ),
+                  Text(
+                    instructor.jobTitle,
+                    style: AppTextStyle.nunitoSansBlack.copyWith(fontSize: 16),
+                  ),
+                ],
               ),
-              const SliverToBoxAdapter(child: SizedBox(height: 30)),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 30)),
 
-              /// description
-              SliverToBoxAdapter(
-                child: Text(
-                  instructor.qualifications,
-                  style: AppTextStyle.nunitoSansGrey,
-                ),
+            /// description
+            SliverToBoxAdapter(
+              child: Text(
+                instructor.qualifications,
+                style: AppTextStyle.nunitoSansGrey,
               ),
-              const SliverToBoxAdapter(child: SizedBox(height: 30)),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 30)),
 
-              /// contact
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    ContactItem(text: instructor.email, iconData: Icons.email),
-                    const SizedBox(height: 20),
-                    ContactItem(text: instructor.mobile, iconData: Icons.phone)
-                  ],
-                ),
-              )
-            ],
-          ),
+            /// contact
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  ContactItem(text: instructor.email, iconData: Icons.email),
+                  const SizedBox(height: 20),
+                  ContactItem(text: instructor.mobile, iconData: Icons.phone)
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );

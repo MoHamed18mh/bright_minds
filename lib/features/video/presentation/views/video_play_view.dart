@@ -34,7 +34,8 @@ class VideoPlayView extends StatelessWidget {
             BlocConsumer<VideoCubit, VideoState>(
               listener: (context, state) {
                 if (state is VideoError) {
-                  showToast(msg: 'error, try later');
+                  showToast(
+                      msg: 'Your device does not support decoding this video');
                 }
               },
               builder: (context, state) {
@@ -47,7 +48,7 @@ class VideoPlayView extends StatelessWidget {
                   );
                 }
 
-                return SliverFillRemaining(
+                return SliverToBoxAdapter(
                   child: Center(
                     child: CircularProgressIndicator(
                       color: AppColors.primaryColor,
@@ -56,7 +57,7 @@ class VideoPlayView extends StatelessWidget {
                 );
               },
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: 200)),
+            const SliverToBoxAdapter(child: SizedBox(height: 130)),
             SliverToBoxAdapter(
               child: MaterialButtonW(
                 text: AppStrings.takeQuiz,
@@ -65,7 +66,8 @@ class VideoPlayView extends StatelessWidget {
                   navigate(context, RouteKeys.quiz, extra: videoId);
                 },
               ),
-            )
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 130)),
           ],
         ),
       ),

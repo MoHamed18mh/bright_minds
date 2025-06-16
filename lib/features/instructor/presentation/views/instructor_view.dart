@@ -52,121 +52,119 @@ class _InstructorViewState extends State<InstructorView> {
           showToast(msg: state.error);
         }
       },
-      child: SafeArea(
-        child: Scaffold(
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: padding),
-            child: CustomScrollView(
-              controller: _scrollController,
-              slivers: [
-                SliverAppBar(
-                  backgroundColor: Colors.white,
-                  leading: const BackButtonW(),
-
-                  /// search
-                  actions: [
-                    BlocBuilder<InstructorCubit, InstructorState>(
-                      builder: (context, state) {
-                        return IconButton(
-                          onPressed: () {
-                            List<InstructorItem> itemsList =
-                                (state is InstructorSuccess) ? state.items : [];
-
-                            showSearch(
-                              context: context,
-                              delegate: InstructorSearchDelegate(
-                                list: itemsList,
-                              ),
-                            );
-                          },
-                          icon: Icon(
-                            Icons.search,
-                            color: AppColors.primaryColor,
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                  floating: true,
-                ),
-                const SliverToBoxAdapter(child: SizedBox(height: 20)),
-
-                /// screen title
-                const SliverToBoxAdapter(
-                  child: ScreenOverview(
-                    title: AppStrings.instructors,
-                    subTitle: AppStrings.expertInstructors,
-                  ),
-                ),
-
-                /// instructors
-                BlocBuilder<InstructorCubit, InstructorState>(
-                  builder: (context, state) {
-                    // loading state
-                    if (state is InstructorLoading) {
-                      return SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: Center(
-                            child: CircularProgressIndicator(
+      child: Scaffold(
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: padding),
+          child: CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              SliverAppBar(
+                backgroundColor: Colors.white,
+                leading: const BackButtonW(),
+      
+                /// search
+                actions: [
+                  BlocBuilder<InstructorCubit, InstructorState>(
+                    builder: (context, state) {
+                      return IconButton(
+                        onPressed: () {
+                          List<InstructorItem> itemsList =
+                              (state is InstructorSuccess) ? state.items : [];
+      
+                          showSearch(
+                            context: context,
+                            delegate: InstructorSearchDelegate(
+                              list: itemsList,
+                            ),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.search,
                           color: AppColors.primaryColor,
-                        )),
-                      );
-                    }
-
-                    List itemsList = [];
-
-                    if (state is InstructorSuccess) {
-                      itemsList = state.items;
-                    } else if (state is InstructorFailure) {
-                      itemsList = state.previousItems;
-                    }
-
-                    if (itemsList.isEmpty) {
-                      return SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: Center(
-                          child: Text(
-                            AppStrings.noInstructors,
-                            style: AppTextStyle.nunitoSansBlack,
-                          ),
                         ),
                       );
-                    }
-
-                    return SliverGrid.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 400,
-                        mainAxisExtent: 110,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                      ),
-                      itemCount: itemsList.length,
-                      itemBuilder: (context, index) => InstructorTile(
-                        instructor: itemsList[index],
+                    },
+                  ),
+                ],
+                floating: true,
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 20)),
+      
+              /// screen title
+              const SliverToBoxAdapter(
+                child: ScreenOverview(
+                  title: AppStrings.instructors,
+                  subTitle: AppStrings.expertInstructors,
+                ),
+              ),
+      
+              /// instructors
+              BlocBuilder<InstructorCubit, InstructorState>(
+                builder: (context, state) {
+                  // loading state
+                  if (state is InstructorLoading) {
+                    return SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Center(
+                          child: CircularProgressIndicator(
+                        color: AppColors.primaryColor,
+                      )),
+                    );
+                  }
+      
+                  List itemsList = [];
+      
+                  if (state is InstructorSuccess) {
+                    itemsList = state.items;
+                  } else if (state is InstructorFailure) {
+                    itemsList = state.previousItems;
+                  }
+      
+                  if (itemsList.isEmpty) {
+                    return SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Center(
+                        child: Text(
+                          AppStrings.noInstructors,
+                          style: AppTextStyle.nunitoSansBlack,
+                        ),
                       ),
                     );
-                  },
-                ),
-                const SliverToBoxAdapter(child: SizedBox(height: 15)),
-
-                /// Loading indicator
-                BlocBuilder<InstructorCubit, InstructorState>(
-                  builder: (context, state) {
-                    if (state is InstructorSuccess && state.isLoadingMore) {
-                      return SliverToBoxAdapter(
-                        child: Center(
-                            child: CircularProgressIndicator(
-                          color: AppColors.primaryColor,
-                        )),
-                      );
-                    }
-                    return const SliverToBoxAdapter(child: SizedBox.shrink());
-                  },
-                ),
-                const SliverToBoxAdapter(child: SizedBox(height: 15)),
-              ],
-            ),
+                  }
+      
+                  return SliverGrid.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 400,
+                      mainAxisExtent: 110,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                    ),
+                    itemCount: itemsList.length,
+                    itemBuilder: (context, index) => InstructorTile(
+                      instructor: itemsList[index],
+                    ),
+                  );
+                },
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 15)),
+      
+              /// Loading indicator
+              BlocBuilder<InstructorCubit, InstructorState>(
+                builder: (context, state) {
+                  if (state is InstructorSuccess && state.isLoadingMore) {
+                    return SliverToBoxAdapter(
+                      child: Center(
+                          child: CircularProgressIndicator(
+                        color: AppColors.primaryColor,
+                      )),
+                    );
+                  }
+                  return const SliverToBoxAdapter(child: SizedBox.shrink());
+                },
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 15)),
+            ],
           ),
         ),
       ),

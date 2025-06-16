@@ -18,94 +18,86 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final padding = calcPadding(context);
 
-    return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: EdgeInsets.only(left: padding, right: padding, top: 4),
-          child: CustomScrollView(
-            physics: const ClampingScrollPhysics(),
-            slivers: [
-              /// app bar
-              SliverAppBar(
-                leading: Image.asset(Assets.assetsImagesLogo),
-                titleSpacing: 6,
-                title: const AppName(alignment: Alignment.centerLeft),
-                actions: [
-                  /// profile button
-                  IconButton(
-                    onPressed: () => navigate(context, RouteKeys.profile),
-                    icon: Icon(
-                      Icons.person,
-                      size: 45,
-                      color: AppColors.primaryColor,
-                    ),
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.only(left: padding, right: padding, top: 4),
+        child: CustomScrollView(
+          physics: const ClampingScrollPhysics(),
+          slivers: [
+            /// app bar
+            SliverAppBar(
+              leading: Image.asset(Assets.assetsImagesLogo),
+              titleSpacing: 6,
+              title: const AppName(alignment: Alignment.centerLeft),
+              actions: [
+                /// profile button
+                IconButton(
+                  onPressed: () => navigate(context, RouteKeys.profile),
+                  icon: Icon(
+                    Icons.person,
+                    size: 45,
+                    color: AppColors.primaryColor,
                   ),
+                ),
+              ],
+              floating: true,
+              backgroundColor: Colors.white,
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 20)),
+
+            /// navigate screens
+            SliverList.builder(
+              itemCount: navigationList.length,
+              itemBuilder: (context, index) {
+                String title = navigationList.keys.elementAt(index);
+                NavigationData data = navigationList[title]!;
+
+                return NavigationTile(title: title, data: data);
+              },
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 80)),
+
+            /// services section
+            SliverGrid.builder(
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 400,
+                mainAxisExtent: 290,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+              ),
+              itemCount: servicesList.length,
+              itemBuilder: (context, index) {
+                String title = servicesList.keys.elementAt(index);
+                ServiceModel service = servicesList[title]!;
+
+                return ServicesItem(title: title, service: service);
+              },
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 80)),
+
+            /// skills section
+            SliverGrid(
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 400,
+                mainAxisExtent: 250,
+                crossAxisSpacing: 20,
+                childAspectRatio: .75,
+              ),
+              delegate: SliverChildListDelegate(
+                [
+                  Image.asset(
+                    Assets.assetsImagesAbout,
+                    height: 250,
+                    fit: BoxFit.cover,
+                  ),
+                  const Skills(),
                 ],
-                floating: true,
-                backgroundColor: Colors.white,
               ),
-              const SliverToBoxAdapter(child: SizedBox(height: 20)),
-
-              /// navigate screens
-              SliverList.builder(
-                itemCount: navigationList.length,
-                itemBuilder: (context, index) {
-                  String title = navigationList.keys.elementAt(index);
-                  NavigationData data = navigationList[title]!;
-
-                  return NavigationTile(title: title, data: data);
-                },
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: 80)),
-
-              /// services section
-              SliverGrid.builder(
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 400,
-                  mainAxisExtent: 290,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                ),
-                itemCount: servicesList.length,
-                itemBuilder: (context, index) {
-                  String title = servicesList.keys.elementAt(index);
-                  ServiceModel service = servicesList[title]!;
-
-                  return ServicesItem(title: title, service: service);
-                },
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: 80)),
-
-              /// skills section
-              SliverGrid(
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 400,
-                  mainAxisExtent: 250,
-                  crossAxisSpacing: 20,
-                  childAspectRatio: .75,
-                ),
-                delegate: SliverChildListDelegate(
-                  [
-                    Image.asset(
-                      Assets.assetsImagesAbout,
-                      height: 250,
-                      fit: BoxFit.cover,
-                    ),
-                    const Skills(),
-                  ],
-                ),
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: 80)),
-            ],
-          ),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 80)),
+          ],
         ),
       ),
     );
   }
 }
-
-
-
-
-
-

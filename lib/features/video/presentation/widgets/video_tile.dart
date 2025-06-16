@@ -18,8 +18,7 @@ class VideoTile extends StatelessWidget {
     return InkWell(
       onTap: () {
         navigate(context, RouteKeys.videoPlay, extra: {
-          ApiKey.videoUrl:
-              'https://dn721904.ca.archive.org/0/items/bear_20240117/Bear.mp4',
+          ApiKey.videoUrl: video.videoStreamUrl,
           ApiKey.id: video.id,
         });
       },

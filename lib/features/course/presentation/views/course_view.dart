@@ -52,120 +52,118 @@ class _CourseViewState extends State<CourseView> {
           showToast(msg: state.error);
         }
       },
-      child: SafeArea(
-        child: Scaffold(
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: padding),
-            child: CustomScrollView(
-              controller: _scrollController,
-              slivers: [
-                SliverAppBar(
-                  backgroundColor: Colors.white,
-                  leading: const BackButtonW(),
-
-                  /// search
-                  actions: [
-                    BlocBuilder<CourseCubit, CourseState>(
-                      builder: (context, state) {
-                        return IconButton(
-                          onPressed: () {
-                            List<CourseItem> itemsList =
-                                (state is CourseSuccess) ? state.items : [];
-                            showSearch(
-                              context: context,
-                              delegate: CourseSearchDelegate(
-                                list: itemsList,
-                              ),
-                            );
-                          },
-                          icon: Icon(
-                            Icons.search,
-                            color: AppColors.primaryColor,
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                  floating: true,
-                ),
-                const SliverToBoxAdapter(child: SizedBox(height: 20)),
-
-                /// screen title
-                const SliverToBoxAdapter(
-                  child: ScreenOverview(
-                    title: AppStrings.courses,
-                    subTitle: AppStrings.popularCourses,
-                  ),
-                ),
-
-                /// courses
-                BlocBuilder<CourseCubit, CourseState>(
-                  builder: (context, state) {
-                    // loading state
-                    if (state is CourseLoading) {
-                      return SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: Center(
-                            child: CircularProgressIndicator(
+      child: Scaffold(
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: padding),
+          child: CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              SliverAppBar(
+                backgroundColor: Colors.white,
+                leading: const BackButtonW(),
+      
+                /// search
+                actions: [
+                  BlocBuilder<CourseCubit, CourseState>(
+                    builder: (context, state) {
+                      return IconButton(
+                        onPressed: () {
+                          List<CourseItem> itemsList =
+                              (state is CourseSuccess) ? state.items : [];
+                          showSearch(
+                            context: context,
+                            delegate: CourseSearchDelegate(
+                              list: itemsList,
+                            ),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.search,
                           color: AppColors.primaryColor,
-                        )),
-                      );
-                    }
-
-                    List itemsList = [];
-
-                    if (state is CourseSuccess) {
-                      itemsList = state.items;
-                    } else if (state is CourseFailure) {
-                      itemsList = state.previousItems;
-                    }
-
-                    if (itemsList.isEmpty) {
-                      return SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: Center(
-                          child: Text(
-                            AppStrings.noInstructors,
-                            style: AppTextStyle.nunitoSansBlack,
-                          ),
                         ),
                       );
-                    }
-
-                    return SliverGrid.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 400,
-                        mainAxisExtent: 110,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                      ),
-                      itemCount: itemsList.length,
-                      itemBuilder: (context, index) => CourseTile(
-                        course: itemsList[index],
+                    },
+                  ),
+                ],
+                floating: true,
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 20)),
+      
+              /// screen title
+              const SliverToBoxAdapter(
+                child: ScreenOverview(
+                  title: AppStrings.courses,
+                  subTitle: AppStrings.popularCourses,
+                ),
+              ),
+      
+              /// courses
+              BlocBuilder<CourseCubit, CourseState>(
+                builder: (context, state) {
+                  // loading state
+                  if (state is CourseLoading) {
+                    return SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Center(
+                          child: CircularProgressIndicator(
+                        color: AppColors.primaryColor,
+                      )),
+                    );
+                  }
+      
+                  List itemsList = [];
+      
+                  if (state is CourseSuccess) {
+                    itemsList = state.items;
+                  } else if (state is CourseFailure) {
+                    itemsList = state.previousItems;
+                  }
+      
+                  if (itemsList.isEmpty) {
+                    return SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Center(
+                        child: Text(
+                          AppStrings.noInstructors,
+                          style: AppTextStyle.nunitoSansBlack,
+                        ),
                       ),
                     );
-                  },
-                ),
-                const SliverToBoxAdapter(child: SizedBox(height: 15)),
-
-                /// Loading indicator
-                BlocBuilder<CourseCubit, CourseState>(
-                  builder: (context, state) {
-                    if (state is CourseSuccess && state.isLoadingMore) {
-                      return SliverToBoxAdapter(
-                        child: Center(
-                            child: CircularProgressIndicator(
-                          color: AppColors.primaryColor,
-                        )),
-                      );
-                    }
-                    return const SliverToBoxAdapter(child: SizedBox.shrink());
-                  },
-                ),
-                const SliverToBoxAdapter(child: SizedBox(height: 15)),
-              ],
-            ),
+                  }
+      
+                  return SliverGrid.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 400,
+                      mainAxisExtent: 110,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                    ),
+                    itemCount: itemsList.length,
+                    itemBuilder: (context, index) => CourseTile(
+                      course: itemsList[index],
+                    ),
+                  );
+                },
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 15)),
+      
+              /// Loading indicator
+              BlocBuilder<CourseCubit, CourseState>(
+                builder: (context, state) {
+                  if (state is CourseSuccess && state.isLoadingMore) {
+                    return SliverToBoxAdapter(
+                      child: Center(
+                          child: CircularProgressIndicator(
+                        color: AppColors.primaryColor,
+                      )),
+                    );
+                  }
+                  return const SliverToBoxAdapter(child: SizedBox.shrink());
+                },
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 15)),
+            ],
           ),
         ),
       ),

@@ -31,13 +31,12 @@ class VideoData {
   final int sectionId;
   final String sectionName;
   final String videoUrl;
+  final String videoStreamUrl;
   final String coverUrl;
-  final double duration;
+  final double duration; // هنا نستخدم double
   final String description;
   final bool isPaid;
   final int order;
-  final String createdDate;
-  final String updatedDate;
 
   VideoData({
     required this.id,
@@ -45,13 +44,12 @@ class VideoData {
     required this.sectionId,
     required this.sectionName,
     required this.videoUrl,
+    required this.videoStreamUrl,
     required this.coverUrl,
     required this.duration,
     required this.description,
     required this.isPaid,
     required this.order,
-    required this.createdDate,
-    required this.updatedDate,
   });
 
   factory VideoData.fromJson(Map<String, dynamic> json) {
@@ -61,13 +59,12 @@ class VideoData {
       sectionId: (json[ApiKey.sectionId] as num?)?.toInt() ?? 0,
       sectionName: json[ApiKey.sectionName] as String? ?? '',
       videoUrl: json[ApiKey.videoUrl] as String? ?? '',
+      videoStreamUrl: json[ApiKey.videoStreamUrl] as String? ?? '',
       coverUrl: json[ApiKey.coverUrl] as String? ?? '',
       duration: (json[ApiKey.duration] as num?)?.toDouble() ?? 0.0,
       description: json[ApiKey.description] as String? ?? '',
       isPaid: json[ApiKey.isPaid] as bool? ?? false,
       order: (json[ApiKey.order] as num?)?.toInt() ?? 0,
-      createdDate: json[ApiKey.createdDate] as String? ?? '',
-      updatedDate: json[ApiKey.updatedDate] as String? ?? '',
     );
   }
 }

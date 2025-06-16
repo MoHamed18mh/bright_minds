@@ -30,104 +30,101 @@ class CourseDetailsView extends StatelessWidget {
           showToast(msg: state.error);
         }
       },
-      child: SafeArea(
-        child: Scaffold(
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: padding),
-            child: CustomScrollView(
-              slivers: [
-                /// course image
-                SliverToBoxAdapter(
-                  child: CourseImage(
-                    pictureUrl: course.pictureUrl,
-                    courseName: course.name,
-                    instructorName: course.instructorName,
-                    rate: course.rate.toString(),
-                  ),
+      child: Scaffold(
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: padding),
+          child: CustomScrollView(
+            slivers: [
+              /// course image
+              SliverToBoxAdapter(
+                child: CourseImage(
+                  pictureUrl: course.pictureUrl,
+                  courseName: course.name,
+                  instructorName: course.instructorName,
+                  rate: course.rate.toString(),
                 ),
-                const SliverToBoxAdapter(child: SizedBox(height: 22)),
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 22)),
 
-                /// course description
-                SliverToBoxAdapter(
-                  child: Text(
-                    course.description,
-                    style: AppTextStyle.nunitoSansBlack.copyWith(fontSize: 16),
-                  ),
+              /// course description
+              SliverToBoxAdapter(
+                child: Text(
+                  course.description,
+                  style: AppTextStyle.nunitoSansBlack.copyWith(fontSize: 16),
                 ),
-                const SliverToBoxAdapter(
-                  child: Divider(
-                    indent: 70,
-                    endIndent: 70,
-                    thickness: 2,
-                  ),
+              ),
+              const SliverToBoxAdapter(
+                child: Divider(
+                  indent: 70,
+                  endIndent: 70,
+                  thickness: 2,
                 ),
-                const SliverToBoxAdapter(child: SizedBox(height: 22)),
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 22)),
 
-                /// sections list
-                BlocBuilder<CourseCubit, CourseState>(
-                  builder: (context, state) {
-                    return SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: 35,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: (state is SectionSuccess)
-                              ? state.section.data.length
-                              : 3,
-                          itemBuilder: (context, index) {
-                            if (state is SectionSuccess) {
-                              return ChipW(
-                                sectionName: state.section.data[index].name,
-                                sectionId: state.section.data[index].id,
-                              );
-                            }
-                            return Container();
-                          },
-                        ),
+              /// sections list
+              BlocBuilder<CourseCubit, CourseState>(
+                builder: (context, state) {
+                  return SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 35,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: (state is SectionSuccess)
+                            ? state.section.data.length
+                            : 3,
+                        itemBuilder: (context, index) {
+                          if (state is SectionSuccess) {
+                            return ChipW(
+                              sectionName: state.section.data[index].name,
+                              sectionId: state.section.data[index].id,
+                            );
+                          }
+                          return Container();
+                        },
                       ),
+                    ),
+                  );
+                },
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 60)),
+
+              /// price
+              SliverToBoxAdapter(
+                child: Text.rich(
+                  TextSpan(
+                    text: '${AppStrings.price}: ',
+                    style: AppTextStyle.nunitoSansBlack.copyWith(fontSize: 22),
+                    children: [
+                      TextSpan(
+                        text: '${course.price} \$',
+                        style: AppTextStyle.notoSerifPrimary
+                            .copyWith(fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 12)),
+
+              /// cart button
+              SliverToBoxAdapter(
+                child: BlocBuilder<CourseCubit, CourseState>(
+                  builder: (context, state) {
+                    if (state is AddToCartLoading) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                            color: AppColors.primaryColor),
+                      );
+                    }
+                    return MaterialButtonW(
+                      text: AppStrings.addToBag,
+                      onPressed: () => cubit.addToCart(course.id),
                     );
                   },
                 ),
-                const SliverToBoxAdapter(child: SizedBox(height: 60)),
-
-                /// price
-                SliverToBoxAdapter(
-                  child: Text.rich(
-                    TextSpan(
-                      text: '${AppStrings.price}: ',
-                      style:
-                          AppTextStyle.nunitoSansBlack.copyWith(fontSize: 22),
-                      children: [
-                        TextSpan(
-                          text: '${course.price} \$',
-                          style: AppTextStyle.notoSerifPrimary
-                              .copyWith(fontSize: 20),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SliverToBoxAdapter(child: SizedBox(height: 12)),
-
-                /// cart button
-                SliverToBoxAdapter(
-                  child: BlocBuilder<CourseCubit, CourseState>(
-                    builder: (context, state) {
-                      if (state is AddToCartLoading) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                              color: AppColors.primaryColor),
-                        );
-                      }
-                      return MaterialButtonW(
-                        text: AppStrings.addToBag,
-                        onPressed: () => cubit.addToCart(course.id),
-                      );
-                    },
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),

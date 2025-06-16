@@ -24,46 +24,44 @@ class VideoView extends StatelessWidget {
           showToast(msg: state.error);
         }
       },
-      child: SafeArea(
-        child: Scaffold(
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: padding),
-            child: CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  leading: const BackButtonW(),
-                  titleSpacing: 4,
-                  title: Text(
-                    sectionName,
-                    style: AppTextStyle.nunitoSansBlack,
-                  ),
-                  backgroundColor: Colors.white,
+      child: Scaffold(
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: padding),
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                leading: const BackButtonW(),
+                titleSpacing: 4,
+                title: Text(
+                  sectionName,
+                  style: AppTextStyle.nunitoSansBlack,
                 ),
+                backgroundColor: Colors.white,
+              ),
 
-                /// videos
-                BlocBuilder<VideoCubit, VideoState>(
-                  builder: (context, state) {
-                    return SliverGrid.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 400,
-                        mainAxisExtent: 110,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                      ),
-                      itemCount:
-                          (state is VideoSuccess) ? state.video.data.length : 3,
-                      itemBuilder: (context, index) {
-                        if (state is VideoSuccess) {
-                          return VideoTile(video: state.video.data[index]);
-                        }
-                        return const ContainerShimmer();
-                      },
-                    );
-                  },
-                )
-              ],
-            ),
+              /// videos
+              BlocBuilder<VideoCubit, VideoState>(
+                builder: (context, state) {
+                  return SliverGrid.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 400,
+                      mainAxisExtent: 110,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                    ),
+                    itemCount:
+                        (state is VideoSuccess) ? state.video.data.length : 3,
+                    itemBuilder: (context, index) {
+                      if (state is VideoSuccess) {
+                        return VideoTile(video: state.video.data[index]);
+                      }
+                      return const ContainerShimmer();
+                    },
+                  );
+                },
+              )
+            ],
           ),
         ),
       ),

@@ -127,6 +127,7 @@ abstract class ApiKey {
       questionId = 'questionId',
       studentAnswer = 'studentAnswer',
       studentName = 'studentName',
+      videoStreamUrl = 'videoStreamUrl',
 
       // schemas
       imageNull = 'https://brightminds.runasp.net//files/UsersImages/',
